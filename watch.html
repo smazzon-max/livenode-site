@@ -5,20 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Registrazione — LiveNode</title>
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#1d1d1f">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Crect x='15' y='15' width='34' height='34' rx='8' fill='none' stroke='%23f5f5f7' stroke-width='5'/%3E%3Crect x='25' y='25' width='14' height='14' rx='3' fill='%23FF4A00'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#09090B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2309090B'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
 <style>
 .player{padding:40px 0 80px;max-width:1000px;margin:0 auto}
-#msg{margin-top:0}
-.player h1{font-size:clamp(30px,4.6vw,52px);margin:0 0 6px}
-.frame{margin-top:22px;background:#000;border-radius:20px;overflow:hidden;aspect-ratio:16/9;position:relative;box-shadow:0 30px 70px -30px #0006}
+.player h1{font-size:clamp(28px,4.4vw,52px);margin:0 0 6px;text-transform:none;letter-spacing:-.04em}
+.frame{margin-top:22px;border:2px solid var(--line2);background:#000;aspect-ratio:16/9;position:relative}
 .frame video{width:100%;height:100%;display:block;background:#000}
-.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin:8px 0 0;font-size:15px;color:var(--mut)}
-.meta b{color:var(--ink);font-weight:600}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin:8px 0 0;font-size:12px;color:var(--dim)}
+.meta b{color:var(--fg);font-weight:500}
 .bar2{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;align-items:center}
 </style>
 </head>
@@ -30,7 +29,7 @@
     <h1 id="title"></h1>
     <div class="meta"><span>Durata <b id="dur"></b></span><span>Peso <b id="size"></b></span><span id="exp"></span></div>
     <div class="frame"><video id="v" controls playsinline preload="metadata"></video></div>
-    <div class="bar2"><a class="key pri" id="dl" href="#">Scarica</a><span class="note">Registrata con LiveNode</span></div>
+    <div class="bar2"><a class="key" id="dl" href="#">▼ Scarica</a><span class="note">Registrata con LiveNode</span></div>
   </div>
 </div></main>
 <footer><div class="w"><div><a href="privacy.html">Privacy</a><a href="terms.html">Termini</a></div><div>© Production Management S.r.l. · Piemme</div></div></footer>
