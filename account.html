@@ -63,12 +63,6 @@
       <p class="note" style="margin-bottom:34px">Pagamento sicuro su Stripe. Rinnovo mensile, disdici quando vuoi.</p>
     </section>
 
-    <section id="rec-box" class="hidden" style="margin-bottom:34px">
-      <h2>Registrazioni nel Cloud <span id="rec-use" class="note" style="letter-spacing:0;text-transform:none"></span></h2>
-      <div class="box"><div class="bb" id="recs"><p class="empty">Caricamento…</p></div></div>
-      <p class="note" style="margin-top:10px">Le registrazioni si caricano dall'app: Impostazioni › Registrazione › Registrazioni nel Cloud.</p>
-    </section>
-
     <section class="box danger" style="margin:10px 0 80px">
       <div class="bh"><span>Sicurezza e dati</span></div>
       <div class="bb">
@@ -112,32 +106,6 @@ function planCards(sel) {
   }).join("");
 }
 
-
-const clock = s => s == null ? "—" : [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map((n, i) => i ? String(n).padStart(2, "0") : n).join(":");
-const mb = b => b >= 1e9 ? (b / 1e9).toFixed(1) + " GB" : Math.round(b / 1e6) + " MB";
-let recItems = [];
-async function loadRecs(hasPlan) {
-  show($("#rec-box"), hasPlan);
-  if (!hasPlan) return;
-  try {
-    const r = await fn("cloud", { action: "list" });
-    recItems = r.items || [];
-    $("#rec-use").textContent = "· " + mb(r.used_bytes) + " di " + mb(r.limit_bytes);
-    $("#recs").innerHTML = recItems.length ? recItems.map(it => `
-      <div class="item" style="align-items:flex-start;flex-wrap:wrap">
-        <div style="min-width:0"><strong>${esc(it.title)}</strong>${it.status === "uploading" ? " <small>(in caricamento)</small>" : ""}<br>
-          <small>${clock(it.duration_sec)} · ${mb(it.size_bytes)} · ${fmtDate(it.created_at)}${it.share_url ? " · condivisa" + (it.share_expires_at ? " fino al " + fmtDate(it.share_expires_at) : "") : ""}</small></div>
-        <div class="row" style="gap:8px">
-          ${it.status === "ready" ? `<select data-days="${it.id}" style="height:34px;background:#09090B;color:#f4f4f5;border:1px solid #3f3f46;font:12px 'JetBrains Mono',monospace;padding:0 8px">
-            <option value="7">7 giorni</option><option value="30">30 giorni</option><option value="">Senza scadenza</option></select>
-          <button class="key sm" data-share="${it.id}">${it.share_url ? "Nuovo link" : "Condividi"}</button>` : ""}
-          ${it.share_url ? `<button class="key sm" data-copy="${esc(it.share_url)}">Copia link</button><a class="key sm" href="${esc(it.share_url)}" target="_blank" rel="noopener">Guarda</a><button class="key sm" data-unshare="${it.id}">Revoca</button>` : ""}
-          <button class="key sm bad" data-delrec="${it.id}">Elimina</button>
-        </div>
-      </div>`).join("") : `<p class="empty">Ancora nessuna registrazione. Caricane una dall'app.</p>`;
-  } catch (e) { $("#recs").innerHTML = `<p class="empty">Non riesco a leggere le registrazioni.</p>`; }
-}
-
 async function load() {
   const { data: { session } } = await sb.auth.getSession();
   const inApp = !!session && !Auth.recovering;
@@ -170,8 +138,6 @@ async function load() {
     }
   }
 
-  loadRecs(!!sub);
-
   const { data: devs } = await sb.from("devices").select("id,name,created_at,last_seen,app_version").order("created_at");
   $("#dev-n").textContent = devs && devs.length ? devs.length + " collegati" : "";
   $("#devices").innerHTML = devs && devs.length ? devs.map(d => `
@@ -194,18 +160,6 @@ document.addEventListener("click", async e => {
   } else if (b.dataset.dev) {
     if (!confirm("Rimuovere questo Mac? L'app dovrà essere collegata di nuovo.")) return;
     await sb.from("devices").delete().eq("id", b.dataset.dev); load();
-  } else if (b.dataset.share) {
-    const d = document.querySelector(`[data-days="${b.dataset.share}"]`).value;
-    b.disabled = true;
-    try { const r = await fn("cloud", { action: "share", id: b.dataset.share, days: d ? Number(d) : null }); try { await navigator.clipboard.writeText(r.url); say(flash, "Link copiato negli appunti.", "ok"); } catch (_) { say(flash, "Link creato: " + r.url, "ok"); } await loadRecs(true); }
-    catch (err) { say(flash, "Non riesco a creare il link.", "err"); b.disabled = false; }
-  } else if (b.dataset.copy) {
-    try { await navigator.clipboard.writeText(b.dataset.copy); say(flash, "Link copiato negli appunti.", "ok"); } catch (_) { say(flash, b.dataset.copy, "ok"); }
-  } else if (b.dataset.unshare) {
-    await fn("cloud", { action: "unshare", id: b.dataset.unshare }); loadRecs(true);
-  } else if (b.dataset.delrec) {
-    if (!confirm("Eliminare questa registrazione dal Cloud? Non si può annullare.")) return;
-    await fn("cloud", { action: "delete", id: b.dataset.delrec }); loadRecs(true);
   } else if (b.id === "portal") {
     b.disabled = true; busy = true;
     try { const r = await fn("portal", {}); location.href = r.url; }
