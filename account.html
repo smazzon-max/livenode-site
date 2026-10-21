@@ -2,6 +2,9 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=fe229beb-2589-4cf2-bbac-fe61a1778a24
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Account — LiveNode</title>
 <meta name="robots" content="noindex">
@@ -84,7 +87,7 @@
   </div>
 </main>
 
-<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · Piemme</div></div></footer>
+<footer><div class="w"><div><a href='/terms'>Termini</a><a href='/privacy'>Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · Piemme</div></div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
@@ -245,3 +248,4 @@ sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
 </script>
 </body>
 </html>
+<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="fe229beb-2589-4cf2-bbac-fe61a1778a24" data-app-host="app.netlify.com" data-account-tier="free"></script>
