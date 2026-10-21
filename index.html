@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LiveNode — regia live per Mac</title>
+<meta name="description" content="LiveNode: la regia video live per Mac. iPhone come camere, controllo di Zoom, OBS e ATEM, qualità adattiva, registrazione. Gratis.">
+<meta name="theme-color" content="#09090B">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LiveNode — regia live per Mac">
+<meta property="og:description" content="Quattro camere. Un Mac. Zero rack.">
+<meta property="og:url" content="https://livenode-software.com/">
+<link rel="canonical" href="https://livenode-software.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2309090B'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="landing.css">
+</head>
+<body class="cr">
+
+<header class="top"><div class="w">
+  <a class="logo" href="./"><i></i>LiveNode</a>
+  <div class="tc"><span class="led"></span>SEGNALE OK <b id="tc">00:00:00:00</b></div>
+  <nav>
+    <a href="#console">Console</a><a href="#telefono">Telefono</a><a href="#cloud">Cloud</a><a href="#faq">FAQ</a><a href="account.html">Account</a>
+    <a class="go" id="dl-nav" href="#">Scarica</a>
+  </nav>
+</div></header>
+
+<main class="w">
+  <section class="hero">
+    <h1>4 camere.<br>1 Mac.<br><s>Zero rack.</s></h1>
+    <aside>
+      <p>La regia live che sta su un portatile: iPhone come camere, Zoom, OBS e ATEM sotto controllo, la qualità che si adatta da sola alla rete.</p>
+      <div class="btnrow">
+        <a class="key pri" id="dl" href="#">▼ Scarica per Mac</a>
+        <a class="key" href="#console">Provala ↓</a>
+      </div>
+      <small>GRATIS · macOS 14.4+ · APPLE SILICON / INTEL</small>
+    </aside>
+  </section>
+
+  <!-- ============ CONSOLE ============ -->
+  <section id="console" class="rack" aria-label="Console di regia interattiva">
+    <div class="rbar"><span><b>LiveNode</b> · Regia 01</span>
+      <span class="r"><span><span class="led r" id="recled"></span> REC <b id="rec" class="mono">00:00:00</b></span><span class="led"></span></span></div>
+    <div class="cons">
+      <div class="mon">
+        <div class="pp">
+          <div class="scr pvw"><span class="lab">PVW</span><div id="pvw"></div><span class="nm" id="pvn"></span><div class="scan"></div></div>
+          <div class="scr pgm"><span class="lab">PGM</span><div id="pgm"></div><span class="nm" id="pgn"></span><div class="scan"></div></div>
+        </div>
+        <div class="src" id="src"></div>
+        <div class="ctrl">
+          <button class="key pri" id="take">Take</button>
+          <button class="key" id="cut">Cut</button>
+          <button class="key" id="rec-k">● Rec</button>
+          <span class="sp"></span>
+          <span class="hint"><kbd>1</kbd>–<kbd>6</kbd> anteprima · <kbd>Spazio</kbd> take</span>
+        </div>
+      </div>
+      <div class="side">
+        <div class="mod">
+          <h4><span>Link iPhone</span><b id="qlab">1080p</b></h4>
+          <div class="tel">
+            <div><small>Bitrate</small><b id="t-br">8.0<u>Mb/s</u></b></div>
+            <div><small>Latenza</small><b id="t-rtt">24<u>ms</u></b></div>
+            <div><small>Frame</small><b id="t-fps">30<u>fps</u></b></div>
+            <div><small>Batteria</small><b>82<u>%</u></b></div>
+          </div>
+          <svg id="spark" viewBox="0 0 240 46" preserveAspectRatio="none" aria-hidden="true"><polyline id="spl" fill="none" stroke="#00F5A0" stroke-width="1.5" points=""/></svg>
+          <div class="ladder" id="ladder"><i></i><i></i><i></i><i></i></div>
+          <div style="margin-top:12px"><button class="key sm" id="net">Simula rete debole</button></div>
+        </div>
+        <div class="mod">
+          <h4><span>Audio</span><b>dBFS</b></h4>
+          <div class="meters" id="meters"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="strip" aria-hidden="true"><div class="tr" id="tr"></div></div>
+
+<main class="w">
+  <!-- ============ INGRESSI ============ -->
+  <section class="sec" id="ingressi">
+    <div class="lb"><em>01</em><span>Ingressi e controlli</span></div>
+    <div class="bd">
+      <h2>Tutto sotto<br><s>le dita.</s></h2>
+      <p class="lead">Una finestra sola per quello che va in onda. <b>Niente schede, niente cavi in più</b>, niente da cercare mentre sei in diretta.</p>
+      <table class="mx">
+        <thead><tr><th>Modulo</th><th>Funzione</th><th>Stato</th></tr></thead>
+        <tbody>
+          <tr><td>iPhone</td><td>Camera con video e audio via codice QR. Zoom, fuoco, torcia, microfono dalla regia.</td><td><span class="st"><i class="led"></i>Attivo</span></td></tr>
+          <tr><td>Zoom</td><td>Controllo delle riunioni dalla stessa console.</td><td><span class="st"><i class="led"></i>Attivo</span></td></tr>
+          <tr><td>OBS</td><td>Cambio scena e controllo diretto.</td><td><span class="st"><i class="led"></i>Attivo</span></td></tr>
+          <tr><td>ATEM</td><td>Controllo del mixer video.</td><td><span class="st"><i class="led"></i>Attivo</span></td></tr>
+          <tr><td>Mixer audio</td><td>Livelli per canale e uscite a scelta.</td><td><span class="st"><i class="led"></i>Attivo</span></td></tr>
+          <tr><td>Dock</td><td>Telecomando su iPad e iPhone, per stare in sala.</td><td><span class="st"><i class="led"></i>Attivo</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ TELEFONO ============ -->
+  <section class="sec" id="telefono">
+    <div class="lb"><em>02</em><span>iPhone come camera</span></div>
+    <div class="bd">
+      <h2>La rete cala.<br><s>Il video no.</s></h2>
+      <p class="lead">Se la connessione peggiora, <b>il flusso scende di qualità</b> invece di congelarsi. Quando torna stabile, risale da solo. Oppure lo scegli tu.</p>
+      <div class="two">
+        <div>
+          <h3>Qualità adattiva</h3>
+          <p>Il telefono misura rete, fotogrammi e temperatura e sceglie il livello giusto. Esempio di scala:</p>
+          <div class="lad">
+            <div><b>1080p</b><i style="--w:100%"></i><span>8,0 Mb/s</span></div>
+            <div><b>720p</b><i style="--w:62%"></i><span>4,5 Mb/s</span></div>
+            <div><b>540p</b><i style="--w:34%"></i><span>2,2 Mb/s</span></div>
+            <div><b>360p</b><i style="--w:14%"></i><span>1,0 Mb/s</span></div>
+          </div>
+        </div>
+        <div>
+          <h3>Clic destro</h3>
+          <p>Sulla camera, nella regia:</p>
+          <div class="ctx">
+            <div class="hl"><span>Qualità</span><span>Auto ▸</span></div>
+            <div><span>Zoom</span><span>1×  2×  3×</span></div>
+            <div><span>Blocca AF / AE</span><span class="sw"></span></div>
+            <div><span>Torcia</span><span class="sw on"></span></div>
+            <div><span>Microfono</span><span class="sw on"></span></div>
+            <hr>
+            <div><span>Fotocamera</span><span>Posteriore</span></div>
+            <div><span>Scollega</span><span>⌫</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SPECIFICHE ============ -->
+  <section class="sec" id="specifiche">
+    <div class="lb"><em>03</em><span>Scheda tecnica</span></div>
+    <div class="bd">
+      <h2>I numeri,<br><s>e basta.</s></h2>
+      <dl class="spec" style="margin:0">
+        <div><dt>Piattaforma</dt><dd>macOS 14.4 o successivo</dd></div>
+        <div><dt>Processore</dt><dd>Apple silicon · Intel</dd></div>
+        <div><dt>Video telefono</dt><dd>H.264 · WebRTC</dd></div>
+        <div><dt>Uscita telefono</dt><dd>1920 px lato lungo</dd></div>
+        <div><dt>Collegamento</dt><dd>Codice QR</dd></div>
+        <div><dt>Registrazione</dt><dd>Locale</dd></div>
+        <div><dt>Telecomando</dt><dd>iPad · iPhone</dd></div>
+        <div><dt>Prezzo app</dt><dd>Gratis</dd></div>
+        <div><dt>Account</dt><dd>Solo per il Cloud</dd></div>
+        <div><dt>Percorso video</dt><dd>Telefono → Mac, diretto</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ PASSI ============ -->
+  <section class="sec" id="passi">
+    <div class="lb"><em>04</em><span>Messa in onda</span></div>
+    <div class="bd">
+      <h2>Tre passaggi.<br><s>Un minuto.</s></h2>
+      <ol class="steps">
+        <li><em>01</em><div><b>Scarica</b>Apri il DMG e trascina LiveNode in Applicazioni.</div></li>
+        <li><em>02</em><div><b>Collega</b>Aggiungi le sorgenti. Per l'iPhone: inquadra il QR.</div></li>
+        <li><em>03</em><div><b>Vai in onda</b>Anteprima, Take. La luce è accesa.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ CLOUD ============ -->
+  <section class="sec" id="cloud">
+    <div class="lb"><em>05</em><span>LiveNode Cloud<span class="tag">IN ARRIVO</span></span></div>
+    <div class="bd">
+      <h2>Se il Mac si ferma,<br><s>la registrazione no.</s></h2>
+      <p class="lead">L'app resta gratuita. <b>Il Cloud è un servizio in più</b>, in abbonamento mensile: salva le tue dirette online. Disdici quando vuoi.</p>
+      <div class="slots" id="plans"></div>
+      <p class="fine">Prezzi IVA esclusa. Pagamenti gestiti da Stripe: LiveNode non vede né conserva i dati della carta.</p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="sec" id="faq">
+    <div class="lb"><em>06</em><span>Domande</span></div>
+    <div class="bd">
+      <h2>Risposte<br><s>corte.</s></h2>
+      <div class="faq">
+        <details><summary><span>Q1</span>Quanto costa?</summary><p>L'app è gratuita. Si paga solo LiveNode Cloud, il servizio facoltativo di registrazione online, con abbonamento mensile.</p></details>
+        <details><summary><span>Q2</span>Su quali Mac funziona?</summary><p>Su qualsiasi Mac con macOS 14.4 o successivo, Apple silicon o Intel.</p></details>
+        <details><summary><span>Q3</span>Come uso l'iPhone come camera?</summary><p>Installa LiveNode Camera sull'iPhone, in LiveNode scegli «Aggiungi telefono» e inquadra il QR. Zoom, fuoco, torcia e microfono si regolano dalla regia.</p></details>
+        <details><summary><span>Q4</span>E se la rete è debole?</summary><p>LiveNode abbassa la qualità del flusso per non perdere l'immagine e la rialza appena la rete è stabile. Dal clic destro puoi anche fissarla a mano.</p></details>
+        <details><summary><span>Q5</span>Il video passa dai vostri server?</summary><p>No. Il video va direttamente dal telefono al Mac. Il nostro servizio serve solo a far incontrare i due dispositivi all'avvio.</p></details>
+        <details><summary><span>Q6</span>Serve un account?</summary><p>Non per usare la regia. Serve solo per abbonarti al Cloud e ritrovare la licenza sul tuo Mac.</p></details>
+        <details><summary><span>Q7</span>Posso disdire?</summary><p>Sì, quando vuoi, dalla pagina Account. L'abbonamento resta attivo fino alla fine del periodo già pagato.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="end">
+    <h2>Luce<br>rossa<span class="tl"></span></h2>
+    <div class="btnrow"><a class="key pri" id="dl2" href="#" style="height:56px;padding:0 28px">▼ Scarica per Mac</a></div>
+  </section>
+</main>
+
+<footer class="ft"><div class="w">
+  <div><a href="account.html">Account</a><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="privacy-camera.html">Privacy Camera</a><a href="mailto:marco@piol.it">Contatti</a></div>
+  <div>© Production Management S.r.l. · Piemme</div>
+</div></footer>
+
+<script src="config.js"></script>
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+["dl","dl2","dl-nav"].forEach(id => { const a = document.getElementById(id); if (a) a.href = CFG.dmgUrl; });
+
+/* piani */
+$("#plans").innerHTML = CFG.plans.map((p, i) => {
+  const seg = Math.max(1, Math.round(Math.log2(p.gb / 25)));      // 50→1, 250→3, 1000→5
+  return `<div class="slot"><h3>${p.name}</h3>
+    <div class="pr">${p.price}<small> /MESE</small></div>
+    <div class="cap">${Array.from({length: 6}, (_, k) => `<i class="${k < seg ? "on" : ""}"></i>`).join("")}</div>
+    <p><b style="color:#f4f4f5">${p.gb >= 1000 ? (p.gb / 1000) + " TB" : p.gb + " GB"}</b> di registrazioni<br>${p.note}</p>
+    <a class="key" href="account.html?plan=${p.key}">Scegli ▸</a></div>`;
+}).join("");
+
+/* striscia */
+const items = ["Qualità adattiva","iPhone via QR","H.264 · WebRTC","Zoom","OBS","ATEM","Registrazione","Dock iPad / iPhone","Gratis"];
+const one = items.map(t => `<span><b>■</b>${t}</span>`).join("");
+$("#tr").innerHTML = one + one + one + one;
+
+/* timecode */
+const p2 = n => String(n).padStart(2, "0");
+setInterval(() => { const d = new Date(); $("#tc").textContent = `${p2(d.getHours())}:${p2(d.getMinutes())}:${p2(d.getSeconds())}:${p2(Math.floor(d.getMilliseconds() / 40))}`; }, 40);
+
+/* sorgenti e scene finte */
+const S = [
+  { n: "CAM 1", c: "v0", k: "person" }, { n: "CAM 2", c: "v1", k: "person" },
+  { n: "IPHONE", c: "v2", k: "person", bat: "82%" }, { n: "ZOOM", c: "v3", k: "grid" },
+  { n: "OBS", c: "v4", k: "title" }, { n: "SLIDE", c: "v5", k: "slide" },
+];
+function scene(i) {
+  const s = S[i];
+  const inner = s.k === "person" ? `<div class="hd"></div><div class="fg"></div><div class="lt"></div>`
+    : s.k === "grid" ? `<div class="gr"><div></div><div></div><div></div><div></div></div>`
+    : s.k === "title" ? `<div class="lt" style="left:8%;bottom:34%;width:70%;height:22%"></div>`
+    : `<div class="tx"><i></i><i></i><i></i><i></i></div>`;
+  return `<div class="sc ${s.c}">${inner}</div>`;
+}
+const chOf = { 0: 1, 2: 2, 3: 3 };   /* sorgente in onda → canale audio (0 = MIC sempre) */
+let pv = 1, pg = 0, rec = false, tRec = 0;
+$("#src").innerHTML = S.map((s, i) => `<button class="tile" data-i="${i}" aria-label="${s.n}">${scene(i)}<span class="k">${i + 1}</span><span class="n">${s.n}</span>${s.bat ? `<span class="bat">${s.bat}</span>` : ""}</button>`).join("");
+function paint() {
+  $("#pvw").innerHTML = scene(pv); $("#pgm").innerHTML = scene(pg);
+  $("#pvn").textContent = S[pv].n; $("#pgn").textContent = S[pg].n;
+  $$(".tile").forEach((t, i) => { t.classList.toggle("pv", i === pv); t.classList.toggle("pg", i === pg); });
+  $$(".ch").forEach(c => c.classList.toggle("live", +c.dataset.ch === 0 || chOf[pg] === +c.dataset.ch));
+}
+function pick(i) { pv = i; paint(); }
+function take() { [pg, pv] = [pv, pg]; paint(); }
+function cut() { pg = pv; paint(); }
+$("#src").addEventListener("click", e => { const t = e.target.closest(".tile"); if (t) pick(+t.dataset.i); });
+$("#take").onclick = take; $("#cut").onclick = cut;
+$("#rec-k").onclick = () => { rec = !rec; $("#rec-k").classList.toggle("on", rec); if (rec) tRec = Date.now(); if (!rec) $("#rec").textContent = "00:00:00"; };
+document.addEventListener("keydown", e => {
+  if (e.target.closest("input,textarea,summary")) return;
+  if (e.key >= "1" && e.key <= "6") pick(+e.key - 1);
+  else if (e.code === "Space" && !e.target.closest("a,button")) { e.preventDefault(); take(); const k = $("#take"); k.classList.add("down"); setTimeout(() => k.classList.remove("down"), 120); }
+});
+setInterval(() => { if (rec) { const s = Math.floor((Date.now() - tRec) / 1000); $("#rec").textContent = `${p2(Math.floor(s / 3600))}:${p2(Math.floor(s / 60) % 60)}:${p2(s % 60)}`; } $("#recled").style.opacity = rec && (Date.now() / 600 | 0) % 2 ? .2 : 1; }, 200);
+
+/* audio */
+const CH = ["MIC", "CAM 1", "IPHONE", "ZOOM"], SEG = 16;
+$("#meters").innerHTML = CH.map((c, i) => `<div class="ch" data-ch="${i}"><div class="mt">${"<i></i>".repeat(SEG)}</div><span>${c}</span></div>`).join("");
+const lv = CH.map(() => 0), pk = CH.map(() => 0);
+function meters() {
+  $$(".mt").forEach((m, c) => {
+    const live = c === 0 || chOf[pg] === c;
+    const tgt = live ? .35 + Math.random() * .55 : .06 + Math.random() * .12;
+    lv[c] += (tgt - lv[c]) * .35; pk[c] = Math.max(lv[c], pk[c] - .012);
+    const on = Math.round(lv[c] * SEG), pi = Math.min(SEG - 1, Math.round(pk[c] * SEG));
+    [...m.children].forEach((s, k) => { s.className = k < on || k === pi ? (k > 13 ? "o" : k > 10 ? "y" : "g") : ""; });
+  });
+}
+setInterval(meters, 60);
+paint();
+
+/* telemetria e qualità adattiva */
+const LV = [{ q: "1080p", br: 8.0, rtt: 24, fps: 30 }, { q: "720p", br: 4.5, rtt: 58, fps: 30 }, { q: "540p", br: 2.2, rtt: 110, fps: 24 }, { q: "360p", br: 1.0, rtt: 190, fps: 20 }];
+let lvl = 0, weak = false, lastMove = 0, hist = Array(60).fill(8);
+$("#net").onclick = () => { weak = !weak; $("#net").classList.toggle("on", weak); $("#net").textContent = weak ? "Rete debole · attiva" : "Simula rete debole"; };
+setInterval(() => {
+  const now = Date.now();
+  if (weak && lvl < 3 && now - lastMove > 1300) { lvl++; lastMove = now; }
+  if (!weak && lvl > 0 && now - lastMove > 2200) { lvl--; lastMove = now; }
+  const L = LV[lvl], br = L.br * (0.94 + Math.random() * .12), rtt = Math.round(L.rtt * (0.9 + Math.random() * .2));
+  $("#qlab").textContent = L.q; $("#t-br").innerHTML = br.toFixed(1) + "<u>Mb/s</u>";
+  $("#t-rtt").innerHTML = rtt + "<u>ms</u>"; $("#t-fps").innerHTML = L.fps + "<u>fps</u>";
+  hist.push(br); hist.shift();
+  $("#spl").setAttribute("points", hist.map((v, i) => `${(i * 240 / 59).toFixed(1)},${(44 - v / 9 * 40).toFixed(1)}`).join(" "));
+  $("#spl").setAttribute("stroke", lvl === 0 ? "#00F5A0" : lvl < 3 ? "#FFD600" : "#FF4A00");
+  const ld = $("#ladder"); ld.className = "ladder" + (lvl === 0 ? "" : lvl < 3 ? " d" : " dd");
+  [...ld.children].forEach((s, k) => s.classList.toggle("on", k >= lvl));
+}, 400);
+</script>
+</body>
+</html>
