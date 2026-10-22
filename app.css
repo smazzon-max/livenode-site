@@ -148,3 +148,19 @@ footer a{text-decoration:none;margin-right:20px;color:var(--mut)}footer a:hover{
   .slots{grid-template-columns:1fr}.slot{border-right:0;border-bottom:1px solid var(--line)}.slot:last-child{border-bottom:0}
   .w{padding:0 16px}
 }
+
+/* campi estesi: registrazione e profilo */
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f2 .f{min-width:0}
+select{width:100%;height:46px;padding:0 12px;background:var(--bg);color:var(--fg);border:1px solid var(--line2);border-radius:2px;font:500 14px var(--mono);outline:none;appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 18px) 20px,calc(100% - 13px) 20px;background-size:5px 5px;background-repeat:no-repeat}
+select:focus{border-color:var(--tally)}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line2);border-radius:2px;overflow:hidden}
+.seg button{height:42px;background:var(--bg);border:0;color:var(--dim);font:600 11.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line2)}
+.seg button.on{background:var(--raised);color:var(--fg);box-shadow:inset 0 -3px 0 var(--tally)}
+.seg button:not(.on):hover{color:var(--fg)}
+.qr{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;margin-top:14px;padding:16px;border:1px dashed var(--line2)}
+.qr img{width:168px;height:168px;background:#fff;padding:8px;display:block}
+.qr code{display:block;margin:6px 0 12px;padding:8px 10px;background:var(--bg);border:1px solid var(--line2);color:var(--fg);word-break:break-all;font:500 12px var(--mono)}
+@media(max-width:560px){.f2{grid-template-columns:1fr}.qr{grid-template-columns:1fr}}
