@@ -2,9 +2,6 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<!-- This site is hosted on Netlify. Anyone can build and deploy a site
-     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=fe229beb-2589-4cf2-bbac-fe61a1778a24
-     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Account — LiveNode</title>
 <meta name="robots" content="noindex">
@@ -60,6 +57,16 @@
       </section>
     </div>
 
+    <section class="box" id="prof-box" style="margin-bottom:24px">
+      <div class="bh"><span>Profilo</span><b id="prof-st"></b></div>
+      <div class="bb">
+        <div id="prof-form"></div>
+        <label class="chk" style="margin-top:4px"><input type="checkbox" id="pp-mk"><span>Voglio ricevere novità e aggiornamenti su LiveNode.</span></label>
+        <div id="prof-msg" class="msg hidden"></div>
+        <button class="key" id="prof-save">Salva dati</button>
+      </div>
+    </section>
+
     <section id="plans-box" class="hidden">
       <h2>Scegli un piano <span class="note" style="letter-spacing:0;text-transform:none">· IVA esclusa</span></h2>
       <div class="box slots" id="plans" style="margin-bottom:10px"></div>
@@ -76,6 +83,14 @@
       <div class="bh"><span>Sicurezza e dati</span></div>
       <div class="bb">
         <div class="item"><div><strong>Password</strong><br><small>Ti inviamo un link per sceglierne una nuova.</small></div><button class="key sm" id="pwd">Cambia</button></div>
+        <div class="item"><div><strong>Verifica in due passaggi</strong><br><small id="mfa-s">Controllo…</small></div><button class="key sm" id="mfa-btn" disabled>…</button></div>
+        <div id="mfa-box" class="hidden" style="padding:6px 0 16px;border-bottom:1px solid var(--line)">
+          <p class="note" style="margin:10px 0 0">1. Apri un'app di autenticazione (Google Authenticator, Microsoft Authenticator, 1Password…) e inquadra il QR, oppure inserisci la chiave a mano.<br>2. Scrivi qui sotto il codice a 6 cifre che mostra.</p>
+          <div class="qr"><img id="mfa-qr" alt="QR code per l'app di autenticazione"><div><span class="note">Chiave manuale</span><code id="mfa-sec"></code>
+            <div class="f" style="max-width:240px"><label for="mfa-code">Codice a 6 cifre</label><input id="mfa-code" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="000000"></div>
+            <div class="row"><button class="key pri sm" id="mfa-ok">Conferma e attiva</button><button class="key sm" id="mfa-no">Annulla</button></div></div></div>
+          <p class="note" style="margin:12px 0 0">Conserva l'app su un telefono sicuro: se lo perdi, scrivici a marco@piol.it per riottenere l'accesso.</p>
+        </div>
         <div class="item"><div><strong>Elimina account</strong><br><small>Cancella i tuoi dati dai nostri sistemi. Non si può annullare.</small></div><button class="key sm bad" id="del-open">Elimina…</button></div>
         <div id="del-box" class="hidden" style="margin-top:14px">
           <div class="msg warn">Si cancellano account, Mac collegati e dati di abbonamento. Le fatture restano a norma di legge. Con un abbonamento attivo, disdicilo prima.</div>
@@ -87,7 +102,7 @@
   </div>
 </main>
 
-<footer><div class="w"><div><a href='/terms'>Termini</a><a href='/privacy'>Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · Piemme</div></div></footer>
+<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · Piemme</div></div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
@@ -98,7 +113,7 @@ const wanted = CFG.plans.find(p => p.key === qs.get("plan"));
 const fromCheckout = qs.get("checkout") === "ok";
 let busy = false;
 
-Auth.mount($("#auth-slot"), {
+const authUI = Auth.mount($("#auth-slot"), {
   onDone: load,
   start: wanted ? "up" : "in",
   context: wanted ? `Per attivare <b>${wanted.name}</b> (${wanted.price}/mese) crea l'account o accedi.` : "",
@@ -141,10 +156,33 @@ async function loadRecs(hasPlan) {
   } catch (e) { $("#recs").innerHTML = `<p class="empty">Non riesco a leggere le registrazioni.</p>`; }
 }
 
+let profUser = null;
+async function loadProfile() {
+  const { data: { user } } = await sb.auth.getUser(); profUser = user;
+  const { data: p } = await sb.from("profiles").select("first_name,last_name,usage,company,vat,employees,country,marketing").maybeSingle();
+  const v = p || {};
+  $("#prof-form").innerHTML = Prof.fields("pp", v);
+  Prof.wire($("#prof-box"), "pp");
+  $("#pp-mk").checked = !!v.marketing;
+  const done = v.first_name && v.last_name && v.country;
+  $("#prof-st").innerHTML = done ? "" : `<span class="stat"><i class="led y"></i>Da completare</span>`;
+}
+
+let mfaFactor = null, mfaEnroll = null;
+async function loadMfa() {
+  const { data } = await sb.auth.mfa.listFactors();
+  mfaFactor = data && (data.totp || []).find(f => f.status === "verified") || null;
+  $("#mfa-s").textContent = mfaFactor ? "Attiva: al login ti chiediamo anche il codice dell'app." : "Non attiva. Consigliata: aggiunge un codice del telefono al login.";
+  $("#mfa-btn").textContent = mfaFactor ? "Disattiva" : "Attiva"; $("#mfa-btn").disabled = false;
+  show($("#mfa-box"), false);
+}
+
 async function load() {
   const { data: { session } } = await sb.auth.getSession();
-  const inApp = !!session && !Auth.recovering;
-  show($("#gate"), !inApp); show($("#panel"), inApp); show($("#logout"), inApp);
+  const mfa = !!session && !Auth.recovering && await Auth.needsMfa();
+  const inApp = !!session && !Auth.recovering && !mfa;
+  show($("#gate"), !inApp); show($("#panel"), inApp); show($("#logout"), !!session);
+  if (mfa) { authUI.view("mfa"); return; }
   if (!inApp) return;
   $("#who").textContent = session.user.email;
 
@@ -174,6 +212,7 @@ async function load() {
   }
 
   loadRecs(!!sub);
+  loadProfile(); loadMfa();
 
   const { data: devs } = await sb.from("devices").select("id,name,created_at,last_seen,app_version").order("created_at");
   $("#dev-n").textContent = devs && devs.length ? devs.length + " collegati" : "";
@@ -191,7 +230,7 @@ document.addEventListener("click", async e => {
     try { const r = await fn("checkout", { plan: b.dataset.plan }); location.href = r.url; }
     catch (err) {
       const c = err.data && err.data.error;
-      say(flash, c === "no_price" ? "Questo piano non è ancora configurato su Stripe (manca la lookup key del prezzo)." : c === "bad_key" ? "La chiave Stripe salvata in Supabase non è una chiave segreta (deve iniziare con sk_test_ o sk_live_)." : c === "auth" ? "Sessione scaduta: esci e accedi di nuovo." : "Non riesco ad avviare il pagamento (" + (c || err.status || "rete") + "). Riprova tra poco.", "err");
+      say(flash, c === "no_price" ? "Questo piano non è ancora configurato su Stripe (manca la lookup key del prezzo)." : c === "bad_key" ? "La chiave Stripe salvata in Supabase non è una chiave segreta (deve iniziare con sk_test_ o sk_live_)." : c === "auth" ? "Sessione scaduta o verifica a due passaggi richiesta: esci e accedi di nuovo." : "Non riesco ad avviare il pagamento (" + (c || err.status || "rete") + "). Riprova tra poco.", "err");
       b.disabled = false; busy = false;
     }
   } else if (b.dataset.dev) {
@@ -213,6 +252,39 @@ document.addEventListener("click", async e => {
     b.disabled = true; busy = true;
     try { const r = await fn("portal", {}); location.href = r.url; }
     catch (err) { say(flash, "Non riesco ad aprire la gestione dell'abbonamento.", "err"); b.disabled = false; busy = false; }
+  } else if (b.id === "prof-save") {
+    const r = Prof.read($("#prof-box"), "pp");
+    if (r.error) return say($("#prof-msg"), r.error, "err");
+    b.disabled = true;
+    const { data, error } = await sb.from("profiles").update({ ...r.data, marketing: $("#pp-mk").checked, updated_at: new Date().toISOString() }).eq("user_id", profUser.id).select();
+    b.disabled = false;
+    say($("#prof-msg"), error || !data || !data.length ? "Non riesco a salvare i dati. Riprova o scrivici a marco@piol.it." : "Dati salvati.", error || !data || !data.length ? "err" : "ok");
+    if (!error && data && data.length) $("#prof-st").innerHTML = "";
+  } else if (b.id === "mfa-btn") {
+    if (mfaFactor) {
+      if (!confirm("Disattivare la verifica in due passaggi? L'account sarà meno protetto.")) return;
+      const { error } = await sb.auth.mfa.unenroll({ factorId: mfaFactor.id });
+      say(flash, error ? Auth.human(error) : "Verifica in due passaggi disattivata.", error ? "err" : "ok"); loadMfa();
+    } else {
+      b.disabled = true;
+      const { data: all } = await sb.auth.mfa.listFactors();
+      for (const f of (all && all.all || []).filter(f => f.factor_type === "totp" && f.status !== "verified")) await sb.auth.mfa.unenroll({ factorId: f.id });
+      const { data, error } = await sb.auth.mfa.enroll({ factorType: "totp", friendlyName: "LiveNode", issuer: "LiveNode" });
+      b.disabled = false;
+      if (error) return say(flash, "Non riesco ad attivare la verifica: " + Auth.human(error), "err");
+      mfaEnroll = data; $("#mfa-qr").src = data.totp.qr_code; $("#mfa-sec").textContent = data.totp.secret; $("#mfa-code").value = "";
+      show($("#mfa-box"), true); $("#mfa-code").focus();
+    }
+  } else if (b.id === "mfa-no") {
+    if (mfaEnroll) await sb.auth.mfa.unenroll({ factorId: mfaEnroll.id }); mfaEnroll = null; show($("#mfa-box"), false);
+  } else if (b.id === "mfa-ok") {
+    const code = $("#mfa-code").value.replace(/\s/g, "");
+    if (!/^\d{6}$/.test(code)) return say(flash, "Inserisci il codice a 6 cifre mostrato dall'app.", "err");
+    b.disabled = true;
+    const { error } = await sb.auth.mfa.challengeAndVerify({ factorId: mfaEnroll.id, code });
+    b.disabled = false;
+    if (error) return say(flash, Auth.human(error), "err");
+    mfaEnroll = null; say(flash, "Verifica in due passaggi attivata.", "ok"); loadMfa();
   } else if (b.id === "pwd") {
     const { data: { user } } = await sb.auth.getUser();
     const { error } = await sb.auth.resetPasswordForEmail(user.email, { redirectTo: backHere() });
@@ -248,4 +320,3 @@ sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
 </script>
 </body>
 </html>
-<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="fe229beb-2589-4cf2-bbac-fe61a1778a24" data-app-host="app.netlify.com" data-account-tier="free"></script>
