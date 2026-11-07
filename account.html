@@ -7,9 +7,7 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="plans.css">
 </head>
@@ -102,6 +100,9 @@
           <div class="ch"><div><h2>Mac collegati</h2><p id="dev-n"></p></div></div>
           <div id="devices"></div>
         </div>
+        <div class="card">
+          <div class="ch"><div><h2>Sessioni aperte</h2><p>Se hai usato l'account su un computer che non è tuo, esci ovunque: dovrai accedere di nuovo su ogni browser.</p></div><button class="key sm" id="out-all">Esci ovunque</button></div>
+        </div>
         <div class="card tip">
           <h2>Collegare un nuovo Mac</h2>
           <p>Apri LiveNode sul Mac, vai in <b>Impostazioni › Informazioni</b> e premi <b>Accedi</b>. Si apre questa pagina con il codice da confermare.</p>
@@ -131,6 +132,11 @@
         <header class="ph"><h1>Registrazioni nel Cloud</h1><p>Le dirette caricate dall'app. Puoi condividerle con un link, anche a scadenza.</p></header>
         <div class="card">
           <div class="ch"><div><h2>Le tue registrazioni</h2><p id="rec-use"></p></div></div>
+          <div id="space-warn" class="msg warn hidden"></div>
+          <div class="tools hidden" id="rec-tools">
+            <input type="text" id="rec-q" placeholder="Cerca per titolo" aria-label="Cerca tra le registrazioni">
+            <select class="sel" id="rec-sort" aria-label="Ordina le registrazioni"><option value="new">Più recenti</option><option value="old">Meno recenti</option><option value="big">Più pesanti</option><option value="long">Più lunghe</option></select>
+          </div>
           <div id="rec-box"><div id="recs"><p class="empty">Caricamento…</p></div></div>
         </div>
         <p class="note">Le registrazioni si caricano dall'app: Impostazioni › Registrazione › Registrazioni nel Cloud.</p>
@@ -141,7 +147,7 @@
 
 <footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="supabase.min.js"></script>
 <script src="config.js"></script>
 <script src="plans.js"></script>
 <script src="site.js"></script>
@@ -174,15 +180,17 @@ function planCards(sel) {
 const clock = s => s == null ? "—" : [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map((n, i) => i ? String(n).padStart(2, "0") : n).join(":");
 const mb = b => b >= 1e9 ? (b / 1e9).toFixed(1) + " GB" : Math.round(b / 1e6) + " MB";
 
-async function loadRecs(hasPlan) {
-  if (!hasPlan) { $("#rec-use").textContent = "Disponibile con un piano LiveNode Cloud."; $("#recs").innerHTML = `<p class="empty">Nessun piano attivo. <a href="#abbonamento">Scegli un piano</a> per salvare le dirette online.</p>`; return; }
-  try {
-    const r = await fn("cloud", { action: "list" });
-    const items = r.items || [];
-    $("#rec-use").textContent = mb(r.used_bytes) + " usati di " + mb(r.limit_bytes);
-    const u = $("#use");
-    if (u && r.limit_bytes) { const pc = Math.min(100, Math.round(r.used_bytes / r.limit_bytes * 100)); u.innerHTML = `<div class="kv"><span>Spazio usato</span><b>${mb(r.used_bytes)} di ${mb(r.limit_bytes)}</b></div><i class="bar"><u style="width:${pc}%"></u></i>`; }
-    $("#recs").innerHTML = items.length ? items.map(it => `
+let recItems = [];
+function renderRecs() {
+  const q = $("#rec-q").value.trim().toLowerCase(), sort = $("#rec-sort").value;
+  const list = recItems.filter(it => !q || String(it.title).toLowerCase().includes(q)).sort((a, b) =>
+    sort === "old" ? new Date(a.created_at) - new Date(b.created_at)
+    : sort === "big" ? (b.size_bytes || 0) - (a.size_bytes || 0)
+    : sort === "long" ? (b.duration_sec || 0) - (a.duration_sec || 0)
+    : new Date(b.created_at) - new Date(a.created_at));
+  $("#recs").innerHTML = !recItems.length ? `<p class="empty">Ancora nessuna registrazione. Caricane una dall'app.</p>`
+    : !list.length ? `<p class="empty">Nessuna registrazione con «${esc(q)}».</p>`
+    : list.map(it => `
       <div class="item rec">
         <div style="min-width:0"><strong>${esc(it.title)}</strong>${it.status === "uploading" ? " <small>(in caricamento)</small>" : ""}<br>
           <small>${clock(it.duration_sec)} · ${mb(it.size_bytes)} · ${fmtDate(it.created_at)}${it.share_url ? " · condivisa" + (it.share_expires_at ? " fino al " + fmtDate(it.share_expires_at) : "") : ""}</small></div>
@@ -192,7 +200,28 @@ async function loadRecs(hasPlan) {
           ${it.share_url ? `<button class="key sm" data-copy="${esc(it.share_url)}">Copia link</button><a class="key sm" href="${esc(it.share_url)}" target="_blank" rel="noopener">Guarda</a><button class="key sm" data-unshare="${it.id}">Revoca</button>` : ""}
           <button class="key sm bad" data-delrec="${it.id}">Elimina</button>
         </div>
-      </div>`).join("") : `<p class="empty">Ancora nessuna registrazione. Caricane una dall'app.</p>`;
+      </div>`).join("");
+}
+$("#rec-q").addEventListener("input", renderRecs);
+$("#rec-sort").addEventListener("change", renderRecs);
+
+async function loadRecs(hasPlan) {
+  show($("#rec-tools"), false); show($("#space-warn"), false);
+  if (!hasPlan) { $("#rec-use").textContent = "Disponibile con un piano LiveNode Cloud."; $("#recs").innerHTML = `<p class="empty">Nessun piano attivo. <a href="#abbonamento">Scegli un piano</a> per salvare le dirette online.</p>`; return; }
+  try {
+    const r = await fn("cloud", { action: "list" });
+    recItems = r.items || [];
+    $("#rec-use").textContent = mb(r.used_bytes) + " usati di " + mb(r.limit_bytes);
+    const pc = r.limit_bytes ? Math.min(100, Math.round(r.used_bytes / r.limit_bytes * 100)) : 0;
+    const u = $("#use");
+    if (u && r.limit_bytes) u.innerHTML = `<div class="kv"><span>Spazio usato</span><b>${mb(r.used_bytes)} di ${mb(r.limit_bytes)} · ${pc}%</b></div><i class="bar${pc >= 80 ? " full" : ""}"><u style="width:${pc}%"></u></i>`;
+    if (pc >= 80) {
+      const t = pc >= 100 ? "Lo spazio è esaurito: le nuove registrazioni non si caricano. Elimina quelle che non servono o passa a un piano più grande." : `Hai usato il ${pc}% dello spazio. Elimina le registrazioni che non servono o passa a un piano più grande.`;
+      $("#space-warn").textContent = t; show($("#space-warn"), true);
+      const w = $("#use-warn"); if (w) { w.textContent = t; show(w, true); }
+    }
+    show($("#rec-tools"), recItems.length > 1);
+    renderRecs();
   } catch (e) { $("#recs").innerHTML = `<p class="empty">Non riesco a leggere le registrazioni.</p>`; }
 }
 
@@ -235,6 +264,7 @@ async function load() {
       <div class="kv"><span>${endLabel}</span><b>${fmtDate(sub.current_period_end)}</b></div>
       <div class="kv"><span>Stato</span><b>${st}</b></div>
       <div id="use"></div>
+      <div id="use-warn" class="msg warn hidden" style="margin-top:14px"></div>
       ${bad ? `<div class="msg warn" style="margin-top:14px">Il pagamento non è andato a buon fine: aggiorna la carta da «Gestisci pagamenti».</div>` : ""}
       <div class="row" style="margin-top:18px"><button class="key sm pri" data-portal="1">Cambia piano</button></div>`;
     $("#pay").innerHTML = `<button class="key sm" id="portal" data-portal="1">Gestisci pagamenti</button>`;
@@ -261,7 +291,7 @@ async function load() {
   $("#dev-n").textContent = n ? (n === 1 ? "1 Mac collegato" : n + " Mac collegati") : "Nessun Mac collegato.";
   $("#devices").innerHTML = n ? devs.map(d => `
     <div class="item"><div class="dev"><span class="dev-ico" aria-hidden="true"></span><div><strong>${esc(d.name)}</strong><br><small>${d.last_seen ? "Ultimo accesso il " + fmtDate(d.last_seen) : "Collegato il " + fmtDate(d.created_at)}${d.app_version ? " · versione " + esc(d.app_version) : ""}</small></div></div>
-    <button class="key sm" data-dev="${d.id}">Rimuovi</button></div>`).join("")
+    <div class="row"><button class="key sm" data-ren="${d.id}" data-name="${esc(d.name)}">Rinomina</button><button class="key sm" data-dev="${d.id}">Rimuovi</button></div></div>`).join("")
     : `<p class="empty">Quando colleghi un Mac lo trovi qui.</p>`;
 }
 
@@ -277,6 +307,14 @@ document.addEventListener("click", async e => {
       flash(c === "no_price" ? "Questo piano non è ancora configurato su Stripe (manca la lookup key del prezzo)." : c === "bad_key" ? "La chiave Stripe salvata in Supabase non è una chiave segreta (deve iniziare con sk_test_ o sk_live_)." : c === "auth" ? "Sessione scaduta: esci e accedi di nuovo." : "Non riesco ad avviare il pagamento (" + (c || err.status || "rete") + "). Riprova tra poco.", "err");
       b.disabled = false; busy = false;
     }
+  } else if (b.dataset.ren) {
+    const name = prompt("Nuovo nome per questo Mac:", b.dataset.name || "");
+    if (!name || !name.trim()) return;
+    const { error } = await sb.from("devices").update({ name: name.trim().slice(0, 60) }).eq("id", b.dataset.ren);
+    if (error) flash("Non riesco a rinominare il Mac. Puoi cambiarne il nome dall'app.", "err"); else load();
+  } else if (b.id === "out-all") {
+    if (!confirm("Uscire da tutte le sessioni dell'account? Dovrai accedere di nuovo su ogni browser.")) return;
+    await sb.auth.signOut({ scope: "global" }); load();
   } else if (b.dataset.dev) {
     if (!confirm("Rimuovere questo Mac? L'app dovrà essere collegata di nuovo.")) return;
     await sb.from("devices").delete().eq("id", b.dataset.dev); load();

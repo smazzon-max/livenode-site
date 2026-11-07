@@ -99,3 +99,31 @@ footer.ft a{text-decoration:none;margin-right:18px;color:var(--mut)}footer.ft a:
   .bhd,.devs,.steps,.feats{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* pagine di guida e assistenza */
+.art{padding-bottom:24px}
+.art-h{padding:clamp(56px,7vw,104px) 0 clamp(28px,4vw,48px);max-width:760px}
+.art-h h1{margin:0 0 16px;font:600 clamp(30px,3.6vw,46px)/1.12 var(--disp);letter-spacing:-.04em;color:#fff}
+.art-h .btnrow{margin-top:8px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.toc a{padding:8px 14px;border:1px solid var(--line2);font-size:14px;color:var(--fg);text-decoration:none;transition:border-color .2s}
+.toc a:hover{border-color:var(--tally)}
+.guide{max-width:760px;padding:28px 0;border-top:1px solid var(--line);scroll-margin-top:72px}
+.guide h2{margin:0 0 12px;font:600 22px/1.25 var(--disp);letter-spacing:-.03em;color:#fff}
+.guide p{margin:0 0 12px;font-size:16px}
+.guide ol{margin:0 0 14px;padding-left:22px;font-size:16px}
+.guide li{margin-bottom:6px}
+.guide a,.release a:not(.key){color:#fff;text-underline-offset:3px}
+.more{display:flex;flex-direction:column;gap:8px;max-width:760px;margin-top:24px;padding:24px;background:var(--card);border:1px solid var(--line)}
+.more p{margin:0 0 4px;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.more a{color:#fff;font-size:15px;text-underline-offset:3px}
+.release{max-width:760px;padding:28px;background:var(--card);border:1px solid var(--line)}
+.release h2{margin:0 0 10px;font:600 26px var(--disp);letter-spacing:-.03em;color:#fff}
+.links3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.links3 a{display:flex;flex-direction:column;gap:6px;padding:22px;border:1px solid var(--line);text-decoration:none;transition:border-color .2s}
+.links3 a:hover{border-color:var(--tally)}
+.links3 b{color:#fff;font-size:16px;font-weight:600}
+.links3 span{font-size:14px}
+@media(max-width:900px){.links3{grid-template-columns:1fr}}
+footer.ft .w>div{display:flex;flex-wrap:wrap;gap:6px 18px;min-width:0}
+footer.ft .w>div a{margin-right:0}

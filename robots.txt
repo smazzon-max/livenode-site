@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /account.html
+Disallow: /link.html
+Disallow: /watch.html
+Disallow: /diagnostica.html
+
+Sitemap: https://livenode-software.com/sitemap.xml

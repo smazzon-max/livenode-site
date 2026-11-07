@@ -11,6 +11,8 @@ const CFG = {
   // link App Store delle app per iPhone e iPad: lascia "" finché non sono pubblicate
   cameraUrl: "",   // LiveNode Camera (iPhone come camera)
   dockUrl: "",     // telecomando Dock (iPad e iPhone)
+  // indirizzo per l'assistenza (pagina Assistenza)
+  supportEmail: "marco@piol.it",
   // prezzi mostrati sul sito: devono coincidere con quelli creati in Stripe
   plans: [
     { key: "cloud_start",  name: "Cloud Start",  gb: 50,   price: "9 €",  note: "Per provare e per piccoli eventi" },

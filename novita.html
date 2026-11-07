@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Novità di LiveNode: versioni e aggiornamenti</title>
+<meta name="description" content="Le versioni di LiveNode per Mac: numero di versione, novità e link per scaricare l&#x27;ultimo aggiornamento.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Novità di LiveNode: versioni e aggiornamenti">
+<meta property="og:description" content="Le versioni di LiveNode per Mac: numero di versione, novità e link per scaricare l&#x27;ultimo aggiornamento.">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="LiveNode">
+<meta property="og:url" content="https://livenode-software.com/novita.html">
+<link rel="canonical" href="https://livenode-software.com/novita.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="landing.css">
+</head>
+<body class="cr">
+
+<header class="top"><div class="w">
+  <a class="logo" href="./"><i></i>LiveNode</a>
+  <nav>
+    <a href="./#download">Download</a><a href="./#come-funziona">Come funziona</a><a href="./#prezzi">Prezzi</a><a href="assistenza.html">Assistenza</a><a href="account.html">Account</a>
+    <a class="go" href="./#download">Scarica</a>
+  </nav>
+</div></header>
+
+<main class="w art">
+<header class="art-h">
+  <p class="eyebrow">Novità</p>
+  <h1>Versioni e aggiornamenti</h1>
+  <p class="hero-lead">Qui trovi l'ultima versione di LiveNode per Mac e le sue novità.</p>
+</header>
+<section class="release" id="rel"><p class="note">Caricamento…</p></section>
+</main>
+
+<footer class="ft"><div class="w">
+  <div><a href="account.html">Account</a><a href="assistenza.html">Assistenza</a><a href="novita.html">Novità</a><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="privacy-camera.html">Privacy Camera</a></div>
+  <div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div>
+</div></footer>
+<script src="config.js"></script>
+<script>document.querySelectorAll("[data-dmg]").forEach(a => a.href = CFG.dmgUrl);</script>
+<script>
+(async () => {
+  const box = document.getElementById("rel");
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  try {
+    const r = await fetch("update.json", { cache: "no-store" });
+    const u = await r.json();
+    box.innerHTML = `<p class="eyebrow">Ultima versione</p><h2>LiveNode ${esc(u.version)}</h2><p>${esc(u.notes || "")}</p><a class="key pri" href="${esc(CFG.dmgUrl)}">Scarica la versione ${esc(u.version)}</a>`;
+  } catch (e) { box.innerHTML = `<p>Non riesco a leggere le novità. <a href="./#download">Vai al download</a>.</p>`; }
+})();
+</script>
+</body>
+</html>

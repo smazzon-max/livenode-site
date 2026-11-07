@@ -192,3 +192,10 @@ footer a:hover{color:#fff}
   .card{padding:18px}
   .ch{flex-direction:column}
 }
+
+.tools{display:flex;gap:8px;margin:0 0 4px}
+.tools input{flex:1;height:36px;font-size:14px}
+.tools select{height:36px}
+.bar.full u{background:var(--warn)}
+footer .w>div{display:flex;flex-wrap:wrap;gap:6px 18px;min-width:0}
+footer .w>div a{margin-right:0}
