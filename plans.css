@@ -1,0 +1,29 @@
+/* LiveNode · schede dei piani, in stile tabella prezzi */
+.pcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;align-items:stretch}
+.pc{display:flex;flex-direction:column;padding:28px 26px 30px;background:#0d0d0d;border:1px solid #2b2b2b;color:#b9b9b9;font-family:"Montserrat",Arial,sans-serif}
+.pc header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:22px}
+.pc h3{margin:0;font:700 24px/1.08 "Montserrat",Arial,sans-serif;letter-spacing:-.045em;color:#fff;text-transform:none}
+.pc-badge{flex:none;padding:4px 9px;border:1px solid #3a3a3a;font:500 11px "JetBrains Mono",monospace;letter-spacing:.04em;color:#fff;white-space:nowrap}
+.pc-price{margin:0;font:700 clamp(40px,3.6vw,54px)/1 "Montserrat",Arial,sans-serif;letter-spacing:-.06em;color:#fff}
+.pc-per{margin:8px 0 0;font:400 14px "Montserrat",Arial,sans-serif;color:#8c8c8c}
+.pc .trial{margin-top:14px}
+.pc-go{margin:22px 0 24px;padding-bottom:24px;border-bottom:1px solid #2b2b2b}
+.pc-go .key{width:100%;justify-content:space-between}
+.pc-inc{margin:0 0 16px;font:600 14px "Montserrat",Arial,sans-serif;color:#fff}
+.pc-list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.pc-list b{display:flex;align-items:center;gap:10px;margin-bottom:6px;font:600 15px "Montserrat",Arial,sans-serif;letter-spacing:-.02em;color:#fff}
+.pc-list b i{width:22px;height:22px;flex:none;border:1px solid #fff;position:relative}
+.pc-list b i::after{content:"";position:absolute;inset:6px;background:#FF4A00}
+.pc-list span{display:block;position:relative;padding-left:52px;font-size:14px;line-height:1.5;color:#b9b9b9}
+.pc-list span+span{margin-top:4px}
+.pc-list span::before{content:"";position:absolute;left:34px;top:.32em;width:9px;height:5px;border:solid currentColor;border-width:0 0 1.5px 1.5px;transform:rotate(-45deg)}
+/* scheda in evidenza: piena, arancione */
+.pc.hl{background:#FF4A00;border-color:#FF4A00;color:#1a0700}
+.pc.hl h3,.pc.hl .pc-price,.pc.hl .pc-inc,.pc.hl .pc-list b{color:#000}
+.pc.hl .pc-per,.pc.hl .pc-list span{color:#2b0c00}
+.pc.hl .pc-badge{border-color:#000;color:#000}
+.pc.hl .pc-go{border-color:#0000004d}
+.pc.hl .pc-list b i{border-color:#000}.pc.hl .pc-list b i::after{background:#000}
+.pc.hl .trial{background:#000;color:#FF4A00}
+.pc.hl .key,.pc.hl .key.pri{background:linear-gradient(#000,#000) left/0 100% no-repeat,#fff;border-color:#fff;color:#000}
+.pc.hl .key:hover{background-size:100% 100%,auto;border-color:#000;color:#fff}

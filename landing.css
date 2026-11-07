@@ -228,3 +228,5 @@ footer.ft a{text-decoration:none;margin-right:20px;color:var(--fg)}footer.ft a:h
  .mx td:first-child{white-space:normal}
 }
 @media(prefers-reduced-motion:reduce){.strip .tr,.end h2 .tl{animation:none}html{scroll-behavior:auto}}
+.sec.sec-wide>.pcs,.sec.sec-wide>.fine{grid-column:1/13}
+.sec.sec-wide>.pcs{margin-top:8px}

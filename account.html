@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Account — LiveNode</title>
+<title>Il tuo account — LiveNode</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="plans.css">
 </head>
 <body>
 <header class="top"><div class="w">
@@ -37,7 +38,7 @@
   <div id="panel" class="hidden">
     <div class="head">
       <div>
-        <h1>Account</h1>
+        <h1>Il tuo<br><s>account.</s></h1>
         <p class="who"><span class="led"></span><span id="who"></span></p>
       </div>
     </div>
@@ -45,21 +46,34 @@
 
     <div id="intent" class="ctxbar hidden"></div>
 
+    <section class="acct">
+      <div class="acct-app">
+        <div class="acct-icon" aria-hidden="true"><i></i></div>
+        <h2>LiveNode</h2>
+        <div class="acct-state" id="sub-st"></div>
+      </div>
+      <div class="acct-plan" id="sub"></div>
+    </section>
+
     <div class="grid2">
-      <section class="box sub">
-        <div class="bh"><span>Abbonamento</span><b id="sub-st"></b></div>
-        <div class="bb" id="sub"></div>
+      <section class="box tile">
+        <div class="tile-ico tile-card" aria-hidden="true"></div>
+        <h3>Dati di pagamento</h3>
+        <div id="pay"></div>
+        <p class="note">Carta, fatture e disdetta si gestiscono su Stripe in modo sicuro.</p>
       </section>
-      <section class="box">
-        <div class="bh"><span>Mac collegati</span><b id="dev-n"></b></div>
-        <div class="bb"><div id="devices"></div>
-          <p class="note" style="margin:14px 0 0">Per collegare un Mac: LiveNode › Impostazioni › Informazioni › «Accedi».</p></div>
+      <section class="box tile">
+        <div class="tile-ico tile-mac" aria-hidden="true"></div>
+        <h3>Mac collegati</h3>
+        <span class="pill" id="dev-n"></span>
+        <div id="devices" class="tile-list"></div>
+        <p class="note">Per collegare un Mac: LiveNode › Impostazioni › Informazioni › «Accedi».</p>
       </section>
     </div>
 
     <section id="plans-box" class="hidden">
       <h2>Scegli un piano <span class="note" style="letter-spacing:0;text-transform:none">· IVA esclusa</span></h2>
-      <div class="box slots" id="plans" style="margin-bottom:10px"></div>
+      <div class="pcs" id="plans" style="margin-bottom:10px"></div>
       <p class="note" style="margin-bottom:34px">Pagamento sicuro su Stripe. Rinnovo mensile, disdici quando vuoi.</p>
     </section>
 
@@ -88,6 +102,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
+<script src="plans.js"></script>
 <script src="site.js"></script>
 <script>
 const qs = new URLSearchParams(location.search);
@@ -102,14 +117,8 @@ Auth.mount($("#auth-slot"), {
 });
 
 function planCards(sel) {
-  return CFG.plans.map(p => {
-    const seg = Math.max(1, Math.round(Math.log2(p.gb / 25)));
-    return `<div class="slot ${p.key === sel ? "sel" : ""}"><h3>${p.name}</h3>
-      <div class="pr">${p.price}<small> /MESE</small></div>
-      <div class="cap">${Array.from({ length: 6 }, (_, k) => `<i class="${k < seg ? "on" : ""}"></i>`).join("")}</div>
-      <p><b style="color:#fff">${gbLabel(p.gb)}</b> di registrazioni<br>${p.note}</p>
-      ${CFG.trialDays ? `<span class="trial">${CFG.trialDays} giorni gratis</span>` : ""}<button class="key ${p.key === sel ? "pri" : ""}" data-plan="${p.key}">${CFG.trialDays ? "Prova gratis" : "Attiva"}</button></div>`;
-  }).join("");
+  const hl = sel || "cloud_pro";
+  return CFG.plans.map(p => planCard(p, `<button class="key" data-plan="${p.key}">${CFG.trialDays ? "Prova gratis" : "Attiva " + esc(p.name)}</button>`, p.key === hl)).join("");
 }
 
 
@@ -123,6 +132,8 @@ async function loadRecs(hasPlan) {
     const r = await fn("cloud", { action: "list" });
     recItems = r.items || [];
     $("#rec-use").textContent = "· " + mb(r.used_bytes) + " di " + mb(r.limit_bytes);
+    const u = $("#use");
+    if (u && r.limit_bytes) { const pc = Math.min(100, Math.round(r.used_bytes / r.limit_bytes * 100)); u.innerHTML = `<span>Spazio usato <b>${mb(r.used_bytes)}</b> di ${mb(r.limit_bytes)}</span><i><u style="width:${pc}%"></u></i>`; }
     $("#recs").innerHTML = recItems.length ? recItems.map(it => `
       <div class="item" style="align-items:flex-start;flex-wrap:wrap">
         <div style="min-width:0"><strong>${esc(it.title)}</strong>${it.status === "uploading" ? " <small>(in caricamento)</small>" : ""}<br>
@@ -151,17 +162,28 @@ async function load() {
   const plan = sub && CFG.plans.find(p => p.key === sub.plan);
 
   if (sub) {
-    const bad = sub.status === "past_due";
-    $("#sub-st").innerHTML = `<span class="stat"><i class="led ${bad ? "y" : ""}"></i>${bad ? "Da regolarizzare" : sub.status === "trialing" ? "In prova" : "Attivo"}</span>`;
-    const when = bad ? "Il pagamento non è andato a buon fine: aggiorna la carta."
-      : sub.cancel_at_period_end ? "Termina il " + fmtDate(sub.current_period_end) : "Rinnovo il " + fmtDate(sub.current_period_end);
-    $("#sub").innerHTML = `<h3>${plan ? esc(plan.name) : "LiveNode Cloud"}</h3>
-      <p style="margin:6px 0 18px">${plan ? gbLabel(plan.gb) + " · " : ""}${when}</p>
-      <button class="key" id="portal">Fatture, carta e disdetta</button>`;
+    const bad = sub.status === "past_due", trial = sub.status === "trialing";
+    $("#sub-st").innerHTML = `<span class="state ${bad ? "y" : ""}"><i></i>${bad ? "Da regolarizzare" : trial ? "In prova" : "Attivo"}</span>`;
+    const endLabel = bad ? "Pagamento non riuscito" : sub.cancel_at_period_end ? "Termina il" : trial ? "Fine della prova" : "Si rinnova il";
+    $("#sub").innerHTML = `<p class="lbl2">Piano</p>
+      <h3>${plan ? esc(plan.name) : "LiveNode Cloud"}${plan ? ` <small>${gbLabel(plan.gb)}</small>` : ""}</h3>
+      <div class="row"><button class="key sm pri" data-portal="1">Cambia piano</button><a class="key sm" href="${CFG.dmgUrl}">Scarica l'app</a></div>
+      <div class="tl2">
+        <div><p class="lbl2">Stato</p><b>${bad ? "Da regolarizzare" : trial ? "In prova" : "Attivo"}</b></div>
+        <div class="tl2-line" aria-hidden="true"><i></i></div>
+        <div><p class="lbl2">${endLabel}</p><b>${fmtDate(sub.current_period_end)}</b></div>
+        <div><p class="lbl2">Rinnovo</p><b>${sub.cancel_at_period_end ? "Disdetto" : "Mensile"}</b></div>
+      </div>
+      <div class="use" id="use"></div>
+      ${bad ? `<div class="msg warn" style="margin-top:16px">Il pagamento non è andato a buon fine: aggiorna la carta da «Dati di pagamento».</div>` : ""}`;
+    $("#pay").innerHTML = `<button class="key sm" id="portal" data-portal="1">Fatture, carta e disdetta</button>`;
     show($("#plans-box"), false); show($("#intent"), false);
   } else {
-    $("#sub-st").innerHTML = `<span class="stat"><i class="led o"></i>Nessuno</span>`;
-    $("#sub").innerHTML = `<p style="margin:0">Non hai un abbonamento. L'app è gratuita; il Cloud si attiva con un piano.</p>`;
+    $("#sub-st").innerHTML = `<span class="state o"><i></i>Nessun piano</span>`;
+    $("#sub").innerHTML = `<p class="lbl2">Piano</p><h3>App gratuita</h3>
+      <p style="margin:6px 0 18px;color:var(--mut)">La regia funziona anche senza abbonamento. Con LiveNode Cloud le dirette si salvano online.</p>
+      <div class="row"><a class="key sm pri" href="#plans-box">Scegli un piano</a><a class="key sm" href="${CFG.dmgUrl}">Scarica l'app</a></div>`;
+    $("#pay").innerHTML = `<span class="pill">Nessun metodo di pagamento</span>`;
     $("#plans").innerHTML = planCards(wanted && wanted.key);
     show($("#plans-box"), true);
     if (wanted) {
@@ -173,11 +195,11 @@ async function load() {
   loadRecs(!!sub);
 
   const { data: devs } = await sb.from("devices").select("id,name,created_at,last_seen,app_version").order("created_at");
-  $("#dev-n").textContent = devs && devs.length ? devs.length + " collegati" : "";
+  $("#dev-n").textContent = devs && devs.length ? (devs.length === 1 ? "1 Mac collegato" : devs.length + " Mac collegati") : "Nessun Mac collegato";
   $("#devices").innerHTML = devs && devs.length ? devs.map(d => `
     <div class="item"><div><strong>${esc(d.name)}</strong><br><small>${d.last_seen ? "visto il " + fmtDate(d.last_seen) : "collegato il " + fmtDate(d.created_at)}${d.app_version ? " · v" + esc(d.app_version) : ""}</small></div>
     <button class="key sm" data-dev="${d.id}">Rimuovi</button></div>`).join("")
-    : `<p class="empty">Nessun Mac collegato.</p>`;
+    : "";
 }
 
 document.addEventListener("click", async e => {
@@ -206,7 +228,7 @@ document.addEventListener("click", async e => {
   } else if (b.dataset.delrec) {
     if (!confirm("Eliminare questa registrazione dal Cloud? Non si può annullare.")) return;
     await fn("cloud", { action: "delete", id: b.dataset.delrec }); loadRecs(true);
-  } else if (b.id === "portal") {
+  } else if (b.dataset.portal) {
     b.disabled = true; busy = true;
     try { const r = await fn("portal", {}); location.href = r.url; }
     catch (err) { say(flash, "Non riesco ad aprire la gestione dell'abbonamento.", "err"); b.disabled = false; busy = false; }

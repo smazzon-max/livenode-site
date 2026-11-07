@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LiveNode — regia live per Mac</title>
-<meta name="description" content="LiveNode: la regia video live per Mac. iPhone come camere, controllo di Zoom, OBS e ATEM, qualità adattiva, registrazione. Gratis.">
+<title>LiveNode | Regia video live per Mac, gratis, con iPhone come camera</title>
+<meta name="description" content="LiveNode è la regia video live gratuita per Mac: usa l'iPhone come camera, controlla Zoom, OBS e ATEM e salva le dirette nel cloud. Scarica l'app.">
 <meta name="theme-color" content="#000000">
 <meta property="og:type" content="website">
-<meta property="og:title" content="LiveNode — regia live per Mac">
-<meta property="og:description" content="Quattro camere. Un Mac. Zero rack.">
+<meta property="og:title" content="LiveNode | Regia video live per Mac">
+<meta property="og:description" content="La regia multicamera che sta su un Mac: iPhone come camere, Zoom, OBS e ATEM sotto controllo. Gratis.">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="LiveNode">
 <meta property="og:url" content="https://livenode-software.com/">
 <link rel="canonical" href="https://livenode-software.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
@@ -16,6 +18,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="landing.css">
+<link rel="stylesheet" href="plans.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "SoftwareApplication", "name": "LiveNode", "applicationCategory": "MultimediaApplication", "operatingSystem": "macOS 14.4 o successivo", "description": "Regia video live per Mac con iPhone come camera, controllo di Zoom, OBS e ATEM e registrazioni nel cloud.", "url": "https://livenode-software.com/", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "publisher": {"@type": "Organization", "name": "Production Management S.r.l.", "brand": "Piemme", "url": "https://www.piemme.srl"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Quanto costa LiveNode?", "acceptedAnswer": {"@type": "Answer", "text": "L'app per Mac è gratuita. Si paga solo LiveNode Cloud, il servizio facoltativo che salva le dirette online, con abbonamento mensile da 9 € più IVA."}}, {"@type": "Question", "name": "Su quali Mac funziona?", "acceptedAnswer": {"@type": "Answer", "text": "Su qualsiasi Mac con macOS 14.4 o successivo, con processore Apple silicon o Intel."}}, {"@type": "Question", "name": "Come uso l'iPhone come camera per una diretta?", "acceptedAnswer": {"@type": "Answer", "text": "Installa LiveNode Camera sull'iPhone, in LiveNode scegli «Aggiungi telefono» e inquadra il codice QR. Zoom, fuoco, torcia e microfono si regolano dalla regia."}}, {"@type": "Question", "name": "Posso controllare Zoom, OBS e ATEM?", "acceptedAnswer": {"@type": "Answer", "text": "Sì. Dalla stessa console controlli le riunioni Zoom, cambi scena in OBS e comandi il mixer video ATEM."}}, {"@type": "Question", "name": "Cosa succede se la rete è debole?", "acceptedAnswer": {"@type": "Answer", "text": "LiveNode abbassa la qualità del flusso dell'iPhone per non perdere l'immagine e la rialza appena la rete è stabile. Dal clic destro puoi anche fissarla a mano."}}, {"@type": "Question", "name": "Il video passa dai vostri server?", "acceptedAnswer": {"@type": "Answer", "text": "No. Il video va direttamente dal telefono al Mac. Il nostro servizio serve solo a far incontrare i due dispositivi all'avvio."}}, {"@type": "Question", "name": "Serve un account?", "acceptedAnswer": {"@type": "Answer", "text": "Non per usare la regia. L'account serve solo per abbonarti al Cloud e attivare il piano sui tuoi Mac."}}, {"@type": "Question", "name": "Posso disdire l'abbonamento?", "acceptedAnswer": {"@type": "Answer", "text": "Sì, quando vuoi, dalla pagina Account. L'abbonamento resta attivo fino alla fine del periodo già pagato."}}]}]}</script>
 </head>
 <body class="cr">
 
@@ -23,21 +27,21 @@
   <a class="logo" href="./"><i></i>LiveNode</a>
   <div class="tc"><span class="led"></span>SEGNALE OK <b id="tc">00:00:00:00</b></div>
   <nav>
-    <a href="#console">Console</a><a href="#telefono">Telefono</a><a href="#cloud">Cloud</a><a href="#faq">FAQ</a><a href="account.html">Account</a>
+    <a href="#funzioni">Funzioni</a><a href="#iphone">iPhone</a><a href="#prezzi">Prezzi</a><a href="#faq">Domande</a><a href="account.html">Account</a>
     <a class="go" id="dl-nav" href="#">Scarica</a>
   </nav>
 </div></header>
 
 <main class="w">
   <section class="hero">
-    <h1>4 camere.<br>1 Mac.<br><s>Zero rack.</s></h1>
+    <h1>Regia video live<br><s>per il tuo Mac.</s></h1>
     <aside>
-      <p>La regia live che sta su un portatile: iPhone come camere, Zoom, OBS e ATEM sotto controllo, la qualità che si adatta da sola alla rete.</p>
+      <p>LiveNode è l'app gratuita per fare regia e live streaming con il Mac: usa l'iPhone come camera, controlla Zoom, OBS e ATEM e registra le dirette, anche nel cloud.</p>
       <div class="btnrow">
         <a class="key pri" id="dl" href="#">Scarica per Mac</a>
-        <a class="key" href="#console">Provala</a>
+        <a class="key" href="#console">Prova la console</a>
       </div>
-      <small>GRATIS · macOS 14.4+ · APPLE SILICON / INTEL</small>
+      <small>GRATIS · macOS 14.4 O SUCCESSIVO · APPLE SILICON E INTEL</small>
     </aside>
   </section>
 
@@ -86,11 +90,11 @@
 
 <main class="w">
   <!-- ============ INGRESSI ============ -->
-  <section class="sec" id="ingressi">
-    <div class="lb"><em>01</em><span>Ingressi e controlli</span></div>
+  <section class="sec" id="funzioni">
+    <div class="lb"><em>01</em><span>Funzioni</span></div>
     <div class="bd">
-      <h2>Tutto sotto<br><s>le dita.</s></h2>
-      <p class="lead">Una finestra sola per quello che va in onda. <b>Niente schede, niente cavi in più</b>, niente da cercare mentre sei in diretta.</p>
+      <h2>Tutta la regia<br><s>in una finestra.</s></h2>
+      <p class="lead">Camere, riunioni, scene e audio nella stessa console. <b>Niente programmi da alternare e niente cavi in più</b>: tutto quello che va in onda resta sotto i tuoi occhi.</p>
       <table class="mx">
         <thead><tr><th>Modulo</th><th>Funzione</th><th>Stato</th></tr></thead>
         <tbody>
@@ -106,11 +110,11 @@
   </section>
 
   <!-- ============ TELEFONO ============ -->
-  <section class="sec" id="telefono">
+  <section class="sec" id="iphone">
     <div class="lb"><em>02</em><span>iPhone come camera</span></div>
     <div class="bd">
-      <h2>La rete cala.<br><s>Il video no.</s></h2>
-      <p class="lead">Se la connessione peggiora, <b>il flusso scende di qualità</b> invece di congelarsi. Quando torna stabile, risale da solo. Oppure lo scegli tu.</p>
+      <h2>L'iPhone diventa<br><s>una camera.</s></h2>
+      <p class="lead">Installi LiveNode Camera, inquadri il codice QR e il telefono entra in regia con video e audio. Se la rete peggiora, <b>la qualità scende invece di bloccarsi</b> e risale da sola quando la connessione torna stabile.</p>
       <div class="two">
         <div>
           <h3>Qualità adattiva</h3>
@@ -142,9 +146,9 @@
 
   <!-- ============ SPECIFICHE ============ -->
   <section class="sec" id="specifiche">
-    <div class="lb"><em>03</em><span>Scheda tecnica</span></div>
+    <div class="lb"><em>03</em><span>Requisiti</span></div>
     <div class="bd">
-      <h2>I numeri,<br><s>e basta.</s></h2>
+      <h2>Requisiti<br><s>e scheda tecnica.</s></h2>
       <dl class="spec" style="margin:0">
         <div><dt>Piattaforma</dt><dd>macOS 14.4 o successivo</dd></div>
         <div><dt>Processore</dt><dd>Apple silicon · Intel</dd></div>
@@ -162,47 +166,48 @@
 
   <!-- ============ PASSI ============ -->
   <section class="sec" id="passi">
-    <div class="lb"><em>04</em><span>Messa in onda</span></div>
+    <div class="lb"><em>04</em><span>Come si usa</span></div>
     <div class="bd">
-      <h2>Tre passaggi.<br><s>Un minuto.</s></h2>
+      <h2>In onda<br><s>in tre passaggi.</s></h2>
       <ol class="steps">
         <li><em>01</em><div><b>Scarica</b>Apri il DMG e trascina LiveNode in Applicazioni.</div></li>
         <li><em>02</em><div><b>Collega</b>Aggiungi le sorgenti. Per l'iPhone: inquadra il QR.</div></li>
-        <li><em>03</em><div><b>Vai in onda</b>Anteprima, Take. La luce è accesa.</div></li>
+        <li><em>03</em><div><b>Vai in onda</b>Prepari l'inquadratura in anteprima e premi Take.</div></li>
       </ol>
     </div>
   </section>
 
-  <!-- ============ CLOUD ============ -->
-  <section class="sec" id="cloud">
-    <div class="lb"><em>05</em><span>LiveNode Cloud<span class="tag">IN ARRIVO</span></span></div>
+  <!-- ============ PREZZI ============ -->
+  <section class="sec sec-wide" id="prezzi">
+    <div class="lb"><em>05</em><span>Prezzi</span></div>
     <div class="bd">
-      <h2>Se il Mac si ferma,<br><s>la registrazione no.</s></h2>
-      <p class="lead">L'app resta gratuita. <b>Il Cloud è un servizio in più</b>, in abbonamento mensile: salva le tue dirette online. Disdici quando vuoi.</p>
-      <div class="slots" id="plans"></div>
-      <p class="fine">Prezzi IVA esclusa. Pagamenti gestiti da Stripe: LiveNode non vede né conserva i dati della carta.</p>
+      <h2>L'app è gratis.<br><s>Il Cloud, se ti serve.</s></h2>
+      <p class="lead">LiveNode per Mac è gratuita e funziona senza account. <b>LiveNode Cloud</b> è un abbonamento mensile facoltativo: salva le dirette online, così non le perdi se il Mac si ferma. Disdici quando vuoi.</p>
     </div>
+    <div class="pcs" id="plans"></div>
+    <p class="fine">Prezzi IVA esclusa. Pagamenti gestiti da Stripe: LiveNode non vede né conserva i dati della carta.</p>
   </section>
 
   <!-- ============ FAQ ============ -->
   <section class="sec" id="faq">
-    <div class="lb"><em>06</em><span>Domande</span></div>
+    <div class="lb"><em>06</em><span>Domande frequenti</span></div>
     <div class="bd">
-      <h2>Risposte<br><s>corte.</s></h2>
+      <h2>Domande<br><s>frequenti.</s></h2>
       <div class="faq">
-        <details><summary><span>Q1</span>Quanto costa?</summary><p>L'app è gratuita. Si paga solo LiveNode Cloud, il servizio facoltativo di registrazione online, con abbonamento mensile.</p></details>
-        <details><summary><span>Q2</span>Su quali Mac funziona?</summary><p>Su qualsiasi Mac con macOS 14.4 o successivo, Apple silicon o Intel.</p></details>
-        <details><summary><span>Q3</span>Come uso l'iPhone come camera?</summary><p>Installa LiveNode Camera sull'iPhone, in LiveNode scegli «Aggiungi telefono» e inquadra il QR. Zoom, fuoco, torcia e microfono si regolano dalla regia.</p></details>
-        <details><summary><span>Q4</span>E se la rete è debole?</summary><p>LiveNode abbassa la qualità del flusso per non perdere l'immagine e la rialza appena la rete è stabile. Dal clic destro puoi anche fissarla a mano.</p></details>
-        <details><summary><span>Q5</span>Il video passa dai vostri server?</summary><p>No. Il video va direttamente dal telefono al Mac. Il nostro servizio serve solo a far incontrare i due dispositivi all'avvio.</p></details>
-        <details><summary><span>Q6</span>Serve un account?</summary><p>Non per usare la regia. Serve solo per abbonarti al Cloud e ritrovare la licenza sul tuo Mac.</p></details>
-        <details><summary><span>Q7</span>Posso disdire?</summary><p>Sì, quando vuoi, dalla pagina Account. L'abbonamento resta attivo fino alla fine del periodo già pagato.</p></details>
+        <details><summary><span>Q1</span>Quanto costa LiveNode?</summary><p>L&#x27;app per Mac è gratuita. Si paga solo LiveNode Cloud, il servizio facoltativo che salva le dirette online, con abbonamento mensile da 9 € più IVA.</p></details>
+        <details><summary><span>Q2</span>Su quali Mac funziona?</summary><p>Su qualsiasi Mac con macOS 14.4 o successivo, con processore Apple silicon o Intel.</p></details>
+        <details><summary><span>Q3</span>Come uso l&#x27;iPhone come camera per una diretta?</summary><p>Installa LiveNode Camera sull&#x27;iPhone, in LiveNode scegli «Aggiungi telefono» e inquadra il codice QR. Zoom, fuoco, torcia e microfono si regolano dalla regia.</p></details>
+        <details><summary><span>Q4</span>Posso controllare Zoom, OBS e ATEM?</summary><p>Sì. Dalla stessa console controlli le riunioni Zoom, cambi scena in OBS e comandi il mixer video ATEM.</p></details>
+        <details><summary><span>Q5</span>Cosa succede se la rete è debole?</summary><p>LiveNode abbassa la qualità del flusso dell&#x27;iPhone per non perdere l&#x27;immagine e la rialza appena la rete è stabile. Dal clic destro puoi anche fissarla a mano.</p></details>
+        <details><summary><span>Q6</span>Il video passa dai vostri server?</summary><p>No. Il video va direttamente dal telefono al Mac. Il nostro servizio serve solo a far incontrare i due dispositivi all&#x27;avvio.</p></details>
+        <details><summary><span>Q7</span>Serve un account?</summary><p>Non per usare la regia. L&#x27;account serve solo per abbonarti al Cloud e attivare il piano sui tuoi Mac.</p></details>
+        <details><summary><span>Q8</span>Posso disdire l&#x27;abbonamento?</summary><p>Sì, quando vuoi, dalla pagina Account. L&#x27;abbonamento resta attivo fino alla fine del periodo già pagato.</p></details>
       </div>
     </div>
   </section>
 
   <section class="end">
-    <h2>Luce<br>rossa<span class="tl"></span></h2>
+    <h2>Pronto per<br>la diretta?<span class="tl"></span></h2>
     <div class="btnrow"><a class="key pri" id="dl2" href="#" style="height:56px;padding:0 28px">Scarica per Mac</a></div>
   </section>
 </main>
@@ -213,23 +218,17 @@
 </div></footer>
 
 <script src="config.js"></script>
+<script src="plans.js"></script>
 <script>
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 ["dl","dl2","dl-nav"].forEach(id => { const a = document.getElementById(id); if (a) a.href = CFG.dmgUrl; });
 
 /* piani */
-$("#plans").innerHTML = CFG.plans.map((p, i) => {
-  const seg = Math.max(1, Math.round(Math.log2(p.gb / 25)));      // 50→1, 250→3, 1000→5
-  const trial = CFG.trialDays ? `<span class="trial">${CFG.trialDays} giorni gratis</span>` : "";
-  return `<div class="slot"><h3>${p.name}</h3>
-    <div class="pr">${p.price}<small> /MESE</small></div>
-    <div class="cap">${Array.from({length: 6}, (_, k) => `<i class="${k < seg ? "on" : ""}"></i>`).join("")}</div>
-    <p><b style="color:#fff">${p.gb >= 1000 ? (p.gb / 1000) + " TB" : p.gb + " GB"}</b> di registrazioni<br>${p.note}</p>
-    ${trial}<a class="key" href="account.html?plan=${p.key}">${CFG.trialDays ? "Prova gratis" : "Scegli"}</a></div>`;
-}).join("");
+$("#plans").innerHTML = planCard({ key: "free" }, `<a class="key" id="dl3" href="${CFG.dmgUrl}">Scarica gratis</a>`)
+  + CFG.plans.map(p => planCard(p, `<a class="key" href="account.html?plan=${p.key}">${CFG.trialDays ? "Prova gratis" : "Scegli " + p.name}</a>`, p.key === "cloud_pro")).join("");
 
 /* striscia */
-const items = ["Qualità adattiva","iPhone via QR","H.264 · WebRTC","Zoom","OBS","ATEM","Registrazione","Dock iPad / iPhone","Gratis"];
+const items = ["Regia multicamera","iPhone come camera","Qualità adattiva","Zoom","OBS","ATEM","Mixer audio","Registrazione","Telecomando iPad e iPhone","Gratis per Mac"];
 const one = items.map(t => `<span><b>■</b>${t}</span>`).join("");
 $("#tr").innerHTML = one + one + one + one;
 
