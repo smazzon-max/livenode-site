@@ -3,5 +3,8 @@ Disallow: /account.html
 Disallow: /link.html
 Disallow: /watch.html
 Disallow: /diagnostica.html
+Disallow: /it/account.html
+Disallow: /it/link.html
+Disallow: /it/watch.html
 
 Sitemap: https://livenode-software.com/sitemap.xml

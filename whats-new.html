@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-it="it/novita.html" data-auto="pref">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What&#x27;s new in LiveNode: versions and updates</title>
+<meta name="description" content="LiveNode for Mac releases: version number, what&#x27;s new and the link to download the latest update.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What&#x27;s new in LiveNode: versions and updates">
+<meta property="og:description" content="LiveNode for Mac releases: version number, what&#x27;s new and the link to download the latest update.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:site_name" content="LiveNode">
+<meta property="og:url" content="https://livenode-software.com/whats-new.html">
+<link rel="canonical" href="https://livenode-software.com/whats-new.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="landing.css">
+<link rel="alternate" hreflang="en" href="https://livenode-software.com/whats-new.html">
+<link rel="alternate" hreflang="it" href="https://livenode-software.com/it/novita.html">
+<link rel="alternate" hreflang="x-default" href="https://livenode-software.com/whats-new.html">
+<script src="lang.js"></script>
+</head>
+<body class="cr">
+
+<header class="top"><div class="w">
+  <a class="logo" href="./"><i></i>LiveNode</a>
+  <nav>
+    <a href="./#download">Download</a><a href="./#how-it-works">How it works</a><a href="./#pricing">Pricing</a><a href="support.html">Support</a><a href="account.html">Account</a>
+    <a class="lang" href="it/novita.html" hreflang="it" lang="it" data-setlang="it" title="Italiano">IT</a>
+    <a class="go" href="./#download">Get the app</a>
+  </nav>
+</div></header>
+
+<main class="w art">
+<header class="art-h">
+  <p class="eyebrow">What's new</p>
+  <h1>Versions and updates</h1>
+  <p class="hero-lead">The latest version of LiveNode for Mac and what's new in it.</p>
+</header>
+<section class="release" id="rel"><p class="note">Loading…</p></section>
+</main>
+
+<footer class="ft"><div class="w">
+  <div><a href="account.html">Account</a><a href="support.html">Support</a><a href="whats-new.html">What's new</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="privacy-camera.html">Camera privacy</a></div>
+  <div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div>
+</div></footer>
+<script src="config.js"></script>
+<script>document.querySelectorAll("[data-dmg]").forEach(a => a.href = CFG.dmgUrl);</script>
+<script>
+(async () => {
+  const box = document.getElementById("rel");
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  try {
+    const r = await fetch("update.json", { cache: "no-store" });
+    const u = await r.json();
+    box.innerHTML = `<p class="eyebrow">Latest version</p><h2>LiveNode ${esc(u.version)}</h2><p>${esc(u.notes_en || u.notes || "")}</p><a class="key pri" href="${esc(CFG.dmgUrl)}">Download version ${esc(u.version)}</a>`;
+  } catch (e) { box.innerHTML = `<p>We couldn't load the release notes. <a href="./#download">Go to download</a>.</p>`; }
+})();
+</script>
+</body>
+</html>

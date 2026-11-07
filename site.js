@@ -25,7 +25,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const show = (el, on = true) => el && el.classList.toggle("hidden", !on);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const fmtDate = d => new Date(d).toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" });
+const fmtDate = d => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 const gbLabel = gb => gb >= 1000 ? (gb / 1000) + " TB" : gb + " GB";
 function say(el, text, kind = "") { el.className = "msg " + kind; el.textContent = text; show(el, !!text); }
 
@@ -43,19 +43,19 @@ const Auth = (() => {
     const t = String((error && error.message) || error || "");
     console.warn("[LiveNode auth]", error);
     const code = error && (error.status || error.code);
-    if (/Invalid login credentials/i.test(t)) return "Email o password non corrette.";
+    if (/Invalid login credentials/i.test(t)) return "Incorrect email or password.";
     if (/not confirmed/i.test(t)) return "NOT_CONFIRMED";
-    if (/already (registered|been registered)|already exists/i.test(t)) return "Esiste già un account con questa email. Accedi.";
-    if (/at least (\d+) char/i.test(t)) return "La password è troppo corta (minimo 8 caratteri).";
-    if (/same password|different from the old/i.test(t)) return "Scegli una password diversa dalla precedente.";
-    if (/weak|pwned|easy to guess/i.test(t)) return "Questa password è troppo debole o compare in elenchi di password rubate. Scegline un'altra.";
-    if (code === 429 || /rate limit|too many|seconds/i.test(t)) return "Troppi tentativi. Riprova tra qualche minuto.";
-    if (/Failed to fetch|NetworkError|Load failed/i.test(t)) return "Connessione assente o servizio non raggiungibile.";
-    if (/invalid.*email|unable to validate email/i.test(t)) return "Controlla l'indirizzo email.";
-    if (/sending .*email|smtp|mail/i.test(t)) return "Non riesco a inviare l'email di conferma. Riprova più tardi o scrivici a marco@piol.it.";
-    if (/totp|mfa|factor|invalid.*code|code.*invalid|expired/i.test(t)) return "Codice non valido o scaduto. Controlla l'ora del telefono e riprova.";
-    if (/database error/i.test(t)) return "Errore del servizio durante la creazione dell'account. Scrivici a marco@piol.it.";
-    return "Qualcosa non ha funzionato (" + (code || t.slice(0, 60) || "errore") + "). Riprova.";
+    if (/already (registered|been registered)|already exists/i.test(t)) return "An account with this email already exists. Sign in.";
+    if (/at least (\d+) char/i.test(t)) return "The password is too short (at least 8 characters).";
+    if (/same password|different from the old/i.test(t)) return "Choose a password different from the previous one.";
+    if (/weak|pwned|easy to guess/i.test(t)) return "This password is too weak or appears in lists of stolen passwords. Choose another one.";
+    if (code === 429 || /rate limit|too many|seconds/i.test(t)) return "Too many attempts. Try again in a few minutes.";
+    if (/Failed to fetch|NetworkError|Load failed/i.test(t)) return "No connection, or the service can't be reached.";
+    if (/invalid.*email|unable to validate email/i.test(t)) return "Check the email address.";
+    if (/sending .*email|smtp|mail/i.test(t)) return "We couldn't send the confirmation email. Try again later or write to marco@piol.it.";
+    if (/totp|mfa|factor|invalid.*code|code.*invalid|expired/i.test(t)) return "Invalid or expired code. Check your phone's time and try again.";
+    if (/database error/i.test(t)) return "Service error while creating the account. Write to marco@piol.it.";
+    return "Something went wrong (" + (code || t.slice(0, 60) || "error") + "). Try again.";
   }
 
   /* true se l'utente ha la verifica in due passaggi e deve ancora inserire il codice */
@@ -79,42 +79,42 @@ const Auth = (() => {
     const onDone = opts.onDone || (() => {});
     host.innerHTML = `
     <div class="box" id="a-box">
-      <div class="tabs" id="a-tabs" role="tablist"><button type="button" data-m="in" role="tab">Accedi</button><button type="button" data-m="up" role="tab">Crea account</button></div>
+      <div class="tabs" id="a-tabs" role="tablist"><button type="button" data-m="in" role="tab">Sign in</button><button type="button" data-m="up" role="tab">Create account</button></div>
       <div class="bb">
         ${opts.context ? `<div class="ctxbar">${opts.context}</div>` : ""}
         <div class="msg hidden" id="a-msg" role="status"></div>
 
         <form id="a-form" novalidate>
           <input class="hp" type="text" name="website" id="a-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <div class="f"><label for="a-email">Email</label><input id="a-email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="nome@esempio.it" required></div>
-          <div class="f" id="a-pwf"><label for="a-pw">Password <button type="button" id="a-eye">mostra</button></label><input id="a-pw" type="password" minlength="8" placeholder="almeno 8 caratteri" required></div>
+          <div class="f"><label for="a-email">Email</label><input id="a-email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="name@example.com" required></div>
+          <div class="f" id="a-pwf"><label for="a-pw">Password <button type="button" id="a-eye">show</button></label><input id="a-pw" type="password" minlength="8" placeholder="at least 8 characters" required></div>
           <div class="str hidden" id="a-str"><i></i><i></i><i></i><i></i><span id="a-strl"></span></div>
-          <label class="chk hidden" id="a-cons"><input type="checkbox" id="a-ok"><span>Ho letto e accetto i <a href="terms.html" target="_blank" rel="noopener">Termini di servizio</a> e l'<a href="privacy.html" target="_blank" rel="noopener">Informativa privacy</a>.</span></label>
-          <button class="key pri full" id="a-go" type="submit">Accedi</button>
-          <div class="links"><a href="#" id="a-forgot">Password dimenticata?</a><span class="note" id="a-hint"></span></div>
+          <label class="chk hidden" id="a-cons"><input type="checkbox" id="a-ok"><span>I have read and accept the <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a> and the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
+          <button class="key pri full" id="a-go" type="submit">Sign in</button>
+          <div class="links"><a href="#" id="a-forgot">Forgot your password?</a><span class="note" id="a-hint"></span></div>
         </form>
 
         <div class="sent hidden" id="a-sent">
-          <h3 style="margin-bottom:6px">Controlla la posta</h3>
-          <p>Ti abbiamo scritto per confermare l'indirizzo:</p>
+          <h3 style="margin-bottom:6px">Check your inbox</h3>
+          <p>We've emailed you to confirm the address:</p>
           <span class="mail" id="a-mail"></span>
-          <p class="note">Apri il link nell'email e torna qui. Se non la trovi, guarda in spam.</p>
-          <div class="row"><button class="key" id="a-resend" type="button">Reinvia email</button><button class="key" id="a-back" type="button">Cambia indirizzo</button></div>
+          <p class="note">Open the link in the email and come back here. If you can't find it, check your spam folder.</p>
+          <div class="row"><button class="key" id="a-resend" type="button">Resend email</button><button class="key" id="a-back" type="button">Change address</button></div>
         </div>
 
         <form id="a-mfa" class="hidden" novalidate>
           <h3 style="margin-bottom:6px">Verifica in due passaggi</h3>
-          <p class="note">Apri l'app di autenticazione sul telefono e inserisci il codice a 6 cifre di LiveNode.</p>
-          <div class="f"><label for="a-code">Codice</label><input id="a-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
-          <button class="key pri full" id="a-cgo" type="submit">Verifica</button>
-          <div class="links"><a href="#" id="a-out">Usa un altro account</a></div>
+          <p class="note">Open the authenticator app on your phone and enter the 6-digit LiveNode code.</p>
+          <div class="f"><label for="a-code">Code</label><input id="a-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
+          <button class="key pri full" id="a-cgo" type="submit">Verify</button>
+          <div class="links"><a href="#" id="a-out">Use another account</a></div>
         </form>
 
         <form id="a-new" class="hidden" novalidate>
-          <h3 style="margin-bottom:14px">Nuova password</h3>
-          <div class="f"><label for="a-np">Nuova password</label><input id="a-np" type="password" minlength="8" autocomplete="new-password" placeholder="almeno 8 caratteri" required></div>
+          <h3 style="margin-bottom:14px">New password</h3>
+          <div class="f"><label for="a-np">New password</label><input id="a-np" type="password" minlength="8" autocomplete="new-password" placeholder="at least 8 characters" required></div>
           <div class="str" id="a-nstr"><i></i><i></i><i></i><i></i><span></span></div>
-          <button class="key pri full" id="a-ngo" type="submit">Salva password</button>
+          <button class="key pri full" id="a-ngo" type="submit">Save password</button>
         </form>
       </div>
     </div>`;
@@ -130,23 +130,23 @@ const Auth = (() => {
       show(q("#a-tabs"), form);
       q("#a-tabs").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.m === (v === "reset" ? "in" : v)));
       show(q("#a-pwf"), v !== "reset"); show(q("#a-str"), v === "up"); show(q("#a-cons"), v === "up");
-      q("#a-go").textContent = v === "in" ? "Accedi" : v === "up" ? "Crea account" : "Invia link";
+      q("#a-go").textContent = v === "in" ? "Sign in" : v === "up" ? "Create account" : "Send link";
       q("#a-pw").autocomplete = v === "up" ? "new-password" : "current-password";
-      q("#a-forgot").textContent = v === "reset" ? "← Torna all'accesso" : "Password dimenticata?";
+      q("#a-forgot").textContent = v === "reset" ? "← Back to sign in" : "Forgot your password?";
       show(q("#a-forgot"), v !== "up");
-      q("#a-hint").textContent = v === "up" ? "Nessuna carta richiesta." : "";
+      q("#a-hint").textContent = v === "up" ? "No card required." : "";
       say(msg, "");
     }
 
     function meter(el, label, pw) {
       const s = score(pw);
       el.className = "str " + (pw ? "s" + Math.max(s, 1) : "");
-      if (label) label.textContent = pw ? ["", "debole", "discreta", "buona", "ottima"][Math.max(s, 1)] : "";
+      if (label) label.textContent = pw ? ["", "weak", "fair", "good", "strong"][Math.max(s, 1)] : "";
     }
     q("#a-pw").addEventListener("input", e => meter(q("#a-str"), q("#a-strl"), e.target.value));
     q("#a-np").addEventListener("input", e => meter(q("#a-nstr"), q("#a-nstr span"), e.target.value));
     q("#a-eye").addEventListener("click", () => {
-      const p = q("#a-pw"), on = p.type === "password"; p.type = on ? "text" : "password"; q("#a-eye").textContent = on ? "nascondi" : "mostra";
+      const p = q("#a-pw"), on = p.type === "password"; p.type = on ? "text" : "password"; q("#a-eye").textContent = on ? "hide" : "show";
     });
     q("#a-tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) view(b.dataset.m); });
     q("#a-forgot").addEventListener("click", e => { e.preventDefault(); view(mode === "reset" ? "in" : "reset"); });
@@ -157,45 +157,45 @@ const Auth = (() => {
     function cool(sec) {
       cooling = sec; clearInterval(timer);
       const b = q("#a-resend");
-      const tick = () => { b.disabled = cooling > 0; b.textContent = cooling > 0 ? `Reinvia email (${cooling})` : "Reinvia email"; if (cooling-- <= 0) clearInterval(timer); };
+      const tick = () => { b.disabled = cooling > 0; b.textContent = cooling > 0 ? `Resend email (${cooling})` : "Resend email"; if (cooling-- <= 0) clearInterval(timer); };
       tick(); timer = setInterval(tick, 1000);
     }
     q("#a-back").addEventListener("click", () => view("up"));
     q("#a-resend").addEventListener("click", async () => {
       const { error } = await sb.auth.resend({ type: "signup", email: pendingEmail, options: { emailRedirectTo: backHere() } });
-      if (error) say(msg, human(error), "err"); else { say(msg, "Email inviata di nuovo.", "ok"); cool(60); }
+      if (error) say(msg, human(error), "err"); else { say(msg, "Email sent again.", "ok"); cool(60); }
     });
 
     q("#a-form").addEventListener("submit", async e => {
       e.preventDefault();
       if (q("#a-hp").value) return;                       // trappola per i bot
       const email = q("#a-email").value.trim(), password = q("#a-pw").value, go = q("#a-go");
-      if (!/^\S+@\S+\.\S+$/.test(email)) return say(msg, "Controlla l'indirizzo email.", "err");
+      if (!/^\S+@\S+\.\S+$/.test(email)) return say(msg, "Check the email address.", "err");
       go.disabled = true; say(msg, "");
       try {
         if (mode === "reset") {
           const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: backHere() });
           if (error) throw error;
-          say(msg, "Se esiste un account con questa email, ti abbiamo inviato il link per scegliere una nuova password.", "ok");
+          say(msg, "If an account exists for this email, we've sent you a link to choose a new password.", "ok");
         } else if (mode === "in") {
-          if (!password) throw Object.assign(new Error("Inserisci la password."), { client: true });
+          if (!password) throw Object.assign(new Error("Enter your password."), { client: true });
           const { error } = await sb.auth.signInWithPassword({ email, password });
           if (error) throw error;
           if (await needsMfa()) { view("mfa"); q("#a-code").focus(); return; }
           onDone();
         } else {
-          if (password.length < 8) throw Object.assign(new Error("La password deve avere almeno 8 caratteri."), { client: true });
-          if (!q("#a-ok").checked) throw Object.assign(new Error("Per creare l'account devi accettare Termini e Privacy."), { client: true });
+          if (password.length < 8) throw Object.assign(new Error("The password must be at least 8 characters long."), { client: true });
+          if (!q("#a-ok").checked) throw Object.assign(new Error("To create an account you need to accept the Terms and Privacy Policy."), { client: true });
           const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: backHere() } });
           if (error) throw error;
           if (data.user && data.user.identities && data.user.identities.length === 0) {
-            view("in"); q("#a-email").value = email; say(msg, "Esiste già un account con questa email. Accedi, oppure recupera la password.", "warn");
+            view("in"); q("#a-email").value = email; say(msg, "An account with this email already exists. Sign in, or reset your password.", "warn");
           } else if (data.session) onDone();
           else sentView(email);
         }
       } catch (err) {
         const t = human(err);
-        if (t === "NOT_CONFIRMED") sentView(email, "Prima di accedere devi confermare l'email. Ti serve un nuovo link?");
+        if (t === "NOT_CONFIRMED") sentView(email, "You need to confirm your email before signing in. Need a new link?");
         else say(msg, err.client ? err.message : t, "err");
       } finally { go.disabled = false; }
     });
@@ -203,7 +203,7 @@ const Auth = (() => {
     q("#a-mfa").addEventListener("submit", async e => {
       e.preventDefault();
       const code = q("#a-code").value.replace(/\D/g, "");
-      if (code.length !== 6) return say(msg, "Il codice ha 6 cifre.", "err");
+      if (code.length !== 6) return say(msg, "The code has 6 digits.", "err");
       q("#a-cgo").disabled = true;
       try {
         const { data, error } = await sb.auth.mfa.listFactors();
@@ -220,7 +220,7 @@ const Auth = (() => {
 
     q("#a-new").addEventListener("submit", async e => {
       e.preventDefault();
-      const p = q("#a-np").value; if (p.length < 8) return say(msg, "La password deve avere almeno 8 caratteri.", "err");
+      const p = q("#a-np").value; if (p.length < 8) return say(msg, "The password must be at least 8 characters long.", "err");
       q("#a-ngo").disabled = true;
       const { error } = await sb.auth.updateUser({ password: p });
       q("#a-ngo").disabled = false;

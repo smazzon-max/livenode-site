@@ -1,33 +1,37 @@
 <!doctype html>
-<html lang="it">
+<html lang="en" data-it="it/account.html" data-auto="always">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Il tuo account — LiveNode</title>
+<title>Your account — LiveNode</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="plans.css">
+<link rel="alternate" hreflang="en" href="https://livenode-software.com/account.html">
+<link rel="alternate" hreflang="it" href="https://livenode-software.com/it/account.html">
+<link rel="alternate" hreflang="x-default" href="https://livenode-software.com/account.html">
+<script src="lang.js"></script>
 </head>
 <body class="ui">
 <header class="top"><div class="w">
   <a class="logo" href="./"><i></i>LiveNode</a>
-  <nav><a href="./">Home</a><button id="logout" class="hidden">Esci</button></nav>
+  <nav><a href="./">Home</a><button id="logout" class="hidden">Sign out</button><a class="lang" href="it/account.html" hreflang="it" lang="it" data-setlang="it" title="Italiano">IT</a></nav>
 </div></header>
 
 <main class="w">
   <!-- ===== non collegato ===== -->
   <section id="gate" class="gate hidden">
     <div>
-      <p class="eyebrow">Area riservata</p>
-      <h1>Il tuo account LiveNode</h1>
-      <p class="lead">Serve solo per <b>LiveNode Cloud</b>. L'app per Mac resta gratuita e funziona anche senza account.</p>
+      <p class="eyebrow">Account area</p>
+      <h1>Your LiveNode account</h1>
+      <p class="lead">You only need it for <b>LiveNode Cloud</b>. The Mac app stays free and works without an account.</p>
       <ul>
-        <li><em>01</em><div><b>Una licenza, tutti i tuoi Mac</b>Accedi dall'app e il piano si attiva da solo.</div></li>
-        <li><em>02</em><div><b>Paghi su Stripe</b>I dati della carta non passano da noi.</div></li>
-        <li><em>03</em><div><b>Disdici quando vuoi</b>Dalla stessa pagina, senza telefonate.</div></li>
+        <li><em>01</em><div><b>One licence, all your Macs</b>Sign in from the app and your plan activates automatically.</div></li>
+        <li><em>02</em><div><b>Pay with Stripe</b>Your card details never pass through us.</div></li>
+        <li><em>03</em><div><b>Cancel anytime</b>From this same page, no phone calls.</div></li>
       </ul>
     </div>
     <div id="auth-slot"></div>
@@ -38,10 +42,10 @@
     <aside class="side">
       <div class="me"><span class="av" id="av"></span><div><b id="who"></b><small id="me-plan"></small></div></div>
       <nav class="sidenav" id="sidenav">
-        <a href="#profilo" data-p="profilo">Profilo e sicurezza</a>
-        <a href="#dispositivi" data-p="dispositivi">Dispositivi</a>
-        <a href="#abbonamento" data-p="abbonamento">Abbonamento e pagamenti</a>
-        <a href="#registrazioni" data-p="registrazioni">Registrazioni nel Cloud</a>
+        <a href="#profilo" data-p="profilo">Profile and security</a>
+        <a href="#dispositivi" data-p="dispositivi">Devices</a>
+        <a href="#abbonamento" data-p="abbonamento">Subscription and billing</a>
+        <a href="#registrazioni" data-p="registrazioni">Cloud recordings</a>
       </nav>
     </aside>
 
@@ -50,102 +54,102 @@
 
       <!-- PROFILO -->
       <section class="pane" id="p-profilo">
-        <header class="ph"><h1>Profilo e sicurezza</h1><p>Le informazioni del tuo account e come proteggerlo.</p></header>
+        <header class="ph"><h1>Profile and security</h1><p>Your account details and how to keep it safe.</p></header>
 
         <div class="card">
-          <div class="ch"><div><h2>Email</h2><p>La usi per accedere e ricevere le fatture.</p></div></div>
-          <div class="kv"><span>Indirizzo attuale</span><b id="cur-email"></b></div>
+          <div class="ch"><div><h2>Email</h2><p>You use it to sign in and receive invoices.</p></div></div>
+          <div class="kv"><span>Current address</span><b id="cur-email"></b></div>
           <form id="email-form" class="inline" novalidate>
-            <div class="f"><label for="new-email">Nuovo indirizzo</label><input id="new-email" type="email" autocomplete="email" placeholder="nome@esempio.it"></div>
-            <button class="key sm" type="submit" id="email-go">Cambia email</button>
+            <div class="f"><label for="new-email">New address</label><input id="new-email" type="email" autocomplete="email" placeholder="name@example.com"></div>
+            <button class="key sm" type="submit" id="email-go">Change email</button>
           </form>
         </div>
 
         <div class="card">
-          <div class="ch"><div><h2>Password</h2><p>Ti inviamo un link per sceglierne una nuova.</p></div><button class="key sm" id="pwd">Cambia password</button></div>
+          <div class="ch"><div><h2>Password</h2><p>We'll send you a link to choose a new one.</p></div><button class="key sm" id="pwd">Change password</button></div>
         </div>
 
         <div class="card">
-          <div class="ch"><div><h2>Verifica in due passaggi</h2><p>All'accesso, oltre alla password, ti chiediamo un codice dall'app di autenticazione del telefono.</p></div><span class="badge" id="mfa-st"></span></div>
-          <div id="mfa-off" class="hidden"><button class="key sm pri" id="mfa-on">Attiva</button></div>
+          <div class="ch"><div><h2>Two-step verification</h2><p>When you sign in, besides your password we ask for a code from the authenticator app on your phone.</p></div><span class="badge" id="mfa-st"></span></div>
+          <div id="mfa-off" class="hidden"><button class="key sm pri" id="mfa-on">Turn on</button></div>
           <div id="mfa-setup" class="hidden">
             <ol class="mfa-steps">
-              <li>Apri un'app di autenticazione, come Google Authenticator, Microsoft Authenticator o 1Password.</li>
-              <li>Inquadra il codice QR. Se non puoi, inserisci a mano la chiave qui sotto.</li>
-              <li>Scrivi il codice a 6 cifre che compare nell'app.</li>
+              <li>Open an authenticator app, such as Google Authenticator, Microsoft Authenticator or 1Password.</li>
+              <li>Scan the QR code. If you can't, enter the key below manually.</li>
+              <li>Type the 6-digit code shown in the app.</li>
             </ol>
-            <div class="mfa-qr"><img id="mfa-img" alt="Codice QR per l'app di autenticazione"><div><span class="lbl">Chiave</span><code id="mfa-secret"></code></div></div>
+            <div class="mfa-qr"><img id="mfa-img" alt="QR code for the authenticator app"><div><span class="lbl">Key</span><code id="mfa-secret"></code></div></div>
             <form id="mfa-form" class="inline" novalidate>
-              <div class="f"><label for="mfa-code">Codice</label><input id="mfa-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
-              <button class="key sm pri" type="submit">Conferma</button><button class="key sm" type="button" id="mfa-cancel">Annulla</button>
+              <div class="f"><label for="mfa-code">Code</label><input id="mfa-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
+              <button class="key sm pri" type="submit">Confirm</button><button class="key sm" type="button" id="mfa-cancel">Cancel</button>
             </form>
           </div>
-          <div id="mfa-done" class="hidden"><button class="key sm bad" id="mfa-off-btn">Disattiva</button></div>
+          <div id="mfa-done" class="hidden"><button class="key sm bad" id="mfa-off-btn">Turn off</button></div>
         </div>
 
         <div class="card danger">
-          <div class="ch"><div><h2>Elimina account</h2><p>Cancella account, Mac collegati e dati di abbonamento. Non si può annullare.</p></div><button class="key sm bad" id="del-open">Elimina…</button></div>
+          <div class="ch"><div><h2>Delete account</h2><p>Deletes your account, linked Macs and subscription data. This can't be undone.</p></div><button class="key sm bad" id="del-open">Delete…</button></div>
           <div id="del-box" class="hidden">
-            <div class="msg warn">Le fatture restano a norma di legge. Con un abbonamento attivo, disdicilo prima.</div>
-            <div class="f"><label for="del-t">Scrivi ELIMINA per confermare</label><input id="del-t" type="text" autocomplete="off"></div>
-            <div class="row"><button class="key sm bad" id="del-go" disabled>Elimina definitivamente</button><button class="key sm" id="del-no">Annulla</button></div>
+            <div class="msg warn">Invoices are kept as required by law. If you have an active subscription, cancel it first.</div>
+            <div class="f"><label for="del-t">Type DELETE to confirm</label><input id="del-t" type="text" autocomplete="off"></div>
+            <div class="row"><button class="key sm bad" id="del-go" disabled>Delete permanently</button><button class="key sm" id="del-no">Cancel</button></div>
           </div>
         </div>
       </section>
 
       <!-- DISPOSITIVI -->
       <section class="pane hidden" id="p-dispositivi">
-        <header class="ph"><h1>Dispositivi</h1><p>I Mac collegati al tuo account. Il piano Cloud funziona su ognuno.</p></header>
+        <header class="ph"><h1>Devices</h1><p>The Macs linked to your account. Your Cloud plan works on each of them.</p></header>
         <div class="card">
-          <div class="ch"><div><h2>Mac collegati</h2><p id="dev-n"></p></div></div>
+          <div class="ch"><div><h2>Linked Macs</h2><p id="dev-n"></p></div></div>
           <div id="devices"></div>
         </div>
         <div class="card">
-          <div class="ch"><div><h2>Sessioni aperte</h2><p>Se hai usato l'account su un computer che non è tuo, esci ovunque: dovrai accedere di nuovo su ogni browser.</p></div><button class="key sm" id="out-all">Esci ovunque</button></div>
+          <div class="ch"><div><h2>Open sessions</h2><p>If you used your account on a computer that isn't yours, sign out everywhere: you'll need to sign in again on every browser.</p></div><button class="key sm" id="out-all">Sign out everywhere</button></div>
         </div>
         <div class="card tip">
-          <h2>Collegare un nuovo Mac</h2>
-          <p>Apri LiveNode sul Mac, vai in <b>Impostazioni › Informazioni</b> e premi <b>Accedi</b>. Si apre questa pagina con il codice da confermare.</p>
+          <h2>Link a new Mac</h2>
+          <p>Open LiveNode on your Mac, go to <b>Settings › About</b> (Impostazioni › Informazioni) and click <b>Sign in</b> (Accedi). This page opens with the code to confirm.</p>
         </div>
       </section>
 
       <!-- ABBONAMENTO -->
       <section class="pane hidden" id="p-abbonamento">
-        <header class="ph"><h1>Abbonamento e pagamenti</h1><p>Il tuo piano LiveNode Cloud, la carta e le fatture.</p></header>
+        <header class="ph"><h1>Subscription and billing</h1><p>Your LiveNode Cloud plan, card and invoices.</p></header>
         <div id="intent" class="ctxbar hidden"></div>
         <div class="card">
-          <div class="ch"><div><h2>Piano attuale</h2><p id="sub-note"></p></div><span id="sub-st"></span></div>
+          <div class="ch"><div><h2>Current plan</h2><p id="sub-note"></p></div><span id="sub-st"></span></div>
           <div id="sub"></div>
         </div>
         <div class="card" id="pay-card">
-          <div class="ch"><div><h2>Pagamento e fatture</h2><p>Carta, fatture e disdetta si gestiscono su Stripe in modo sicuro.</p></div><div id="pay"></div></div>
+          <div class="ch"><div><h2>Payment and invoices</h2><p>Card, invoices and cancellation are managed securely on Stripe.</p></div><div id="pay"></div></div>
         </div>
         <section id="plans-box" class="hidden">
-          <h2 class="sec-t">Scegli un piano <span class="note">· IVA esclusa</span></h2>
+          <h2 class="sec-t">Choose a plan <span class="note">· excl. VAT</span></h2>
           <div class="pcs" id="plans"></div>
-          <p class="note" style="margin-top:12px">Pagamento sicuro su Stripe. Rinnovo mensile, disdici quando vuoi.</p>
+          <p class="note" style="margin-top:12px">Secure payment on Stripe. Monthly renewal, cancel anytime.</p>
         </section>
       </section>
 
       <!-- REGISTRAZIONI -->
       <section class="pane hidden" id="p-registrazioni">
-        <header class="ph"><h1>Registrazioni nel Cloud</h1><p>Le dirette caricate dall'app. Puoi condividerle con un link, anche a scadenza.</p></header>
+        <header class="ph"><h1>Cloud recordings</h1><p>Live shows uploaded from the app. Share them with a link, with or without expiry.</p></header>
         <div class="card">
-          <div class="ch"><div><h2>Le tue registrazioni</h2><p id="rec-use"></p></div></div>
+          <div class="ch"><div><h2>Your recordings</h2><p id="rec-use"></p></div></div>
           <div id="space-warn" class="msg warn hidden"></div>
           <div class="tools hidden" id="rec-tools">
-            <input type="text" id="rec-q" placeholder="Cerca per titolo" aria-label="Cerca tra le registrazioni">
-            <select class="sel" id="rec-sort" aria-label="Ordina le registrazioni"><option value="new">Più recenti</option><option value="old">Meno recenti</option><option value="big">Più pesanti</option><option value="long">Più lunghe</option></select>
+            <input type="text" id="rec-q" placeholder="Search by title" aria-label="Search recordings">
+            <select class="sel" id="rec-sort" aria-label="Sort recordings"><option value="new">Newest</option><option value="old">Oldest</option><option value="big">Largest</option><option value="long">Longest</option></select>
           </div>
-          <div id="rec-box"><div id="recs"><p class="empty">Caricamento…</p></div></div>
+          <div id="rec-box"><div id="recs"><p class="empty">Loading…</p></div></div>
         </div>
-        <p class="note">Le registrazioni si caricano dall'app: Impostazioni › Registrazione › Registrazioni nel Cloud.</p>
+        <p class="note">Recordings are uploaded from the app: Settings › Recording › Cloud recordings (Impostazioni › Registrazione › Registrazioni nel Cloud).</p>
       </section>
     </div>
   </div>
 </main>
 
-<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
+<footer><div class="w"><div><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contact</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
 
 <script src="supabase.min.js"></script>
 <script src="config.js"></script>
@@ -160,7 +164,7 @@ let busy = false, mfaPending = null;
 const authUI = Auth.mount($("#auth-slot"), {
   onDone: load,
   start: wanted ? "up" : "in",
-  context: wanted ? `Per attivare <b>${wanted.name}</b> (${wanted.price}/mese) crea l'account o accedi.` : "",
+  context: wanted ? `To activate <b>${wanted.name}</b> (${wanted.price}/month) create an account or sign in.` : "",
 });
 
 /* sezioni */
@@ -174,7 +178,7 @@ window.addEventListener("hashchange", () => { openPane(location.hash.slice(1)); 
 
 function planCards(sel) {
   const hl = sel || "cloud_pro";
-  return CFG.plans.map(p => planCard(p, `<button class="key" data-plan="${p.key}">${CFG.trialDays ? "Prova gratis" : "Attiva " + esc(p.name)}</button>`, p.key === hl)).join("");
+  return CFG.plans.map(p => planCard(p, `<button class="key" data-plan="${p.key}">${CFG.trialDays ? "Start free trial" : "Activate " + esc(p.name)}</button>`, p.key === hl)).join("");
 }
 
 const clock = s => s == null ? "—" : [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map((n, i) => i ? String(n).padStart(2, "0") : n).join(":");
@@ -188,17 +192,17 @@ function renderRecs() {
     : sort === "big" ? (b.size_bytes || 0) - (a.size_bytes || 0)
     : sort === "long" ? (b.duration_sec || 0) - (a.duration_sec || 0)
     : new Date(b.created_at) - new Date(a.created_at));
-  $("#recs").innerHTML = !recItems.length ? `<p class="empty">Ancora nessuna registrazione. Caricane una dall'app.</p>`
-    : !list.length ? `<p class="empty">Nessuna registrazione con «${esc(q)}».</p>`
+  $("#recs").innerHTML = !recItems.length ? `<p class="empty">No recordings yet. Upload one from the app.</p>`
+    : !list.length ? `<p class="empty">No recordings matching “${esc(q)}”.</p>`
     : list.map(it => `
       <div class="item rec">
-        <div style="min-width:0"><strong>${esc(it.title)}</strong>${it.status === "uploading" ? " <small>(in caricamento)</small>" : ""}<br>
-          <small>${clock(it.duration_sec)} · ${mb(it.size_bytes)} · ${fmtDate(it.created_at)}${it.share_url ? " · condivisa" + (it.share_expires_at ? " fino al " + fmtDate(it.share_expires_at) : "") : ""}</small></div>
+        <div style="min-width:0"><strong>${esc(it.title)}</strong>${it.status === "uploading" ? " <small>(uploading)</small>" : ""}<br>
+          <small>${clock(it.duration_sec)} · ${mb(it.size_bytes)} · ${fmtDate(it.created_at)}${it.share_url ? " · shared" + (it.share_expires_at ? " until " + fmtDate(it.share_expires_at) : "") : ""}</small></div>
         <div class="row">
-          ${it.status === "ready" ? `<select class="sel" data-days="${it.id}"><option value="7">7 giorni</option><option value="30">30 giorni</option><option value="">Senza scadenza</option></select>
-          <button class="key sm" data-share="${it.id}">${it.share_url ? "Nuovo link" : "Condividi"}</button>` : ""}
-          ${it.share_url ? `<button class="key sm" data-copy="${esc(it.share_url)}">Copia link</button><a class="key sm" href="${esc(it.share_url)}" target="_blank" rel="noopener">Guarda</a><button class="key sm" data-unshare="${it.id}">Revoca</button>` : ""}
-          <button class="key sm bad" data-delrec="${it.id}">Elimina</button>
+          ${it.status === "ready" ? `<select class="sel" data-days="${it.id}"><option value="7">7 days</option><option value="30">30 days</option><option value="">No expiry</option></select>
+          <button class="key sm" data-share="${it.id}">${it.share_url ? "New link" : "Share"}</button>` : ""}
+          ${it.share_url ? `<button class="key sm" data-copy="${esc(it.share_url)}">Copy link</button><a class="key sm" href="${esc(it.share_url)}" target="_blank" rel="noopener">Watch</a><button class="key sm" data-unshare="${it.id}">Revoke</button>` : ""}
+          <button class="key sm bad" data-delrec="${it.id}">Delete</button>
         </div>
       </div>`).join("");
 }
@@ -207,22 +211,22 @@ $("#rec-sort").addEventListener("change", renderRecs);
 
 async function loadRecs(hasPlan) {
   show($("#rec-tools"), false); show($("#space-warn"), false);
-  if (!hasPlan) { $("#rec-use").textContent = "Disponibile con un piano LiveNode Cloud."; $("#recs").innerHTML = `<p class="empty">Nessun piano attivo. <a href="#abbonamento">Scegli un piano</a> per salvare le dirette online.</p>`; return; }
+  if (!hasPlan) { $("#rec-use").textContent = "Available with a LiveNode Cloud plan."; $("#recs").innerHTML = `<p class="empty">No active plan. <a href="#abbonamento">Choose a plan</a> to save your live shows online.</p>`; return; }
   try {
     const r = await fn("cloud", { action: "list" });
     recItems = r.items || [];
-    $("#rec-use").textContent = mb(r.used_bytes) + " usati di " + mb(r.limit_bytes);
+    $("#rec-use").textContent = mb(r.used_bytes) + " used of " + mb(r.limit_bytes);
     const pc = r.limit_bytes ? Math.min(100, Math.round(r.used_bytes / r.limit_bytes * 100)) : 0;
     const u = $("#use");
-    if (u && r.limit_bytes) u.innerHTML = `<div class="kv"><span>Spazio usato</span><b>${mb(r.used_bytes)} di ${mb(r.limit_bytes)} · ${pc}%</b></div><i class="bar${pc >= 80 ? " full" : ""}"><u style="width:${pc}%"></u></i>`;
+    if (u && r.limit_bytes) u.innerHTML = `<div class="kv"><span>Storage used</span><b>${mb(r.used_bytes)} of ${mb(r.limit_bytes)} · ${pc}%</b></div><i class="bar${pc >= 80 ? " full" : ""}"><u style="width:${pc}%"></u></i>`;
     if (pc >= 80) {
-      const t = pc >= 100 ? "Lo spazio è esaurito: le nuove registrazioni non si caricano. Elimina quelle che non servono o passa a un piano più grande." : `Hai usato il ${pc}% dello spazio. Elimina le registrazioni che non servono o passa a un piano più grande.`;
+      const t = pc >= 100 ? "Your storage is full: new recordings won't upload. Delete the ones you don't need or move to a bigger plan." : `You've used ${pc}% of your storage. Delete recordings you don't need or move to a bigger plan.`;
       $("#space-warn").textContent = t; show($("#space-warn"), true);
       const w = $("#use-warn"); if (w) { w.textContent = t; show(w, true); }
     }
     show($("#rec-tools"), recItems.length > 1);
     renderRecs();
-  } catch (e) { $("#recs").innerHTML = `<p class="empty">Non riesco a leggere le registrazioni.</p>`; }
+  } catch (e) { $("#recs").innerHTML = `<p class="empty">We couldn't load your recordings.</p>`; }
 }
 
 async function loadMfa() {
@@ -230,9 +234,9 @@ async function loadMfa() {
   try {
     const { data } = await sb.auth.mfa.listFactors();
     const on = !!(data && (data.totp || []).find(f => f.status === "verified"));
-    $("#mfa-st").textContent = on ? "Attiva" : "Non attiva"; $("#mfa-st").classList.toggle("ok", on);
+    $("#mfa-st").textContent = on ? "On" : "Off"; $("#mfa-st").classList.toggle("ok", on);
     show($("#mfa-off"), !on); show($("#mfa-done"), on);
-  } catch (_) { $("#mfa-st").textContent = "Non disponibile"; }
+  } catch (_) { $("#mfa-st").textContent = "Unavailable"; }
 }
 
 async function load() {
@@ -254,31 +258,31 @@ async function load() {
 
   if (sub) {
     const bad = sub.status === "past_due", trial = sub.status === "trialing";
-    const st = bad ? "Da regolarizzare" : trial ? "In prova" : "Attivo";
+    const st = bad ? "Payment due" : trial ? "Trial" : "Active";
     $("#sub-st").innerHTML = `<span class="badge ${bad ? "warn" : "ok"}">${st}</span>`;
     $("#me-plan").textContent = plan ? plan.name : "LiveNode Cloud";
-    $("#sub-note").textContent = plan ? `${gbLabel(plan.gb)} di registrazioni · ${plan.price}/mese` : "";
-    const endLabel = sub.cancel_at_period_end ? "Termina il" : trial ? "Fine della prova" : "Si rinnova il";
+    $("#sub-note").textContent = plan ? `${gbLabel(plan.gb)} of recordings · ${plan.price}/month` : "";
+    const endLabel = sub.cancel_at_period_end ? "Ends on" : trial ? "Trial ends" : "Renews on";
     $("#sub").innerHTML = `
-      <div class="plan-now"><div class="pn-ico" aria-hidden="true"><i></i></div><div><b>${plan ? esc(plan.name) : "LiveNode Cloud"}</b><small>${sub.cancel_at_period_end ? "Disdetto, resta attivo fino alla scadenza" : "Rinnovo mensile automatico"}</small></div></div>
+      <div class="plan-now"><div class="pn-ico" aria-hidden="true"><i></i></div><div><b>${plan ? esc(plan.name) : "LiveNode Cloud"}</b><small>${sub.cancel_at_period_end ? "Cancelled, active until the end date" : "Renews automatically every month"}</small></div></div>
       <div class="kv"><span>${endLabel}</span><b>${fmtDate(sub.current_period_end)}</b></div>
-      <div class="kv"><span>Stato</span><b>${st}</b></div>
+      <div class="kv"><span>Status</span><b>${st}</b></div>
       <div id="use"></div>
       <div id="use-warn" class="msg warn hidden" style="margin-top:14px"></div>
-      ${bad ? `<div class="msg warn" style="margin-top:14px">Il pagamento non è andato a buon fine: aggiorna la carta da «Gestisci pagamenti».</div>` : ""}
-      <div class="row" style="margin-top:18px"><button class="key sm pri" data-portal="1">Cambia piano</button></div>`;
-    $("#pay").innerHTML = `<button class="key sm" id="portal" data-portal="1">Gestisci pagamenti</button>`;
+      ${bad ? `<div class="msg warn" style="margin-top:14px">Your payment failed: update your card from “Manage billing”.</div>` : ""}
+      <div class="row" style="margin-top:18px"><button class="key sm pri" data-portal="1">Change plan</button></div>`;
+    $("#pay").innerHTML = `<button class="key sm" id="portal" data-portal="1">Manage billing</button>`;
     show($("#pay-card"), true); show($("#plans-box"), false); show($("#intent"), false);
   } else {
-    $("#sub-st").innerHTML = `<span class="badge">Nessun piano</span>`;
-    $("#me-plan").textContent = "App gratuita";
-    $("#sub-note").textContent = "Stai usando l'app gratuita.";
-    $("#sub").innerHTML = `<p class="muted">La regia funziona anche senza abbonamento. Con LiveNode Cloud le dirette si salvano online e le puoi condividere con un link.</p>`;
+    $("#sub-st").innerHTML = `<span class="badge">No plan</span>`;
+    $("#me-plan").textContent = "Free app";
+    $("#sub-note").textContent = "You're using the free app.";
+    $("#sub").innerHTML = `<p class="muted">The control room works without a subscription. With LiveNode Cloud your live shows are saved online and you can share them with a link.</p>`;
     show($("#pay-card"), false);
     $("#plans").innerHTML = planCards(wanted && wanted.key);
     show($("#plans-box"), true);
     if (wanted) {
-      $("#intent").innerHTML = `Sei pronto per <b>${esc(wanted.name)}</b>, ${wanted.price}/mese. Prosegui per pagare su Stripe.`;
+      $("#intent").innerHTML = `You're about to start <b>${esc(wanted.name)}</b>, ${wanted.price}/month. Continue to pay on Stripe.`;
       show($("#intent"), true);
     }
   }
@@ -288,11 +292,11 @@ async function load() {
 
   const { data: devs } = await sb.from("devices").select("id,name,created_at,last_seen,app_version").order("created_at");
   const n = devs ? devs.length : 0;
-  $("#dev-n").textContent = n ? (n === 1 ? "1 Mac collegato" : n + " Mac collegati") : "Nessun Mac collegato.";
+  $("#dev-n").textContent = n ? (n === 1 ? "1 Mac linked" : n + " Macs linked") : "No Macs linked.";
   $("#devices").innerHTML = n ? devs.map(d => `
-    <div class="item"><div class="dev"><span class="dev-ico" aria-hidden="true"></span><div><strong>${esc(d.name)}</strong><br><small>${d.last_seen ? "Ultimo accesso il " + fmtDate(d.last_seen) : "Collegato il " + fmtDate(d.created_at)}${d.app_version ? " · versione " + esc(d.app_version) : ""}</small></div></div>
-    <div class="row"><button class="key sm" data-ren="${d.id}" data-name="${esc(d.name)}">Rinomina</button><button class="key sm" data-dev="${d.id}">Rimuovi</button></div></div>`).join("")
-    : `<p class="empty">Quando colleghi un Mac lo trovi qui.</p>`;
+    <div class="item"><div class="dev"><span class="dev-ico" aria-hidden="true"></span><div><strong>${esc(d.name)}</strong><br><small>${d.last_seen ? "Last seen on " + fmtDate(d.last_seen) : "Linked on " + fmtDate(d.created_at)}${d.app_version ? " · version " + esc(d.app_version) : ""}</small></div></div>
+    <div class="row"><button class="key sm" data-ren="${d.id}" data-name="${esc(d.name)}">Rename</button><button class="key sm" data-dev="${d.id}">Remove</button></div></div>`).join("")
+    : `<p class="empty">Macs you link will appear here.</p>`;
 }
 
 function flash(text, kind) { say($("#flash"), text, kind); if (text) window.scrollTo({ top: 0, behavior: "smooth" }); }
@@ -304,40 +308,40 @@ document.addEventListener("click", async e => {
     try { const r = await fn("checkout", { plan: b.dataset.plan }); location.href = r.url; }
     catch (err) {
       const c = err.data && err.data.error;
-      flash(c === "no_price" ? "Questo piano non è ancora configurato su Stripe (manca la lookup key del prezzo)." : c === "bad_key" ? "La chiave Stripe salvata in Supabase non è una chiave segreta (deve iniziare con sk_test_ o sk_live_)." : c === "auth" ? "Sessione scaduta: esci e accedi di nuovo." : "Non riesco ad avviare il pagamento (" + (c || err.status || "rete") + "). Riprova tra poco.", "err");
+      flash(c === "no_price" ? "This plan isn't set up on Stripe yet (the price lookup key is missing)." : c === "bad_key" ? "The Stripe key saved in Supabase is not a secret key (it must start with sk_test_ or sk_live_)." : c === "auth" ? "Session expired: sign out and sign in again." : "We couldn't start the payment (" + (c || err.status || "network") + "). Try again shortly.", "err");
       b.disabled = false; busy = false;
     }
   } else if (b.dataset.ren) {
-    const name = prompt("Nuovo nome per questo Mac:", b.dataset.name || "");
+    const name = prompt("New name for this Mac:", b.dataset.name || "");
     if (!name || !name.trim()) return;
     const { error } = await sb.from("devices").update({ name: name.trim().slice(0, 60) }).eq("id", b.dataset.ren);
-    if (error) flash("Non riesco a rinominare il Mac. Puoi cambiarne il nome dall'app.", "err"); else load();
+    if (error) flash("We couldn't rename the Mac. You can change its name from the app.", "err"); else load();
   } else if (b.id === "out-all") {
-    if (!confirm("Uscire da tutte le sessioni dell'account? Dovrai accedere di nuovo su ogni browser.")) return;
+    if (!confirm("Sign out of all account sessions? You'll need to sign in again on every browser.")) return;
     await sb.auth.signOut({ scope: "global" }); load();
   } else if (b.dataset.dev) {
-    if (!confirm("Rimuovere questo Mac? L'app dovrà essere collegata di nuovo.")) return;
+    if (!confirm("Remove this Mac? The app will need to be linked again.")) return;
     await sb.from("devices").delete().eq("id", b.dataset.dev); load();
   } else if (b.dataset.share) {
     const d = document.querySelector(`[data-days="${b.dataset.share}"]`).value;
     b.disabled = true;
-    try { const r = await fn("cloud", { action: "share", id: b.dataset.share, days: d ? Number(d) : null }); try { await navigator.clipboard.writeText(r.url); flash("Link copiato negli appunti.", "ok"); } catch (_) { flash("Link creato: " + r.url, "ok"); } await loadRecs(true); }
-    catch (err) { flash("Non riesco a creare il link.", "err"); b.disabled = false; }
+    try { const r = await fn("cloud", { action: "share", id: b.dataset.share, days: d ? Number(d) : null }); try { await navigator.clipboard.writeText(r.url); flash("Link copied to the clipboard.", "ok"); } catch (_) { flash("Link created: " + r.url, "ok"); } await loadRecs(true); }
+    catch (err) { flash("We couldn't create the link.", "err"); b.disabled = false; }
   } else if (b.dataset.copy) {
-    try { await navigator.clipboard.writeText(b.dataset.copy); flash("Link copiato negli appunti.", "ok"); } catch (_) { flash(b.dataset.copy, "ok"); }
+    try { await navigator.clipboard.writeText(b.dataset.copy); flash("Link copied to the clipboard.", "ok"); } catch (_) { flash(b.dataset.copy, "ok"); }
   } else if (b.dataset.unshare) {
     await fn("cloud", { action: "unshare", id: b.dataset.unshare }); loadRecs(true);
   } else if (b.dataset.delrec) {
-    if (!confirm("Eliminare questa registrazione dal Cloud? Non si può annullare.")) return;
+    if (!confirm("Delete this recording from the Cloud? This can't be undone.")) return;
     await fn("cloud", { action: "delete", id: b.dataset.delrec }); loadRecs(true);
   } else if (b.dataset.portal) {
     b.disabled = true; busy = true;
     try { const r = await fn("portal", {}); location.href = r.url; }
-    catch (err) { flash("Non riesco ad aprire la gestione dell'abbonamento.", "err"); b.disabled = false; busy = false; }
+    catch (err) { flash("We couldn't open subscription management.", "err"); b.disabled = false; busy = false; }
   } else if (b.id === "pwd") {
     const { data: { user } } = await sb.auth.getUser();
     const { error } = await sb.auth.resetPasswordForEmail(user.email, { redirectTo: backHere() });
-    flash(error ? Auth.human(error) : "Ti abbiamo inviato un'email con il link per cambiare password.", error ? "err" : "ok");
+    flash(error ? Auth.human(error) : "We've sent you an email with a link to change your password.", error ? "err" : "ok");
   } else if (b.id === "mfa-on") {
     b.disabled = true;
     try {
@@ -350,16 +354,16 @@ document.addEventListener("click", async e => {
       $("#mfa-img").src = qr.startsWith("data:") ? qr : "data:image/svg+xml;utf-8," + encodeURIComponent(qr);
       $("#mfa-secret").textContent = data.totp.secret;
       show($("#mfa-off"), false); show($("#mfa-setup"), true); $("#mfa-code").focus();
-    } catch (err) { flash("Non riesco ad attivare la verifica in due passaggi. Controlla che sia abilitata nel progetto Supabase.", "err"); }
+    } catch (err) { flash("We couldn't turn on two-step verification. Check that it is enabled in the Supabase project.", "err"); }
     b.disabled = false;
   } else if (b.id === "mfa-cancel") {
     if (mfaPending) { try { await sb.auth.mfa.unenroll({ factorId: mfaPending }); } catch (_) {} mfaPending = null; }
     loadMfa();
   } else if (b.id === "mfa-off-btn") {
-    if (!confirm("Disattivare la verifica in due passaggi? L'account sarà protetto solo dalla password.")) return;
+    if (!confirm("Turn off two-step verification? Your account will be protected by your password only.")) return;
     const { data } = await sb.auth.mfa.listFactors();
     for (const f of (data && data.totp) || []) await sb.auth.mfa.unenroll({ factorId: f.id });
-    flash("Verifica in due passaggi disattivata.", "ok"); loadMfa();
+    flash("Two-step verification turned off.", "ok"); loadMfa();
   } else if (b.id === "del-open") { show($("#del-box"), true); b.disabled = true; }
   else if (b.id === "del-no") { show($("#del-box"), false); $("#del-open").disabled = false; $("#del-t").value = ""; $("#del-go").disabled = true; }
   else if (b.id === "del-go") {
@@ -367,7 +371,7 @@ document.addEventListener("click", async e => {
     try { await fn("delete-account", {}); await sb.auth.signOut(); location.href = "./?account=eliminato"; }
     catch (err) {
       busy = false; b.disabled = false;
-      flash(err.data && err.data.error === "active_subscription" ? "Hai un abbonamento attivo: disdicilo da «Abbonamento e pagamenti», poi riprova." : "Non riesco a eliminare l'account. Scrivici a marco@piol.it.", "err");
+      flash(err.data && err.data.error === "active_subscription" ? "You have an active subscription: cancel it from “Subscription and billing”, then try again." : "We couldn't delete the account. Write to marco@piol.it.", "err");
     }
   }
 });
@@ -375,26 +379,26 @@ document.addEventListener("click", async e => {
 $("#mfa-form").addEventListener("submit", async e => {
   e.preventDefault();
   const code = $("#mfa-code").value.replace(/\D/g, "");
-  if (code.length !== 6 || !mfaPending) return flash("Il codice ha 6 cifre.", "err");
+  if (code.length !== 6 || !mfaPending) return flash("The code has 6 digits.", "err");
   const { error } = await sb.auth.mfa.challengeAndVerify({ factorId: mfaPending, code });
   if (error) return flash(Auth.human(error), "err");
   mfaPending = null; $("#mfa-code").value = "";
-  flash("Verifica in due passaggi attivata. Al prossimo accesso ti chiederemo il codice.", "ok"); loadMfa();
+  flash("Two-step verification is on. We'll ask for the code next time you sign in.", "ok"); loadMfa();
 });
 
 $("#email-form").addEventListener("submit", async e => {
   e.preventDefault();
   const v = $("#new-email").value.trim();
-  if (!/^\S+@\S+\.\S+$/.test(v)) return flash("Controlla il nuovo indirizzo email.", "err");
+  if (!/^\S+@\S+\.\S+$/.test(v)) return flash("Check the new email address.", "err");
   $("#email-go").disabled = true;
   const { error } = await sb.auth.updateUser({ email: v }, { emailRedirectTo: backHere() });
   $("#email-go").disabled = false;
   if (error) return flash(Auth.human(error), "err");
   $("#new-email").value = "";
-  flash("Controlla la posta: per completare il cambio devi confermare con il link che ti abbiamo inviato.", "ok");
+  flash("Check your inbox: confirm the change with the link we've sent you.", "ok");
 });
 
-$("#del-t").addEventListener("input", e => { $("#del-go").disabled = e.target.value.trim().toUpperCase() !== "ELIMINA"; });
+$("#del-t").addEventListener("input", e => { $("#del-go").disabled = e.target.value.trim().toUpperCase() !== "DELETE"; });
 $("#logout").addEventListener("click", async () => { await sb.auth.signOut(); load(); });
 sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
 
@@ -402,13 +406,13 @@ sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
   await load();
   if (fromCheckout) {
     openPane("abbonamento");
-    flash("Pagamento ricevuto. Sto attivando il piano…", "ok");
+    flash("Payment received. Activating your plan…", "ok");
     for (let i = 0; i < 15; i++) {
       await new Promise(r => setTimeout(r, 2000));
       const { data } = await sb.from("subscriptions").select("id").in("status", ["active", "trialing"]).limit(1);
-      if (data && data.length) { flash("Piano attivato. Grazie! Nell'app tocca «Aggiorna» per vederlo.", "ok"); await load(); openPane("abbonamento"); return; }
+      if (data && data.length) { flash("Plan activated. Thank you! In the app, tap “Refresh” (Aggiorna) to see it.", "ok"); await load(); openPane("abbonamento"); return; }
     }
-    flash("L'attivazione richiede più del solito. Ricarica la pagina tra un minuto: se non compare, scrivici.", "warn");
+    flash("Activation is taking longer than usual. Reload the page in a minute; if it doesn't appear, write to us.", "warn");
   }
 })();
 </script>

@@ -1,40 +1,44 @@
 <!doctype html>
-<html lang="it">
+<html lang="en" data-it="it/link.html" data-auto="always">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Collega il Mac — LiveNode</title>
+<title>Link your Mac — LiveNode</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f5f5f7' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="app.css">
+<link rel="alternate" hreflang="en" href="https://livenode-software.com/link.html">
+<link rel="alternate" hreflang="it" href="https://livenode-software.com/it/link.html">
+<link rel="alternate" hreflang="x-default" href="https://livenode-software.com/link.html">
+<script src="lang.js"></script>
 </head>
 <body>
-<header class="top"><div class="w"><a class="logo" href="./"><i></i>LiveNode</a><nav><a href="account.html">Account</a></nav></div></header>
+<header class="top"><div class="w"><a class="logo" href="./"><i></i>LiveNode</a><nav><a href="account.html">Account</a><a class="lang" href="it/link.html" hreflang="it" lang="it" data-setlang="it" title="Italiano">IT</a></nav></div></header>
 
 <main class="w"><div class="pair">
-  <h1>Collega il Mac</h1>
-  <p class="lead">Conferma il codice mostrato nell'app per collegare questo Mac al tuo account.</p>
+  <h1>Link your Mac</h1>
+  <p class="lead">Confirm the code shown in the app to link this Mac to your account.</p>
 
-  <div id="nocode" class="msg err hidden" style="margin-top:26px">Manca il codice. Apri questa pagina dall'app: LiveNode › Impostazioni › Informazioni › «Accedi».</div>
+  <div id="nocode" class="msg err hidden" style="margin-top:26px">The code is missing. Open this page from the app: LiveNode › Settings › About › “Sign in” (Impostazioni › Informazioni › Accedi).</div>
 
   <div id="auth-slot" style="margin-top:26px"></div>
 
   <div id="confirm" class="box hidden">
-    <div class="bh"><span>Richiesta di collegamento</span><b id="who"></b></div>
+    <div class="bh"><span>Link request</span><b id="who"></b></div>
     <div class="bb">
       <div id="msg" class="msg hidden"></div>
       <div id="info">
         <div class="mac"><span class="led"></span><span id="mac"></span></div>
         <div class="code" id="code"></div>
-        <p class="note">Controlla che il codice sia identico a quello mostrato nell'app. Se non l'hai richiesto tu, chiudi questa pagina.</p>
-        <div class="row" style="margin-top:18px"><button class="key pri" id="ok">Collega</button><a class="key" href="./">Annulla</a></div>
+        <p class="note">Check that the code matches the one shown in the app. If you didn't request it, close this page.</p>
+        <div class="row" style="margin-top:18px"><button class="key pri" id="ok">Link</button><a class="key" href="./">Cancel</a></div>
       </div>
     </div>
   </div>
 </div></main>
-<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
+<footer><div class="w"><div><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contact</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
 
 <script src="supabase.min.js"></script>
 <script src="config.js"></script>
@@ -43,7 +47,7 @@
 const code = (new URLSearchParams(location.search).get("code") || "").toUpperCase().replace(/[^A-Z0-9-]/g, "");
 if (!code) { show($("#nocode"), true); }
 else {
-  var authUI = Auth.mount($("#auth-slot"), { onDone: load, context: `Accedi per collegare il tuo Mac. Codice <b>${esc(code)}</b>.` });
+  var authUI = Auth.mount($("#auth-slot"), { onDone: load, context: `Sign in to link your Mac. Code <b>${esc(code)}</b>.` });
   sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
   load();
 }
@@ -62,7 +66,7 @@ async function load() {
     show($("#info"), true); say($("#msg"), "");
   } catch (e) {
     show($("#info"), false);
-    say($("#msg"), "Codice scaduto o non valido. Torna nell'app e tocca di nuovo «Accedi».", "err");
+    say($("#msg"), "Code expired or invalid. Go back to the app and click “Sign in” again.", "err");
   }
 }
 
@@ -71,10 +75,10 @@ $("#ok").addEventListener("click", async () => {
   try {
     await fn("device", { action: "approve", code });
     show($("#info"), false);
-    say($("#msg"), "Fatto. Il Mac è collegato: puoi tornare nell'app e chiudere questa pagina.", "ok");
+    say($("#msg"), "Done. Your Mac is linked: you can go back to the app and close this page.", "ok");
   } catch (e) {
     const d = e.data || {};
-    say($("#msg"), d.error === "limit" ? `Hai già ${d.max} Mac collegati. Rimuovine uno dalla pagina Account e riprova.` : "Codice scaduto. Torna nell'app e riprova.", "err");
+    say($("#msg"), d.error === "limit" ? `You already have ${d.max} Macs linked. Remove one from your Account page and try again.` : "Code expired. Go back to the app and try again.", "err");
     $("#ok").disabled = false;
   }
 });

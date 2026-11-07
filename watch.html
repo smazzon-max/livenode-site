@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="it">
+<html lang="en" data-it="it/watch.html" data-auto="always">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Registrazione — LiveNode</title>
+<title>Recording — LiveNode</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f5f5f7' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
@@ -19,19 +19,23 @@
 .meta b{color:var(--ink);font-weight:600}
 .bar2{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;align-items:center}
 </style>
+<link rel="alternate" hreflang="en" href="https://livenode-software.com/watch.html">
+<link rel="alternate" hreflang="it" href="https://livenode-software.com/it/watch.html">
+<link rel="alternate" hreflang="x-default" href="https://livenode-software.com/watch.html">
+<script src="lang.js"></script>
 </head>
 <body>
-<header class="top"><div class="w"><a class="logo" href="./"><i></i>LiveNode</a><nav><a href="./">Scopri LiveNode</a></nav></div></header>
+<header class="top"><div class="w"><a class="logo" href="./"><i></i>LiveNode</a><nav><a href="./">Discover LiveNode</a><a class="lang" href="it/watch.html" hreflang="it" lang="it" data-setlang="it" title="Italiano">IT</a></nav></div></header>
 <main class="w"><div class="player">
   <div id="msg" class="msg hidden"></div>
   <div id="box" class="hidden">
     <h1 id="title"></h1>
-    <div class="meta"><span>Durata <b id="dur"></b></span><span>Peso <b id="size"></b></span><span id="exp"></span></div>
+    <div class="meta"><span>Length <b id="dur"></b></span><span>Size <b id="size"></b></span><span id="exp"></span></div>
     <div class="frame"><video id="v" controls playsinline preload="metadata"></video></div>
-    <div class="bar2"><a class="key pri" id="dl" href="#">Scarica</a><span class="note">Registrata con LiveNode</span></div>
+    <div class="bar2"><a class="key pri" id="dl" href="#">Download</a><span class="note">Recorded with LiveNode</span></div>
   </div>
 </div></main>
-<footer><div class="w"><div><a href="privacy.html">Privacy</a><a href="terms.html">Termini</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
+<footer><div class="w"><div><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
 <script src="config.js"></script>
 <script>
 const $ = s => document.querySelector(s);
@@ -40,20 +44,20 @@ const clock = s => s == null ? "—" : [Math.floor(s / 3600), Math.floor(s / 60)
 const sz = b => b >= 1e9 ? (b / 1e9).toFixed(1) + " GB" : Math.round(b / 1e6) + " MB";
 function fail(text) { const m = $("#msg"); m.className = "msg err"; m.textContent = text; }
 (async () => {
-  if (t.length < 16) return fail("Link non valido.");
+  if (t.length < 16) return fail("Invalid link.");
   try {
     const r = await fetch(`${CFG.functions}/cloud`, {
       method: "POST", headers: { "Content-Type": "application/json", apikey: CFG.anonKey }, body: JSON.stringify({ action: "watch", t }),
     });
     const d = await r.json().catch(() => ({}));
-    if (r.status === 410) return fail("Questo link è scaduto.");
-    if (!r.ok) return fail("Registrazione non trovata. Il link potrebbe essere stato revocato.");
+    if (r.status === 410) return fail("This link has expired.");
+    if (!r.ok) return fail("Recording not found. The link may have been revoked.");
     document.title = d.title + " — LiveNode";
     $("#title").textContent = d.title; $("#dur").textContent = clock(d.duration_sec); $("#size").textContent = sz(d.size_bytes);
-    $("#exp").textContent = d.expires ? "Disponibile fino al " + new Date(d.expires).toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" }) : "";
+    $("#exp").textContent = d.expires ? "Available until " + new Date(d.expires).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
     $("#v").src = d.play; $("#dl").href = d.download;
     $("#box").classList.remove("hidden");
-  } catch (e) { fail("Non riesco a caricare la registrazione. Riprova."); }
+  } catch (e) { fail("We couldn't load the recording. Try again."); }
 })();
 </script>
 </body>

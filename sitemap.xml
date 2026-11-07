@@ -1,12 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://livenode-software.com/</loc></url>
-  <url><loc>https://livenode-software.com/assistenza.html</loc></url>
-  <url><loc>https://livenode-software.com/novita.html</loc></url>
-  <url><loc>https://livenode-software.com/iphone-come-camera-mac.html</loc></url>
-  <url><loc>https://livenode-software.com/regia-zoom-multicamera.html</loc></url>
-  <url><loc>https://livenode-software.com/controllo-atem-mac.html</loc></url>
-  <url><loc>https://livenode-software.com/privacy.html</loc></url>
-  <url><loc>https://livenode-software.com/terms.html</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://livenode-software.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/"/>
+  </url>
+  <url><loc>https://livenode-software.com/support.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/support.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/assistenza.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/support.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/assistenza.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/support.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/assistenza.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/support.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/whats-new.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/whats-new.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/novita.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/whats-new.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/novita.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/whats-new.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/novita.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/whats-new.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/iphone-as-camera-for-mac.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/iphone-as-camera-for-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/iphone-come-camera-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/iphone-as-camera-for-mac.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/iphone-come-camera-mac.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/iphone-as-camera-for-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/iphone-come-camera-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/iphone-as-camera-for-mac.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/zoom-multicam-production.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/zoom-multicam-production.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/regia-zoom-multicamera.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/zoom-multicam-production.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/regia-zoom-multicamera.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/zoom-multicam-production.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/regia-zoom-multicamera.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/zoom-multicam-production.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/atem-control-mac.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/atem-control-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/controllo-atem-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/atem-control-mac.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/controllo-atem-mac.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/atem-control-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/controllo-atem-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/atem-control-mac.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/privacy.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/privacy.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/terms.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/terms.html"/>
+  </url>
   <url><loc>https://livenode-software.com/privacy-camera.html</loc></url>
 </urlset>
