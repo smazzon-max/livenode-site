@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Collega il Mac — LiveNode</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#09090B">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2309090B'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f5f5f7' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
@@ -35,27 +35,24 @@
     </div>
   </div>
 </div></main>
-<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · Piemme</div></div></footer>
+<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
 <script src="site.js"></script>
 <script>
-let ui;
 const code = (new URLSearchParams(location.search).get("code") || "").toUpperCase().replace(/[^A-Z0-9-]/g, "");
 if (!code) { show($("#nocode"), true); }
 else {
-  ui = Auth.mount($("#auth-slot"), { onDone: load, context: `Accedi per collegare il tuo Mac. Codice <b>${esc(code)}</b>.` });
+  Auth.mount($("#auth-slot"), { onDone: load, context: `Accedi per collegare il tuo Mac. Codice <b>${esc(code)}</b>.` });
   sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
   load();
 }
 
 async function load() {
   const { data: { session } } = await sb.auth.getSession();
-  const mfa = !!session && !Auth.recovering && await Auth.needsMfa();
-  const inApp = !!session && !Auth.recovering && !mfa;
+  const inApp = !!session && !Auth.recovering;
   show($("#auth-slot"), !inApp); show($("#confirm"), inApp);
-  if (mfa) { ui.view("mfa"); return; }
   if (!inApp) return;
   $("#who").textContent = session.user.email;
   $("#code").textContent = code;

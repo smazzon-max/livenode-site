@@ -5,6 +5,9 @@ const CFG = {
   anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsd3huZWp0emJtY3dhcGJ5dmRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3MjI0OTksImV4cCI6MjEwNzI5ODQ5OX0.LavHlVYDt53bCrkDlcxRdm5OiW7kYdSTrXCeRBxvhzc",
   // dove si scarica l'app (da cambiare quando carichi il DMG)
   dmgUrl: "https://livenode-software.com/download/LiveNode.dmg",
+  // giorni di prova gratuita mostrati sul sito: 0 = nessuna prova.
+  // Mettilo a 7 SOLO dopo aver aggiunto la prova nella funzione «checkout» (trial_period_days: 7).
+  trialDays: 0,
   // prezzi mostrati sul sito: devono coincidere con quelli creati in Stripe
   plans: [
     { key: "cloud_start",  name: "Cloud Start",  gb: 50,   price: "9 €",  note: "Per provare e per piccoli eventi" },

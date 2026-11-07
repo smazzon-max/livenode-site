@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LiveNode — regia live per Mac</title>
 <meta name="description" content="LiveNode: la regia video live per Mac. iPhone come camere, controllo di Zoom, OBS e ATEM, qualità adattiva, registrazione. Gratis.">
-<meta name="theme-color" content="#09090B">
+<meta name="theme-color" content="#000000">
 <meta property="og:type" content="website">
 <meta property="og:title" content="LiveNode — regia live per Mac">
 <meta property="og:description" content="Quattro camere. Un Mac. Zero rack.">
 <meta property="og:url" content="https://livenode-software.com/">
 <link rel="canonical" href="https://livenode-software.com/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2309090B'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='14' y='14' width='36' height='36' fill='none' stroke='%23f4f4f5' stroke-width='5'/%3E%3Crect x='24' y='24' width='16' height='16' fill='%23FF4A00'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="landing.css">
 </head>
 <body class="cr">
@@ -34,8 +34,8 @@
     <aside>
       <p>La regia live che sta su un portatile: iPhone come camere, Zoom, OBS e ATEM sotto controllo, la qualità che si adatta da sola alla rete.</p>
       <div class="btnrow">
-        <a class="key pri" id="dl" href="#">▼ Scarica per Mac</a>
-        <a class="key" href="#console">Provala ↓</a>
+        <a class="key pri" id="dl" href="#">Scarica per Mac</a>
+        <a class="key" href="#console">Provala</a>
       </div>
       <small>GRATIS · macOS 14.4+ · APPLE SILICON / INTEL</small>
     </aside>
@@ -203,13 +203,13 @@
 
   <section class="end">
     <h2>Luce<br>rossa<span class="tl"></span></h2>
-    <div class="btnrow"><a class="key pri" id="dl2" href="#" style="height:56px;padding:0 28px">▼ Scarica per Mac</a></div>
+    <div class="btnrow"><a class="key pri" id="dl2" href="#" style="height:56px;padding:0 28px">Scarica per Mac</a></div>
   </section>
 </main>
 
 <footer class="ft"><div class="w">
   <div><a href="account.html">Account</a><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="privacy-camera.html">Privacy Camera</a><a href="mailto:marco@piol.it">Contatti</a></div>
-  <div>© Production Management S.r.l. · Piemme</div>
+  <div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div>
 </div></footer>
 
 <script src="config.js"></script>
@@ -220,11 +220,12 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
 /* piani */
 $("#plans").innerHTML = CFG.plans.map((p, i) => {
   const seg = Math.max(1, Math.round(Math.log2(p.gb / 25)));      // 50→1, 250→3, 1000→5
+  const trial = CFG.trialDays ? `<span class="trial">${CFG.trialDays} giorni gratis</span>` : "";
   return `<div class="slot"><h3>${p.name}</h3>
     <div class="pr">${p.price}<small> /MESE</small></div>
     <div class="cap">${Array.from({length: 6}, (_, k) => `<i class="${k < seg ? "on" : ""}"></i>`).join("")}</div>
-    <p><b style="color:#f4f4f5">${p.gb >= 1000 ? (p.gb / 1000) + " TB" : p.gb + " GB"}</b> di registrazioni<br>${p.note}</p>
-    <a class="key" href="account.html?plan=${p.key}">Scegli ▸</a></div>`;
+    <p><b style="color:#fff">${p.gb >= 1000 ? (p.gb / 1000) + " TB" : p.gb + " GB"}</b> di registrazioni<br>${p.note}</p>
+    ${trial}<a class="key" href="account.html?plan=${p.key}">${CFG.trialDays ? "Prova gratis" : "Scegli"}</a></div>`;
 }).join("");
 
 /* striscia */
