@@ -16,7 +16,8 @@
 <header class="top"><div class="w"><a class="logo" href="./"><i></i>LiveNode</a><nav><a href="account.html">Account</a></nav></div></header>
 
 <main class="w"><div class="pair">
-  <h1>Collega<br><s>il Mac.</s></h1>
+  <h1>Collega il Mac</h1>
+  <p class="lead">Conferma il codice mostrato nell'app per collegare questo Mac al tuo account.</p>
 
   <div id="nocode" class="msg err hidden" style="margin-top:26px">Manca il codice. Apri questa pagina dall'app: LiveNode › Impostazioni › Informazioni › «Accedi».</div>
 
@@ -44,13 +45,14 @@
 const code = (new URLSearchParams(location.search).get("code") || "").toUpperCase().replace(/[^A-Z0-9-]/g, "");
 if (!code) { show($("#nocode"), true); }
 else {
-  Auth.mount($("#auth-slot"), { onDone: load, context: `Accedi per collegare il tuo Mac. Codice <b>${esc(code)}</b>.` });
+  var authUI = Auth.mount($("#auth-slot"), { onDone: load, context: `Accedi per collegare il tuo Mac. Codice <b>${esc(code)}</b>.` });
   sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
   load();
 }
 
 async function load() {
   const { data: { session } } = await sb.auth.getSession();
+  if (session && !Auth.recovering && await Auth.needsMfa()) { show($("#auth-slot"), true); show($("#confirm"), false); authUI.view("mfa"); return; }
   const inApp = !!session && !Auth.recovering;
   show($("#auth-slot"), !inApp); show($("#confirm"), inApp);
   if (!inApp) return;

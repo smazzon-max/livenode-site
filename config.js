@@ -8,6 +8,9 @@ const CFG = {
   // giorni di prova gratuita mostrati sul sito: 0 = nessuna prova.
   // Mettilo a 7 SOLO dopo aver aggiunto la prova nella funzione «checkout» (trial_period_days: 7).
   trialDays: 0,
+  // link App Store delle app per iPhone e iPad: lascia "" finché non sono pubblicate
+  cameraUrl: "",   // LiveNode Camera (iPhone come camera)
+  dockUrl: "",     // telecomando Dock (iPad e iPhone)
   // prezzi mostrati sul sito: devono coincidere con quelli creati in Stripe
   plans: [
     { key: "cloud_start",  name: "Cloud Start",  gb: 50,   price: "9 €",  note: "Per provare e per piccoli eventi" },
