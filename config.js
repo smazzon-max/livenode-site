@@ -7,7 +7,7 @@ const CFG = {
   dmgUrl: "https://livenode-software.com/download/LiveNode.dmg",
   // giorni di prova gratuita mostrati sul sito: 0 = nessuna prova.
   // Mettilo a 7 SOLO dopo aver aggiunto la prova nella funzione «checkout» (trial_period_days: 7).
-  trialDays: 0,
+  trialDays: 7,
   // link App Store delle app per iPhone e iPad: lascia "" finché non sono pubblicate
   cameraUrl: "",   // LiveNode Camera (iPhone come camera)
   dockUrl: "",     // telecomando Dock (iPad e iPhone)
