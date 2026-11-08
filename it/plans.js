@@ -1,7 +1,7 @@
 /* LiveNode · schede dei piani (home e account). Prezzi e nomi arrivano da config.js */
 const PLAN_GROUPS = {
   free: [
-    ["Camere", ["Fino a 2 iPhone collegati insieme", "Zoom, fuoco, torcia e microfono dalla regia"]],
+    ["Camere", ["Fino a 2 iPhone collegati insieme", "Zoom, fuoco e torcia dalla regia"]],
     ["Controlli", ["Zoom, OBS e ATEM dalla stessa console", "Mixer audio con livelli per canale"]],
     ["Rete", ["Qualità adattiva: il video non si blocca"]],
     ["Registrazione", ["Registrazione sul Mac"]],

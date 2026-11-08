@@ -81,4 +81,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/terms.html"/>
   </url>
   <url><loc>https://livenode-software.com/privacy-camera.html</loc></url>
+  <url><loc>https://livenode-software.com/clips.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/clips.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/clips.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/clips.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/clips.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/clips.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/clips.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/clips.html"/>
+  </url>
 </urlset>
