@@ -52,9 +52,9 @@ const Auth = (() => {
     if (code === 429 || /rate limit|too many|seconds/i.test(t)) return "Too many attempts. Try again in a few minutes.";
     if (/Failed to fetch|NetworkError|Load failed/i.test(t)) return "No connection, or the service can't be reached.";
     if (/invalid.*email|unable to validate email/i.test(t)) return "Check the email address.";
-    if (/sending .*email|smtp|mail/i.test(t)) return "We couldn't send the confirmation email. Try again later or write to marco@piol.it.";
+    if (/sending .*email|smtp|mail/i.test(t)) return "We couldn't send the confirmation email. Try again later or write to contact@livenode-software.com.";
     if (/totp|mfa|factor|invalid.*code|code.*invalid|expired/i.test(t)) return "Invalid or expired code. Check your phone's time and try again.";
-    if (/database error/i.test(t)) return "Service error while creating the account. Write to marco@piol.it.";
+    if (/database error/i.test(t)) return "Service error while creating the account. Write to contact@livenode-software.com.";
     return "Something went wrong (" + (code || t.slice(0, 60) || "error") + "). Try again.";
   }
 

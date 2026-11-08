@@ -21,7 +21,7 @@
   <h1>Collega il Mac</h1>
   <p class="lead">Conferma il codice mostrato nell'app per collegare questo Mac al tuo account.</p>
 
-  <div id="nocode" class="msg err hidden" style="margin-top:26px">Manca il codice. Apri questa pagina dall'app: LiveNode › Impostazioni › Informazioni › «Accedi».</div>
+  <div id="nocode" class="msg err hidden" style="margin-top:26px">Manca il codice. Apri questa pagina dall'app: LiveNode › Settings › About › «Sign in».</div>
 
   <div id="auth-slot" style="margin-top:26px"></div>
 
@@ -38,7 +38,7 @@
     </div>
   </div>
 </div></main>
-<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
+<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:contact@livenode-software.com">Contatti</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
 
 <script src="../supabase.min.js"></script>
 <script src="../config.js"></script>
@@ -66,7 +66,7 @@ async function load() {
     show($("#info"), true); say($("#msg"), "");
   } catch (e) {
     show($("#info"), false);
-    say($("#msg"), "Codice scaduto o non valido. Torna nell'app e tocca di nuovo «Accedi».", "err");
+    say($("#msg"), "Codice scaduto o non valido. Torna nell'app e premi di nuovo «Sign in».", "err");
   }
 }
 

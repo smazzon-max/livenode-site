@@ -52,9 +52,9 @@ const Auth = (() => {
     if (code === 429 || /rate limit|too many|seconds/i.test(t)) return "Troppi tentativi. Riprova tra qualche minuto.";
     if (/Failed to fetch|NetworkError|Load failed/i.test(t)) return "Connessione assente o servizio non raggiungibile.";
     if (/invalid.*email|unable to validate email/i.test(t)) return "Controlla l'indirizzo email.";
-    if (/sending .*email|smtp|mail/i.test(t)) return "Non riesco a inviare l'email di conferma. Riprova più tardi o scrivici a marco@piol.it.";
+    if (/sending .*email|smtp|mail/i.test(t)) return "Non riesco a inviare l'email di conferma. Riprova più tardi o scrivici a contact@livenode-software.com.";
     if (/totp|mfa|factor|invalid.*code|code.*invalid|expired/i.test(t)) return "Codice non valido o scaduto. Controlla l'ora del telefono e riprova.";
-    if (/database error/i.test(t)) return "Errore del servizio durante la creazione dell'account. Scrivici a marco@piol.it.";
+    if (/database error/i.test(t)) return "Errore del servizio durante la creazione dell'account. Scrivici a contact@livenode-software.com.";
     return "Qualcosa non ha funzionato (" + (code || t.slice(0, 60) || "errore") + "). Riprova.";
   }
 

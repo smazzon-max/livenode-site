@@ -109,7 +109,7 @@
         </div>
         <div class="card tip">
           <h2>Link a new Mac</h2>
-          <p>Open LiveNode on your Mac, go to <b>Settings › About</b> (Impostazioni › Informazioni) and click <b>Sign in</b> (Accedi). This page opens with the code to confirm.</p>
+          <p>Open LiveNode on your Mac, go to <b>Settings › About</b> and click <b>Sign in</b>. This page opens with the code to confirm.</p>
         </div>
       </section>
 
@@ -143,13 +143,13 @@
           </div>
           <div id="rec-box"><div id="recs"><p class="empty">Loading…</p></div></div>
         </div>
-        <p class="note">Recordings are uploaded from the app: Settings › Recording › Cloud recordings (Impostazioni › Registrazione › Registrazioni nel Cloud).</p>
+        <p class="note">Recordings are uploaded from the app: Settings › Recording › Cloud recordings.</p>
       </section>
     </div>
   </div>
 </main>
 
-<footer><div class="w"><div><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contact</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
+<footer><div class="w"><div><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="mailto:contact@livenode-software.com">Contact</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
 
 <script src="supabase.min.js"></script>
 <script src="config.js"></script>
@@ -371,7 +371,7 @@ document.addEventListener("click", async e => {
     try { await fn("delete-account", {}); await sb.auth.signOut(); location.href = "./?account=eliminato"; }
     catch (err) {
       busy = false; b.disabled = false;
-      flash(err.data && err.data.error === "active_subscription" ? "You have an active subscription: cancel it from “Subscription and billing”, then try again." : "We couldn't delete the account. Write to marco@piol.it.", "err");
+      flash(err.data && err.data.error === "active_subscription" ? "You have an active subscription: cancel it from “Subscription and billing”, then try again." : "We couldn't delete the account. Write to contact@livenode-software.com.", "err");
     }
   }
 });
@@ -410,7 +410,7 @@ sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
     for (let i = 0; i < 15; i++) {
       await new Promise(r => setTimeout(r, 2000));
       const { data } = await sb.from("subscriptions").select("id").in("status", ["active", "trialing"]).limit(1);
-      if (data && data.length) { flash("Plan activated. Thank you! In the app, tap “Refresh” (Aggiorna) to see it.", "ok"); await load(); openPane("abbonamento"); return; }
+      if (data && data.length) { flash("Plan activated. Thank you! In the app, click “Refresh” to see it.", "ok"); await load(); openPane("abbonamento"); return; }
     }
     flash("Activation is taking longer than usual. Reload the page in a minute; if it doesn't appear, write to us.", "warn");
   }

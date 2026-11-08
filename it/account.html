@@ -109,7 +109,7 @@
         </div>
         <div class="card tip">
           <h2>Collegare un nuovo Mac</h2>
-          <p>Apri LiveNode sul Mac, vai in <b>Impostazioni › Informazioni</b> e premi <b>Accedi</b>. Si apre questa pagina con il codice da confermare.</p>
+          <p>Apri LiveNode sul Mac, vai in <b>Settings › About</b> e premi <b>Sign in</b>. Si apre questa pagina con il codice da confermare.</p>
         </div>
       </section>
 
@@ -143,13 +143,13 @@
           </div>
           <div id="rec-box"><div id="recs"><p class="empty">Caricamento…</p></div></div>
         </div>
-        <p class="note">Le registrazioni si caricano dall'app: Impostazioni › Registrazione › Registrazioni nel Cloud.</p>
+        <p class="note">Le registrazioni si caricano dall'app: Settings › Recording › Cloud recordings.</p>
       </section>
     </div>
   </div>
 </main>
 
-<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:marco@piol.it">Contatti</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
+<footer><div class="w"><div><a href="terms.html">Termini</a><a href="privacy.html">Privacy</a><a href="mailto:contact@livenode-software.com">Contatti</a></div><div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div></div></footer>
 
 <script src="../supabase.min.js"></script>
 <script src="../config.js"></script>
@@ -371,7 +371,7 @@ document.addEventListener("click", async e => {
     try { await fn("delete-account", {}); await sb.auth.signOut(); location.href = "./?account=eliminato"; }
     catch (err) {
       busy = false; b.disabled = false;
-      flash(err.data && err.data.error === "active_subscription" ? "Hai un abbonamento attivo: disdicilo da «Abbonamento e pagamenti», poi riprova." : "Non riesco a eliminare l'account. Scrivici a marco@piol.it.", "err");
+      flash(err.data && err.data.error === "active_subscription" ? "Hai un abbonamento attivo: disdicilo da «Abbonamento e pagamenti», poi riprova." : "Non riesco a eliminare l'account. Scrivici a contact@livenode-software.com.", "err");
     }
   }
 });
@@ -410,7 +410,7 @@ sb.auth.onAuthStateChange(ev => { if (ev !== "PASSWORD_RECOVERY") load(); });
     for (let i = 0; i < 15; i++) {
       await new Promise(r => setTimeout(r, 2000));
       const { data } = await sb.from("subscriptions").select("id").in("status", ["active", "trialing"]).limit(1);
-      if (data && data.length) { flash("Piano attivato. Grazie! Nell'app tocca «Aggiorna» per vederlo.", "ok"); await load(); openPane("abbonamento"); return; }
+      if (data && data.length) { flash("Piano attivato. Grazie! Nell'app premi «Refresh» per vederlo.", "ok"); await load(); openPane("abbonamento"); return; }
     }
     flash("L'attivazione richiede più del solito. Ricarica la pagina tra un minuto: se non compare, scrivici.", "warn");
   }
