@@ -1,13 +1,17 @@
 /* LiveNode · schede dei piani, in stile tabella prezzi */
 .pcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;align-items:stretch}
 .pc{display:flex;flex-direction:column;padding:24px 22px 26px;background:#0d0d0d;border:1px solid #2b2b2b;color:#b9b9b9;font-family:"Montserrat",Arial,sans-serif}
-.pc header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:22px}
-.pc h3{margin:0;font:600 19px/1.15 "Montserrat",Arial,sans-serif;letter-spacing:-.045em;color:#fff;text-transform:none}
-.pc-badge{flex:none;padding:4px 9px;border:1px solid #3a3a3a;font:500 11px "JetBrains Mono",monospace;letter-spacing:.04em;color:#fff;white-space:nowrap}
-.pc-price{margin:0;font:600 clamp(32px,2.8vw,40px)/1 "Montserrat",Arial,sans-serif;letter-spacing:-.06em;color:#fff}
-.pc-per{margin:8px 0 0;font:400 14px "Montserrat",Arial,sans-serif;color:#8c8c8c}
-.pc .trial{margin-top:14px}
-.pc-go{margin:22px 0 24px;padding-bottom:24px;border-bottom:1px solid #2b2b2b}
+.pc h3{margin:0 0 18px;font:600 17px/1.2 "Montserrat",Arial,sans-serif;letter-spacing:-.03em;color:#fff;text-transform:none}
+.pc-price{display:flex;align-items:flex-end;gap:12px;min-height:50px;margin:0}
+.pc-price small{white-space:nowrap}
+.pc-price b{font:600 clamp(40px,3.4vw,50px)/.9 "Montserrat",Arial,sans-serif;letter-spacing:-.06em;color:#fff}
+.pc-price small{padding-bottom:3px;font:400 12px/1.35 "Montserrat",Arial,sans-serif;color:#8c8c8c}
+.pc-gb{margin:20px 0 0;padding-top:16px;border-top:1px solid #2b2b2b}
+.pc-gb b{display:block;font:600 28px/1 "Montserrat",Arial,sans-serif;letter-spacing:-.04em;color:#FF4A00}
+.pc-gb span{display:block;margin-top:6px;font:400 13px "Montserrat",Arial,sans-serif;color:#b9b9b9}
+.pc-note{display:flex;align-items:flex-start;gap:9px;min-height:2.9em;margin:16px 0 0;font:500 13px/1.45 "Montserrat",Arial,sans-serif;color:#fff}
+.pc-note i{flex:none;width:8px;height:8px;margin-top:.45em;background:#FF4A00}
+.pc-go{margin:14px 0 24px;padding-bottom:24px;border-bottom:1px solid #2b2b2b}
 .pc-go .key{width:100%;justify-content:space-between}
 .pc-inc{margin:0 0 16px;font:600 14px "Montserrat",Arial,sans-serif;color:#fff}
 .pc-list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
@@ -21,9 +25,12 @@
 .pc.hl{background:#FF4A00;border-color:#FF4A00;color:#1a0700}
 .pc.hl h3,.pc.hl .pc-price,.pc.hl .pc-inc,.pc.hl .pc-list b{color:#000}
 .pc.hl .pc-per,.pc.hl .pc-list span{color:#2b0c00}
-.pc.hl .pc-badge{border-color:#000;color:#000}
+.pc.hl .pc-gb{border-color:#0000004d}
+.pc.hl .pc-gb b{color:#000}
+.pc.hl .pc-price small,.pc.hl .pc-gb span{color:#2b0c00}
+.pc.hl .pc-note{color:#000}
+.pc.hl .pc-note i{background:#000}
 .pc.hl .pc-go{border-color:#0000004d}
 .pc.hl .pc-list b i{border-color:#000}.pc.hl .pc-list b i::after{background:#000}
-.pc.hl .trial{background:#000;color:#FF4A00}
 .pc.hl .key,.pc.hl .key.pri{background:linear-gradient(#000,#000) left/0 100% no-repeat,#fff;border-color:#fff;color:#000}
 .pc.hl .key:hover{background-size:100% 100%,auto;border-color:#000;color:#fff}
