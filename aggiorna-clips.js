@@ -26,8 +26,14 @@ for (const [name, b64] of Object.entries(D.icons)) {
 }
 
 // 2. stile
+// (il blocco viene sempre rinnovato: così anche chi aveva lanciato una versione precedente riceve gli stili nuovi)
 let css = read("landing.css");
-if (!css.includes("LiveNode Clips (aggiunto")) write("landing.css", css + D.css);
+const START = "\n/* LiveNode Clips (aggiunto", END = "/* fine LiveNode Clips */\n";
+const block = D.css.replace(/^\n?/, "\n") + END;
+const a = css.indexOf(START);
+if (a < 0) css = css + block;
+else { const e = css.indexOf(END, a); css = css.slice(0, a) + block + (e < 0 ? "" : css.slice(e + END.length)); }
+write("landing.css", css);
 
 // 3. home: scheda Clips, riga nei prezzi
 for (const [file, k, priceAnchor] of [["index.html", "en", 'id="plans"></div>\n'], ["it/index.html", "it", 'id="plans"></div>\n']]) {
