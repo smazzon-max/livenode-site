@@ -37,7 +37,7 @@ const backHere = () => location.origin + location.pathname + location.search;
    ------------------------------------------------------------------ */
 const Auth = (() => {
   // se si arriva da un link «recupera password», la pagina non deve mostrare l'area riservata
-  let recovering = /type=recovery/.test(location.hash);
+  let recovering = /type=(recovery|invite)/.test(location.hash);   // anche chi arriva da un invito sceglie la password
 
   function human(error) {
     const t = String((error && error.message) || error || "");

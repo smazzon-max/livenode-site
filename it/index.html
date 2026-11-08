@@ -116,8 +116,9 @@
       <h2>Prezzi</h2>
       <p>La regia è gratuita, senza account e senza limiti di tempo. Paghi solo se vuoi LiveNode Cloud: le dirette si caricano online dall'app e le mandi al cliente con un link, senza file pesanti da trasferire. Disdici quando vuoi.</p>
     </div>
+    <div id="ptog"></div>
     <div class="pcs" id="plans"></div>
-    <p class="fine">Prezzi IVA esclusa. Pagamenti gestiti da Stripe: LiveNode non vede né conserva i dati della carta.</p>
+    <p class="fine">Prezzi IVA esclusa. Pagamenti gestiti da Stripe: LiveNode non vede né conserva i dati della carta. * Quanti iPhone reggi davvero dipende dal Mac e dalla rete.</p>
   </section>
 
   <!-- ============ DOMANDE ============ -->
@@ -177,9 +178,13 @@ if (dev === "mac") { d.textContent = "Stai usando un Mac: scarica la regia."; d.
 else if (dev) { d.textContent = "La regia gira sul Mac. Da qui puoi installare le app per camera e telecomando."; d.classList.remove("hidden"); }
 else if (/Windows|Android|Linux/.test(ua)) { d.textContent = "LiveNode è disponibile per Mac. Apri questa pagina dal Mac per scaricarlo."; d.classList.remove("hidden"); }
 
-/* piani */
-$("#plans").innerHTML = planCard({ key: "free" }, `<a class="key" href="${CFG.dmgUrl}">Scarica gratis</a>`)
-  + CFG.plans.map(p => planCard(p, `<a class="key" href="account.html?plan=${p.key}">${CFG.trialDays ? "Prova gratis" : "Scegli " + p.name}</a>`, p.key === "cloud_pro")).join("");
+/* piani, con interruttore Mensile / Annuale */
+function renderPlans() {
+  $("#plans").innerHTML = planCard({ key: "free" }, `<a class="key" href="${CFG.dmgUrl}">Scarica gratis</a>`)
+    + CFG.plans.map(p => planCard(p, `<a class="key" href="account.html?plan=${p.key}${PLAN_YEAR ? "&interval=year" : ""}">${CFG.trialDays ? "Prova gratis" : "Scegli " + p.name}</a>`, p.key === "cloud_pro")).join("");
+}
+planToggle($("#ptog"), renderPlans);
+renderPlans();
 </script>
 </body>
 </html>

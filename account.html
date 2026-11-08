@@ -46,6 +46,7 @@
         <a href="#dispositivi" data-p="dispositivi">Devices</a>
         <a href="#abbonamento" data-p="abbonamento">Subscription and billing</a>
         <a href="#registrazioni" data-p="registrazioni">Cloud recordings</a>
+        <a href="#team" data-p="team">Team</a>
       </nav>
     </aside>
 
@@ -126,8 +127,9 @@
         </div>
         <section id="plans-box" class="hidden">
           <h2 class="sec-t">Choose a plan <span class="note">· excl. VAT</span></h2>
+          <div id="ptog"></div>
           <div class="pcs" id="plans"></div>
-          <p class="note" style="margin-top:12px">Secure payment on Stripe. Monthly renewal, cancel anytime.</p>
+          <p class="note" style="margin-top:12px">Secure payment on Stripe. Monthly or yearly renewal, cancel anytime. * How many iPhones you can actually run depends on your Mac and network.</p>
         </section>
       </section>
 
@@ -145,6 +147,13 @@
         </div>
         <p class="note">Recordings are uploaded from the app: Settings › Recording › Cloud recordings.</p>
       </section>
+
+      <!-- TEAM -->
+      <section class="pane hidden" id="p-team">
+        <header class="ph"><h1>Team</h1><p>With Cloud Studio up to 5 people use the same subscription: shared storage and recordings, each with their own account and Macs.</p></header>
+        <div id="team-inv"></div>
+        <div id="team-box"></div>
+      </section>
     </div>
   </div>
 </main>
@@ -158,23 +167,36 @@
 <script>
 const qs = new URLSearchParams(location.search);
 const wanted = CFG.plans.find(p => p.key === qs.get("plan"));
+if (qs.get("interval") === "year") PLAN_YEAR = true;
+const perLabel = () => PLAN_YEAR ? "/year" : "/month";
 const fromCheckout = qs.get("checkout") === "ok";
 let busy = false, mfaPending = null;
 
 const authUI = Auth.mount($("#auth-slot"), {
   onDone: load,
   start: wanted ? "up" : "in",
-  context: wanted ? `To activate <b>${wanted.name}</b> (${wanted.price}/month) create an account or sign in.` : "",
+  context: wanted ? `To activate <b>${wanted.name}</b> (${planPrice(wanted)}${perLabel()}) create an account or sign in.` : "",
 });
 
 /* sezioni */
-const panes = ["profilo", "dispositivi", "abbonamento", "registrazioni"];
+const panes = ["profilo", "dispositivi", "abbonamento", "registrazioni", "team"];
+let teamDefault = false;
 function openPane(p) {
-  if (!panes.includes(p)) p = wanted || fromCheckout ? "abbonamento" : "profilo";
+  if (!panes.includes(p)) p = wanted || fromCheckout ? "abbonamento" : teamDefault ? "team" : "profilo";
   panes.forEach(x => show($("#p-" + x), x === p));
   $$("#sidenav a").forEach(a => a.classList.toggle("on", a.dataset.p === p));
 }
 window.addEventListener("hashchange", () => { openPane(location.hash.slice(1)); window.scrollTo(0, 0); });
+
+let planToggleSet = null;
+function renderPlanBox() {
+  if (!planToggleSet) { planToggleSet = planToggle($("#ptog"), renderPlanBox); planToggleSet(PLAN_YEAR); }
+  $("#plans").innerHTML = planCards(wanted && wanted.key);
+  if (wanted) {
+    $("#intent").innerHTML = `You're about to start <b>${esc(wanted.name)}</b>, ${planPrice(wanted)}${perLabel()}. Continue to pay on Stripe.`;
+    show($("#intent"), true);
+  }
+}
 
 function planCards(sel) {
   const hl = sel || "cloud_pro";
@@ -182,7 +204,7 @@ function planCards(sel) {
 }
 
 const clock = s => s == null ? "—" : [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map((n, i) => i ? String(n).padStart(2, "0") : n).join(":");
-const mb = b => b >= 1e9 ? (b / 1e9).toFixed(1) + " GB" : Math.round(b / 1e6) + " MB";
+const mb = b => b >= 1e12 ? +(b / 1e12).toFixed(2) + " TB" : b >= 1e9 ? (b / 1e9).toFixed(1) + " GB" : Math.round(b / 1e6) + " MB";
 
 let recItems = [];
 function renderRecs() {
@@ -197,12 +219,13 @@ function renderRecs() {
     : list.map(it => `
       <div class="item rec">
         <div style="min-width:0"><strong>${esc(it.title)}</strong>${it.status === "uploading" ? " <small>(uploading)</small>" : ""}<br>
-          <small>${clock(it.duration_sec)} · ${mb(it.size_bytes)} · ${fmtDate(it.created_at)}${it.share_url ? " · shared" + (it.share_expires_at ? " until " + fmtDate(it.share_expires_at) : "") : ""}</small></div>
+          <small>${it.by ? "by " + esc(it.by) + " · " : ""}${clock(it.duration_sec)} · ${mb(it.size_bytes)} · ${fmtDate(it.created_at)}${it.share_url ? " · shared" + (it.share_expires_at ? " until " + fmtDate(it.share_expires_at) : "") : ""}</small></div>
         <div class="row">
+          ${it.can_manage === false ? (it.share_url ? `<button class="key sm" data-copy="${esc(it.share_url)}">Copy link</button><a class="key sm" href="${esc(it.share_url)}" target="_blank" rel="noopener">Watch</a>` : "") : `
           ${it.status === "ready" ? `<select class="sel" data-days="${it.id}"><option value="7">7 days</option><option value="30">30 days</option><option value="">No expiry</option></select>
           <button class="key sm" data-share="${it.id}">${it.share_url ? "New link" : "Share"}</button>` : ""}
           ${it.share_url ? `<button class="key sm" data-copy="${esc(it.share_url)}">Copy link</button><a class="key sm" href="${esc(it.share_url)}" target="_blank" rel="noopener">Watch</a><button class="key sm" data-unshare="${it.id}">Revoke</button>` : ""}
-          <button class="key sm bad" data-delrec="${it.id}">Delete</button>
+          <button class="key sm bad" data-delrec="${it.id}">Delete</button>`}
         </div>
       </div>`).join("");
 }
@@ -251,42 +274,49 @@ async function load() {
   $("#who").textContent = email; $("#cur-email").textContent = email; $("#av").textContent = email.slice(0, 1).toUpperCase();
   openPane(location.hash.slice(1));
 
-  const { data: subs } = await sb.from("subscriptions").select("plan,status,current_period_end,cancel_at_period_end")
-    .in("status", ["active", "trialing", "past_due"]).order("current_period_end", { ascending: false }).limit(1);
-  const sub = subs && subs[0];
+  // piano: il proprio o quello del team (funzione "team"); se la funzione non c'è ancora, si legge l'abbonamento
+  let info = null;
+  try { info = await fn("team", { action: "info" }); } catch (_) {}
+  if (!info) {
+    const { data: subs } = await sb.from("subscriptions").select("plan,status,current_period_end,cancel_at_period_end")
+      .in("status", ["active", "trialing", "past_due"]).order("current_period_end", { ascending: false }).limit(1);
+    const s = subs && subs[0];
+    info = { role: s ? "owner" : "none", sub: s || null, members: [], invites: [], max_members: 1, owner_email: null };
+  }
+  const sub = info.sub;
   const plan = sub && CFG.plans.find(p => p.key === sub.plan);
+  const year = sub && sub.billing_interval === "year";
+  const member = info.role === "member";
 
   if (sub) {
     const bad = sub.status === "past_due", trial = sub.status === "trialing";
     const st = bad ? "Payment due" : trial ? "Trial" : "Active";
     $("#sub-st").innerHTML = `<span class="badge ${bad ? "warn" : "ok"}">${st}</span>`;
-    $("#me-plan").textContent = plan ? plan.name : "LiveNode Cloud";
-    $("#sub-note").textContent = plan ? `${gbLabel(plan.gb)} of recordings · ${plan.price}/month` : "";
+    $("#me-plan").textContent = (plan ? plan.name : "LiveNode Cloud") + (member ? " · team" : "");
+    $("#sub-note").textContent = plan ? `${gbLabel(plan.gb)} of recordings` + (member ? "" : ` · ${planPrice(plan, year)}${year ? "/year" : "/month"}`) : "";
     const endLabel = sub.cancel_at_period_end ? "Ends on" : trial ? "Trial ends" : "Renews on";
     $("#sub").innerHTML = `
-      <div class="plan-now"><div class="pn-ico" aria-hidden="true"><i></i></div><div><b>${plan ? esc(plan.name) : "LiveNode Cloud"}</b><small>${sub.cancel_at_period_end ? "Cancelled, active until the end date" : "Renews automatically every month"}</small></div></div>
-      <div class="kv"><span>${endLabel}</span><b>${fmtDate(sub.current_period_end)}</b></div>
+      <div class="plan-now"><div class="pn-ico" aria-hidden="true"><i></i></div><div><b>${plan ? esc(plan.name) : "LiveNode Cloud"}</b><small>${member ? "You're in the team of " + esc(info.owner_email || "") : sub.cancel_at_period_end ? "Cancelled, active until the end date" : year ? "Renews automatically every year" : "Renews automatically every month"}</small></div></div>
+      ${member ? "" : `<div class="kv"><span>${endLabel}</span><b>${fmtDate(sub.current_period_end)}</b></div>`}
       <div class="kv"><span>Status</span><b>${st}</b></div>
       <div id="use"></div>
       <div id="use-warn" class="msg warn hidden" style="margin-top:14px"></div>
-      ${bad ? `<div class="msg warn" style="margin-top:14px">Your payment failed: update your card from “Manage billing”.</div>` : ""}
-      <div class="row" style="margin-top:18px"><button class="key sm pri" data-portal="1">Change plan</button></div>`;
+      ${bad && !member ? `<div class="msg warn" style="margin-top:14px">Your payment failed: update your card from “Manage billing”.</div>` : ""}
+      ${member ? `<p class="muted" style="margin-top:14px">The subscription is managed by the team owner. You can leave the team from the <a href="#team">Team</a> section.</p>`
+        : `<div class="row" style="margin-top:18px"><button class="key sm pri" data-portal="1">Change plan</button></div>`}`;
     $("#pay").innerHTML = `<button class="key sm" id="portal" data-portal="1">Manage billing</button>`;
-    show($("#pay-card"), true); show($("#plans-box"), false); show($("#intent"), false);
+    show($("#pay-card"), !member); show($("#plans-box"), false); show($("#intent"), false);
   } else {
     $("#sub-st").innerHTML = `<span class="badge">No plan</span>`;
     $("#me-plan").textContent = "Free app";
     $("#sub-note").textContent = "You're using the free app.";
     $("#sub").innerHTML = `<p class="muted">The control room works without a subscription. With LiveNode Cloud your live shows are saved online and you can share them with a link.</p>`;
     show($("#pay-card"), false);
-    $("#plans").innerHTML = planCards(wanted && wanted.key);
+    renderPlanBox();
     show($("#plans-box"), true);
-    if (wanted) {
-      $("#intent").innerHTML = `You're about to start <b>${esc(wanted.name)}</b>, ${wanted.price}/month. Continue to pay on Stripe.`;
-      show($("#intent"), true);
-    }
   }
-
+  renderTeam(info);
+  if (teamDefault && !location.hash && !wanted && !fromCheckout) openPane("team");
   loadRecs(!!sub);
   loadMfa();
 
@@ -299,16 +329,86 @@ async function load() {
     : `<p class="empty">Macs you link will appear here.</p>`;
 }
 
+/* ---------- team (Cloud Studio) ---------- */
+const TEAM_ERR = {
+  full: "The team is full.", exists: "This person is already in the team or already has an invitation.", bad_email: "Check the email address.",
+  self: "You're already in the team: you're the owner.", own_subscription: "You already have your own subscription: cancel it first to join the team.",
+  already_member: "You're already in another team: leave it before accepting.", team_inactive: "This team's subscription is no longer active.",
+  not_owner: "Only the subscription owner can invite people.", no_team_plan: "Teams are only included in Cloud Studio.",
+};
+const teamErr = err => TEAM_ERR[err && err.data && err.data.error] || "Something went wrong. Try again.";
+
+function renderTeam(info) {
+  const inv = info.invites || [];
+  teamDefault = inv.length > 0;
+  $("#team-inv").innerHTML = inv.map(i => `
+    <div class="card tip">
+      <div class="ch"><div><h2>Team invitation</h2><p><b>${esc(i.owner_email || "A subscriber")}</b> invited you to their Cloud Studio team. You'll get the team's storage and recordings.</p></div></div>
+      <div class="row"><button class="key sm pri" data-tacc="${esc(i.owner_id)}">Accept</button><button class="key sm" data-tdec="${esc(i.owner_id)}">Decline</button></div>
+    </div>`).join("");
+
+  const max = Number(info.max_members || 1);
+  if (info.role === "member") {
+    $("#team-box").innerHTML = `<div class="card">
+      <div class="ch"><div><h2>Your team</h2><p>You're in the team of <b>${esc(info.owner_email || "")}</b>. The plan and storage are theirs.</p></div><button class="key sm" id="team-leave">Leave team</button></div>
+    </div>`;
+  } else if (info.role === "owner" && max > 1) {
+    const ms = info.members || [], full = ms.length >= max - 1;
+    $("#team-box").innerHTML = `<div class="card">
+      <div class="ch"><div><h2>People in the team</h2><p>${ms.length + 1} of ${max}, including you.</p></div></div>
+      <div class="item"><div><strong>You</strong><br><small>Owner · you pay for the subscription</small></div></div>
+      ${ms.map(m => `<div class="item"><div style="min-width:0"><strong>${esc(m.email)}</strong><br><small>${m.status === "active" ? "Active" : "Invitation sent, waiting"}</small></div>
+        <div class="row"><button class="key sm" data-trem="${esc(m.email)}">${m.status === "active" ? "Remove" : "Cancel invitation"}</button></div></div>`).join("")}
+      <form id="team-form" class="inline" novalidate style="margin-top:16px">
+        <div class="f"><label for="team-email">Invite someone</label><input id="team-email" type="email" autocomplete="off" placeholder="name@example.com" ${full ? "disabled" : ""}></div>
+        <button class="key sm pri" type="submit" ${full ? "disabled" : ""}>Invite</button>
+      </form>
+      <p class="note" style="margin-top:10px">${full ? "The team is full. Remove someone to invite another person." : "People without an account get an email to create one. People who already have one find the invitation here, in the Team section, next time they sign in."}</p>
+    </div>`;
+  } else {
+    $("#team-box").innerHTML = `<div class="card">
+      <div class="ch"><div><h2>Teams are included in Cloud Studio</h2><p>Up to 5 people share 1 TB and the recordings, each with their own account. Only the owner pays.</p></div>
+      ${info.role === "owner" ? `<button class="key sm pri" data-portal="1">Switch to Cloud Studio</button>` : `<a class="key sm pri" href="#abbonamento">Choose Cloud Studio</a>`}</div>
+    </div>`;
+  }
+}
+
+document.addEventListener("click", async e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const act = b.dataset.tacc ? ["accept", { owner_id: b.dataset.tacc }, "Welcome to the team."]
+    : b.dataset.tdec ? ["decline", { owner_id: b.dataset.tdec }, "Invitation declined."]
+    : b.dataset.trem ? ["remove", { email: b.dataset.trem }, "Fatto."]
+    : b.id === "team-leave" ? ["leave", {}, "You left the team."] : null;
+  if (!act) return;
+  if (act[0] === "leave" && !confirm("Leave the team? Your recordings stay yours, but without a plan you won't be able to upload more.")) return;
+  if (act[0] === "remove" && !confirm("Remove " + b.dataset.trem + " from the team? Their recordings stay in their account.")) return;
+  b.disabled = true;
+  try { await fn("team", { action: act[0], ...act[1] }); flash(act[2], "ok"); await load(); openPane("team"); }
+  catch (err) { flash(teamErr(err), "err"); b.disabled = false; }
+});
+document.addEventListener("submit", async e => {
+  if (e.target.id !== "team-form") return;
+  e.preventDefault();
+  const email = $("#team-email").value.trim();
+  if (!email) return;
+  const btn = e.target.querySelector("button"); btn.disabled = true;
+  try {
+    const r = await fn("team", { action: "invite", email, lang: document.documentElement.lang });
+    flash(r.emailed ? `Invitation sent to ${email}.` : `Invitation ready: ${email} will find it in the Team section when they sign in.`, "ok");
+    await load(); openPane("team");
+  } catch (err) { flash(teamErr(err), "err"); btn.disabled = false; }
+});
+
 function flash(text, kind) { say($("#flash"), text, kind); if (text) window.scrollTo({ top: 0, behavior: "smooth" }); }
 
 document.addEventListener("click", async e => {
   const b = e.target.closest("button"); if (!b || busy) return;
   if (b.dataset.plan) {
     b.disabled = true; busy = true;
-    try { const r = await fn("checkout", { plan: b.dataset.plan, lang: document.documentElement.lang }); location.href = r.url; }
+    try { const r = await fn("checkout", { plan: b.dataset.plan, interval: PLAN_YEAR ? "year" : "month", lang: document.documentElement.lang }); location.href = r.url; }
     catch (err) {
       const c = err.data && err.data.error;
-      flash(c === "no_price" ? "This plan isn't set up on Stripe yet (the price lookup key is missing)." : c === "bad_key" ? "The Stripe key saved in Supabase is not a secret key (it must start with sk_test_ or sk_live_)." : c === "auth" ? "Session expired: sign out and sign in again." : "We couldn't start the payment (" + (c || err.status || "network") + "). Try again shortly.", "err");
+      flash(c === "no_price" ? (PLAN_YEAR ? "The yearly price of this plan isn't set up on Stripe yet (the …_year lookup key is missing)." : "This plan isn't set up on Stripe yet (the price lookup key is missing).") : c === "bad_key" ? "The Stripe key saved in Supabase is not a secret key (it must start with sk_test_ or sk_live_)." : c === "auth" ? "Session expired: sign out and sign in again." : "We couldn't start the payment (" + (c || err.status || "network") + "). Try again shortly.", "err");
       b.disabled = false; busy = false;
     }
   } else if (b.dataset.ren) {

@@ -113,8 +113,9 @@
       <h2>Pricing</h2>
       <p>The control room is free, with no account and no time limit. You only pay if you want LiveNode Cloud: your live shows upload from the app and you send them to clients with a link, with no heavy files to transfer. Cancel anytime.</p>
     </div>
+    <div id="ptog"></div>
     <div class="pcs" id="plans"></div>
-    <p class="fine">Prices exclude VAT. Payments are handled by Stripe: LiveNode never sees or stores your card details.</p>
+    <p class="fine">Prices exclude VAT. Payments are handled by Stripe: LiveNode never sees or stores your card details. * How many iPhones you can actually run depends on your Mac and network.</p>
   </section>
 
   <section class="block w" id="faq">
@@ -172,9 +173,13 @@ if (dev === "mac") { d.textContent = "You're on a Mac: download the control room
 else if (dev) { d.textContent = "The control room runs on the Mac. From here you can install the camera and remote apps."; d.classList.remove("hidden"); }
 else if (/Windows|Android|Linux/.test(ua)) { d.textContent = "LiveNode is available for Mac. Open this page on your Mac to download it."; d.classList.remove("hidden"); }
 
-/* piani */
-$("#plans").innerHTML = planCard({ key: "free" }, `<a class="key" href="${CFG.dmgUrl}">Download free</a>`)
-  + CFG.plans.map(p => planCard(p, `<a class="key" href="account.html?plan=${p.key}">${CFG.trialDays ? "Start free trial" : "Choose " + p.name}</a>`, p.key === "cloud_pro")).join("");
+/* plans, with Monthly / Yearly switch */
+function renderPlans() {
+  $("#plans").innerHTML = planCard({ key: "free" }, `<a class="key" href="${CFG.dmgUrl}">Download free</a>`)
+    + CFG.plans.map(p => planCard(p, `<a class="key" href="account.html?plan=${p.key}${PLAN_YEAR ? "&interval=year" : ""}">${CFG.trialDays ? "Start free trial" : "Choose " + p.name}</a>`, p.key === "cloud_pro")).join("");
+}
+planToggle($("#ptog"), renderPlans);
+renderPlans();
 </script>
 </body>
 </html>
