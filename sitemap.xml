@@ -91,4 +91,44 @@
     <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/clips.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/clips.html"/>
   </url>
+  <url><loc>https://livenode-software.com/livenode.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/livenode.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/livenode.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/livenode.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/livenode.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/livenode.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/livenode.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/livenode.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/camera.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/camera.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/camera.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/camera.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/camera.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/camera.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/camera.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/camera.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/dock.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/dock.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/dock.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/dock.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/dock.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/dock.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/dock.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/dock.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/cloud.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/cloud.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/cloud.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/cloud.html"/>
+  </url>
+  <url><loc>https://livenode-software.com/it/cloud.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://livenode-software.com/cloud.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://livenode-software.com/it/cloud.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://livenode-software.com/cloud.html"/>
+  </url>
 </urlset>
