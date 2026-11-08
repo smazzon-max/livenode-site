@@ -305,7 +305,7 @@ document.addEventListener("click", async e => {
   const b = e.target.closest("button"); if (!b || busy) return;
   if (b.dataset.plan) {
     b.disabled = true; busy = true;
-    try { const r = await fn("checkout", { plan: b.dataset.plan }); location.href = r.url; }
+    try { const r = await fn("checkout", { plan: b.dataset.plan, lang: document.documentElement.lang }); location.href = r.url; }
     catch (err) {
       const c = err.data && err.data.error;
       flash(c === "no_price" ? "This plan isn't set up on Stripe yet (the price lookup key is missing)." : c === "bad_key" ? "The Stripe key saved in Supabase is not a secret key (it must start with sk_test_ or sk_live_)." : c === "auth" ? "Session expired: sign out and sign in again." : "We couldn't start the payment (" + (c || err.status || "network") + "). Try again shortly.", "err");
@@ -336,7 +336,7 @@ document.addEventListener("click", async e => {
     await fn("cloud", { action: "delete", id: b.dataset.delrec }); loadRecs(true);
   } else if (b.dataset.portal) {
     b.disabled = true; busy = true;
-    try { const r = await fn("portal", {}); location.href = r.url; }
+    try { const r = await fn("portal", { lang: document.documentElement.lang }); location.href = r.url; }
     catch (err) { flash("We couldn't open subscription management.", "err"); b.disabled = false; busy = false; }
   } else if (b.id === "pwd") {
     const { data: { user } } = await sb.auth.getUser();

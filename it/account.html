@@ -305,7 +305,7 @@ document.addEventListener("click", async e => {
   const b = e.target.closest("button"); if (!b || busy) return;
   if (b.dataset.plan) {
     b.disabled = true; busy = true;
-    try { const r = await fn("checkout", { plan: b.dataset.plan }); location.href = r.url; }
+    try { const r = await fn("checkout", { plan: b.dataset.plan, lang: document.documentElement.lang }); location.href = r.url; }
     catch (err) {
       const c = err.data && err.data.error;
       flash(c === "no_price" ? "Questo piano non è ancora configurato su Stripe (manca la lookup key del prezzo)." : c === "bad_key" ? "La chiave Stripe salvata in Supabase non è una chiave segreta (deve iniziare con sk_test_ o sk_live_)." : c === "auth" ? "Sessione scaduta: esci e accedi di nuovo." : "Non riesco ad avviare il pagamento (" + (c || err.status || "rete") + "). Riprova tra poco.", "err");
@@ -336,7 +336,7 @@ document.addEventListener("click", async e => {
     await fn("cloud", { action: "delete", id: b.dataset.delrec }); loadRecs(true);
   } else if (b.dataset.portal) {
     b.disabled = true; busy = true;
-    try { const r = await fn("portal", {}); location.href = r.url; }
+    try { const r = await fn("portal", { lang: document.documentElement.lang }); location.href = r.url; }
     catch (err) { flash("Non riesco ad aprire la gestione dell'abbonamento.", "err"); b.disabled = false; busy = false; }
   } else if (b.id === "pwd") {
     const { data: { user } } = await sb.auth.getUser();
