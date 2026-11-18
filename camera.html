@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LiveNode Camera | Use your iPhone as a wireless camera for Mac</title>
 <meta name="description" content="LiveNode Camera turns your iPhone into a wireless camera for the LiveNode control room on Mac. Connect by scanning a QR code; zoom, focus and torch are controlled from the Mac.">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#f8f8f7">
 <meta property="og:type" content="website">
 <meta property="og:title" content="LiveNode Camera | Use your iPhone as a wireless camera for Mac">
 <meta property="og:description" content="LiveNode Camera turns your iPhone into a wireless camera for the LiveNode control room on Mac. Connect by scanning a QR code; zoom, focus and torch are controlled from the Mac.">
@@ -18,18 +18,48 @@
 <link rel="apple-touch-icon" href="icons/camera.png">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="landing.css">
+<link rel="stylesheet" href="ln.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "LiveNode Camera", "description": "LiveNode Camera turns your iPhone into a wireless camera for the LiveNode control room on Mac. Connect by scanning a QR code; zoom, focus and torch are controlled from the Mac.", "url": "https://livenode-software.com/camera.html", "inLanguage": "en", "publisher": {"@type": "Organization", "name": "Production Management S.r.l.", "brand": "Piemme", "url": "https://www.piemme.srl"}, "applicationCategory": "MultimediaApplication", "operatingSystem": "iOS"}</script>
 <script src="theme.js"></script>
 </head>
 <body class="cr">
 
-<header class="top"><div class="w">
-  <a class="logo" href="./"><i></i>LiveNode</a>
-  <nav>
-    <div class="nl"><a href="./#download">Apps</a><a href="./#how-it-works">How it works</a><a href="./#pricing">Pricing</a><a href="./#faq">FAQ</a><a href="support.html">Support</a></div>
-    <div class="nr"><button class="theme" type="button" data-theme-toggle aria-label="Light or dark mode" title="Light or dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></button><a class="pill ghost" href="account.html">Account</a><a class="pill" href="./#download">Download</a></div>
-  </nav>
-</div></header>
+<header class="hd" id="hd">
+  <div class="hd-veil" aria-hidden="true"></div>
+  <div class="chip">
+    <div class="chip-bar">
+      <a class="logo" href="./" aria-label="LiveNode, home"><i></i>LiveNode</a>
+      <nav class="nav-inline" aria-label="Main"><a href="./#apps" data-roll>Apps</a><a href="./#how-it-works" data-roll>How it works</a><a href="./#pricing" data-roll>Pricing</a><a href="./#faq" data-roll>FAQ</a><a href="support.html" data-roll>Support</a></nav>
+      <span class="chip-page">Camera</span>
+      <button class="chip-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open the menu"><i></i><i></i></button>
+    </div>
+    <div class="chip-panel" id="menu" inert>
+      <div class="chip-inner">
+        <nav aria-label="Menu"><a href="./#apps" data-roll>Apps</a><a href="./#how-it-works" data-roll>How it works</a><a href="./#pricing" data-roll>Pricing</a><a href="./#faq" data-roll>FAQ</a><a href="support.html" data-roll>Support</a><a class="m-only" href="account.html" data-roll>Account</a></nav>
+        <div class="chip-extra">
+          <div><p>Apps</p><a href="livenode.html">LiveNode</a><a href="camera.html">LiveNode Camera</a><a href="dock.html">LiveNode Dock</a><a href="cloud.html">LiveNode Cloud</a><a href="clips.html">LiveNode Clips</a></div>
+          <div><p>More</p><a href="whats-new.html">What&#x27;s new</a><a href="account.html">Account</a><a href="https://www.piemme.srl" target="_blank" rel="noreferrer">Piemme</a><button class="theme-row" type="button" data-theme-toggle><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg><span>Light / dark</span></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="acts">
+    <button class="theme" type="button" data-theme-toggle aria-label="Light or dark mode" title="Light or dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></button>
+    <a class="act" href="account.html">Account</a>
+    <a class="act pri" href="#waitlist" data-wl-open><span class="lg">Join the waitlist</span><span class="sm">Waitlist</span></a>
+  </div>
+  <div class="wl-pop" id="wl-pop" role="dialog" aria-label="Join the waitlist" inert>
+    <button class="wl-x" type="button" data-wl-close aria-label="Close">&times;</button>
+    <h2>Join the waitlist</h2>
+    <p>LiveNode is almost ready. Leave your email and we&#x27;ll write to you the day it&#x27;s out.</p>
+    <form class="wlf" data-wl="camera" novalidate>
+      <div class="wlf-row"><input type="email" name="email" autocomplete="email" placeholder="you@example.com" aria-label="Your email" required><button class="key pri" type="submit">Join the waitlist</button></div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="chk"><input type="checkbox" name="privacy"><span>I agree to the <a href="privacy.html">privacy policy</a>. We&#x27;ll only email you about LiveNode.</span></label>
+      <p class="wlf-msg" role="status"></p>
+    </form>
+  </div>
+</header>
 
 <main>
   <section class="hero w app-hero">
@@ -38,12 +68,13 @@
     <h1>Your iPhone,<br><s>a wireless camera.</s></h1>
     <p class="hero-lead">LiveNode Camera turns an iPhone into a camera for the LiveNode control room. Scan the QR code on the Mac and you're connected.</p>
     <div class="btnrow">
-      <a class="key pri" data-store="camera" href="#">App Store</a>
+      <a class="key pri" href="#waitlist">Join the waitlist</a>
       <a class="key" href="#how-it-works">How it works</a>
     </div>
     <p class="hero-meta">iPhone · Works with LiveNode for Mac</p>
   </section>
-  <section class="block w" id="how-it-works">
+  <div class="hero-shot rv"><figure class="shot light"><img src="shots/camera-hero.png" alt="" loading="lazy" onerror="this.remove()"><figcaption><b>shots/camera-hero.png</b>LiveNode Camera on iPhone while shooting: full-screen picture with the LIVE / connected badge. Best: iPhone in a hand or on a tripod, next to the Mac.</figcaption></figure></div>
+  <section class="block w rv" id="how-it-works">
     <div class="bhd">
       <h2>How it works</h2>
       <p>Connected in three steps.</p>
@@ -54,7 +85,7 @@
       <li><em>03</em><h3>Scan the code</h3><p>Scan it with LiveNode Camera. The phone joins your sources as a camera.</p></li>
     </ol>
   </section>
-  <section class="block w">
+  <section class="block w rv">
     <div class="bhd">
       <h2>A camera you control from the Mac</h2>
       <p>You don't need to touch the phone during the show.</p>
@@ -77,17 +108,31 @@
       <li><a href="clips.html"><img src="icons/clips.png" width="96" height="96" alt="" loading="lazy"><b>LiveNode Clips</b><small>Mac</small></a></li>
     </ul>
   </section>
-  <section class="end w">
-    <div><h2>Start with the control room</h2><p>LiveNode for Mac is free.</p></div>
-    <a class="key pri" data-dmg href="#">Download for Mac</a>
-  </section>
+  <div class="wlb-wrap" id="waitlist"><section class="wlb rv"><div class="wlb-in">
+    <p class="eyebrow">Waitlist</p>
+    <h2>Be the first on air.</h2>
+    <p>LiveNode is almost ready. Leave your email and we&#x27;ll write to you the day it&#x27;s out. No spam, one email.</p>
+    <form class="wlf" data-wl="camera" novalidate>
+      <div class="wlf-row"><input type="email" name="email" autocomplete="email" placeholder="you@example.com" aria-label="Your email" required><button class="key pri" type="submit">Join the waitlist</button></div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="chk"><input type="checkbox" name="privacy"><span>I agree to the <a href="privacy.html">privacy policy</a>. We&#x27;ll only email you about LiveNode.</span></label>
+      <p class="wlf-msg" role="status"></p>
+    </form>
+  </div></section></div>
 </main>
 
-<footer class="ft"><div class="w">
-  <div><a href="livenode.html">LiveNode</a><a href="camera.html">LiveNode Camera</a><a href="dock.html">LiveNode Dock</a><a href="cloud.html">LiveNode Cloud</a><a href="clips.html">LiveNode Clips</a><a href="account.html">Account</a><a href="support.html">Support</a><a href="whats-new.html">What's new</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="privacy-camera.html">Camera privacy</a></div>
-  <div>© Production Management S.r.l. · <a href="https://www.piemme.srl">Piemme</a></div>
+<footer class="ft2"><div class="w">
+  <div class="ft2-cols">
+    <div><p>Apps</p><a href="livenode.html">LiveNode</a><a href="camera.html">LiveNode Camera</a><a href="dock.html">LiveNode Dock</a><a href="cloud.html">LiveNode Cloud</a><a href="clips.html">LiveNode Clips</a></div>
+    <div><p>Resources</p><a href="./#how-it-works">How it works</a><a href="./#pricing">Pricing</a><a href="support.html">Support</a><a href="whats-new.html">What&#x27;s new</a><a href="iphone-as-camera-for-mac.html">iPhone as a camera</a><a href="zoom-multicam-production.html">Zoom multi-camera</a><a href="atem-control-mac.html">ATEM control</a></div>
+    <div><p>Legal</p><a href="terms.html">Terms of service</a><a href="privacy.html">Privacy policy</a><a href="privacy-camera.html">Camera privacy</a></div>
+    <div><p>Company</p><a href="account.html">Account</a><a href="mailto:contact@livenode-software.com">contact@livenode-software.com</a><a href="https://www.piemme.srl" target="_blank" rel="noreferrer">Piemme ↗</a></div>
+  </div>
+  <div class="ft2-word" aria-hidden="true"><i></i>LiveNode</div>
+  <div class="ft2-base"><span>© 2026 Production Management S.r.l. · All rights reserved.</span><span>Made in Italy by <a href="https://www.piemme.srl" target="_blank" rel="noreferrer">Piemme</a></span></div>
 </div></footer>
 <script src="config.js"></script>
+<script src="menu.js"></script>
 <script>
 document.querySelectorAll("[data-dmg]").forEach(function (a) { a.href = CFG.dmgUrl; });
 /* App Store: finché il link non c'è, il pulsante dice «Coming soon to the App Store» */
