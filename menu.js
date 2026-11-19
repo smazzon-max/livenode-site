@@ -3,55 +3,69 @@
 (function () {
   var hd = document.getElementById("hd");
   if (hd) {
-    var btn = hd.querySelector(".chip-toggle"), panel = hd.querySelector(".chip-panel");
-    var pop = document.getElementById("wl-pop");
+    var pop = document.getElementById("wl-pop"), mnav = document.getElementById("mnav"), burger = hd.querySelector(".burger");
+    var dds = [].slice.call(hd.querySelectorAll(".dd"));
+    var fine = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-    // lettere che ruotano al passaggio del mouse
-    hd.querySelectorAll("[data-roll]").forEach(function (a) {
-      var t = a.textContent; a.setAttribute("aria-label", t); a.textContent = "";
-      var r = document.createElement("span"); r.className = "roll"; r.setAttribute("aria-hidden", "true");
-      [].forEach.call(t, function (c, i) {
-        var ch = document.createElement("span"); ch.className = "rl-c"; ch.style.setProperty("--i", i);
-        var x = c === " " ? " " : c;
-        ch.innerHTML = "<span></span><span></span>"; ch.children[0].textContent = x; ch.children[1].textContent = x;
-        r.appendChild(ch);
+    // «Product» e «For teams»: si aprono passando sopra (mouse) o premendo (tocco / tastiera)
+    function setDd(dd, on) {
+      dd.classList.toggle("open", on);
+      dd.querySelector(".dd-btn").setAttribute("aria-expanded", on ? "true" : "false");
+    }
+    function closeDds(except) { dds.forEach(function (d) { if (d !== except) setDd(d, false); }); }
+    dds.forEach(function (dd) {
+      var t = null;
+      var hoverAt = 0;
+      dd.querySelector(".dd-btn").addEventListener("click", function () {
+        // se si è appena aperto passando col mouse, il clic lo lascia aperto
+        var on = !dd.classList.contains("open") || Date.now() - hoverAt < 500;
+        closeDds(dd); setDd(dd, on); if (on) setWl(false);
       });
-      a.appendChild(r);
+      if (fine) {
+        dd.addEventListener("mouseenter", function () { clearTimeout(t); if (!dd.classList.contains("open")) hoverAt = Date.now(); closeDds(dd); setDd(dd, true); });
+        dd.addEventListener("mouseleave", function () { t = setTimeout(function () { setDd(dd, false); }, 160); });
+      }
     });
 
-    // esteso a inizio pagina, chiuso scorrendo
-    function onScroll() {
-      var wide = window.scrollY < Math.max(80, window.innerHeight * 0.45) && !hd.classList.contains("is-open");
-      hd.classList.toggle("is-wide", wide);
+    // pannello del telefono (☰)
+    function setM(on) {
+      hd.classList.toggle("m-open", on);
+      if (burger) { burger.setAttribute("aria-expanded", on ? "true" : "false"); burger.setAttribute("aria-label", on ? "Close the menu" : "Open the menu"); }
+      if (mnav) { if (on) mnav.removeAttribute("inert"); else mnav.setAttribute("inert", ""); }
+      document.documentElement.style.overflow = on ? "hidden" : "";
+      if (on) setWl(false);
     }
+    if (burger) burger.addEventListener("click", function () { setM(!hd.classList.contains("m-open")); });
+    hd.querySelector(".hd-veil").addEventListener("click", function () { setM(false); });
+    if (mnav) mnav.addEventListener("click", function (e) { if (e.target.closest("a")) setM(false); });
+
+    // ombra sotto la barra quando si scorre
+    function onScroll() { hd.classList.toggle("scrolled", window.scrollY > 8); }
+    onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
+
+    // «Join the waitlist»: apre la finestrella sotto il pulsante
     function setWl(on) {
       if (!pop) return;
       hd.classList.toggle("wl-open", on);
       if (on) { pop.removeAttribute("inert"); var i = pop.querySelector("input[type=email]"); if (i) setTimeout(function () { i.focus({ preventScroll: true }); }, 60); }
       else pop.setAttribute("inert", "");
     }
-    function setOpen(on) {
-      hd.classList.toggle("is-open", on);
-      btn.setAttribute("aria-expanded", on ? "true" : "false");
-      btn.setAttribute("aria-label", on ? "Close the menu" : "Open the menu");
-      if (on) { panel.removeAttribute("inert"); setWl(false); } else panel.setAttribute("inert", "");
-      document.documentElement.style.overflow = on ? "hidden" : "";
-      onScroll();
-    }
-    btn.addEventListener("click", function () { setOpen(!hd.classList.contains("is-open")); });
-    hd.querySelector(".hd-veil").addEventListener("click", function () { setOpen(false); setWl(false); });
-    panel.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    // «Join the waitlist»: apre la finestrella sotto il pulsante
     document.addEventListener("click", function (e) {
-      var o = e.target.closest && e.target.closest("[data-wl-open]");
-      if (o) { e.preventDefault(); if (hd.classList.contains("is-open")) setOpen(false); setWl(!hd.classList.contains("wl-open")); return; }
-      if (e.target.closest && e.target.closest("[data-wl-close]")) { setWl(false); return; }
+      if (!e.target.closest) return;
+      var o = e.target.closest("[data-wl-open]");
+      if (o) { e.preventDefault(); setM(false); closeDds(); setWl(!hd.classList.contains("wl-open")); return; }
+      if (e.target.closest("[data-wl-close]")) { setWl(false); return; }
       if (pop && hd.classList.contains("wl-open") && !pop.contains(e.target)) setWl(false);
+      if (!e.target.closest(".dd")) closeDds();
+      var bp = e.target.closest("[data-plans]");
+      if (bp) {
+        // vale anche se il link ricarica la home: la scheda giusta si apre all'arrivo
+        try { sessionStorage.setItem("ln-plans", bp.getAttribute("data-plans") + "|" + Date.now()); } catch (x) {}
+        if (typeof window.showPlans === "function") window.showPlans(bp.getAttribute("data-plans"));
+        closeDds();
+      }
     });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { setOpen(false); setWl(false); } });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeDds(); setM(false); setWl(false); } });
   }
 
   // lista d'attesa: l'email va nella tabella «waitlist» di Supabase (dal sito si può solo aggiungere)
